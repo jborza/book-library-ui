@@ -11,7 +11,19 @@ import { BooksService } from '../books.service';
   imports: [CommonModule, RouterModule],
 })
 export class BookListComponent implements OnInit {
-  books: Array<{ id: number; title: string }> = [];
+  books: Array<{ id: number;
+    title: string,
+    author_name: string,
+    isbn: string,
+    cover_image: string,
+    cover_image_tiny: string,
+    year: string,
+    status: string,
+    type: string,
+    rating: number,
+    book_type: string,
+    genre: string,
+  }> = [];
   authorName: string = '';
 
   constructor(private booksService: BooksService,

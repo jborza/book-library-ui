@@ -2,3 +2,15 @@
 <h2>Book Details</h2>
 <p *ngIf="bookId">Book ID: {{ bookId }}</p>
 <!-- TODO: Display more details fetched from API -->
+<h6>{{book.author_name}} - {{ book.title }}:</h6>
+    <ul class="list-unstyled mt-3 mb-4">
+      <img src="{{ book.cover_image_tiny }}" alt="{{ book.title }} Cover" class="book-cover">
+      <li>Title: {{ book.title }}</li>
+      <li>Author: {{ book.author_name }}</li>
+      <li *ngIf="book.year">Year: {{ book.year }}</li>
+      <li *ngIf="book.isbn">ISBN: {{ book.isbn }}</li>
+      <li *ngIf="book.book_type">Book type: {{ book.book_type }}</li>
+      <li *ngIf="book.status">Status: {{ book.status }}</li>
+      <li *ngIf="book.rating">Rating: {{ book.rating }}</li>
+      <li *ngIf="book.genre">Genre: {{ book.genre }}</li>
+</ul>

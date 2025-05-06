@@ -10,11 +10,17 @@ export class BooksService {
   // TODO parametrize
   private apiUrl = 'http://localhost:5000/books/search_api';
   private addBookApiUrl = 'http://localhost:5000/books/add_book_api';
+  private bookApiUrl = 'http://localhost:5000/book/api';
 
   constructor(private http: HttpClient) {}
 
   getBooks(): Observable<any> {
     return this.http.get(this.apiUrl);
+  }
+
+  getBookById(id: string): Observable<any> {
+    // http://127.0.0.1:5000/book/api/2
+    return this.http.get(`${this.bookApiUrl}/${id}`);
   }
 
   // Method to fetch books by author
