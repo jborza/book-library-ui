@@ -12,6 +12,7 @@ export const routes: Routes = [
   { path: 'books', component: BookListComponent },
   { path: 'books/:id', component: BookDetailsComponent },
   { path: 'books/:id/edit', component: BookEditorComponent },
+  { path: 'books/:author', component: BookListComponent },
   { path: 'add', component: BookEditorComponent },
   { path: 'authors', component: AuthorsComponent },
   { path: 'genres', component: GenresComponent },

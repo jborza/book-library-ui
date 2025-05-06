@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Component } from '@angular/core';
 import { AuthorsService } from '../authors.service';
 
@@ -11,14 +11,21 @@ import { AuthorsService } from '../authors.service';
   styleUrl: './authors.component.less'
 })
 export class AuthorsComponent {
-  authors: Array<{ title: string }> = [];
+  authors: Array<{ name: string }> = [];
 
-  constructor(private authorsService: AuthorsService) {}
+  constructor(private authorsService: AuthorsService,
+    private router: Router
+  ) {}
   
   ngOnInit(): void {
     this.authorsService.getAuthors().subscribe((data) => {
+      console.log('Authors:', data);
       this.authors = data.authors;
     });
+  }
+
+  viewBooksByAuthor(authorName: string): void {
+    this.router.navigate(['/books', authorName]);
   }
 
 }

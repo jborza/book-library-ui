@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BooksService } from '../books.service';
 
 @Component({
@@ -12,13 +12,30 @@ import { BooksService } from '../books.service';
 })
 export class BookListComponent implements OnInit {
   books: Array<{ id: number; title: string }> = [];
+  authorName: string = '';
 
-  constructor(private booksService: BooksService) {}
+  constructor(private booksService: BooksService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     console.log('BookListComponent initialized');
+    this.route.paramMap.subscribe((params) => {
+      this.authorName = params.get('author') || '';
+      this.fetchBooksByAuthor(this.authorName);
+    });
     this.booksService.getBooks().subscribe((data) => {
       this.books = data;
+    });
+  }
+
+  fetchBooksByAuthor(authorName: string): void {
+    this.booksService.getBooksByAuthor(authorName).subscribe((response) => {
+      if (Array.isArray(response)) {
+        this.books = response;
+      } else {
+        console.error('Unexpected API response format:', response);
+      }
     });
   }
 }

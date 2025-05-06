@@ -14,4 +14,9 @@ export class BooksService {
   getBooks(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
+
+  // Method to fetch books by author
+  getBooksByAuthor(authorName: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?author=${encodeURIComponent(authorName)}`);
+  }
 }
