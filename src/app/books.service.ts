@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,6 +16,18 @@ export class BooksService {
 
   getBooks(): Observable<any> {
     return this.http.get(this.apiUrl);
+  }
+
+  getBooksFiltered(status?:string, type?:string): Observable<any> {
+    let params = new HttpParams();
+    if (status) {
+      params = params.set('status', status);
+    }
+    if (type) {
+      params = params.set('type', type);
+    }
+
+    return this.http.get(this.bookApiUrl, { params });
   }
 
   getBookById(id: string): Observable<any> {

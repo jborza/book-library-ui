@@ -25,6 +25,8 @@ export class BookListComponent implements OnInit {
     genre: string,
   }> = [];
   authorName: string = '';
+  statusFilter: string = '';
+  typeFilter: string = '';
 
   constructor(private booksService: BooksService,
     private route: ActivatedRoute
@@ -38,6 +40,17 @@ export class BookListComponent implements OnInit {
     });
     this.booksService.getBooks().subscribe((data) => {
       this.books = data;
+    });
+  }
+
+  fetchBooks(): void {
+    this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter)
+      .subscribe((response) => {
+      if (Array.isArray(response)) {
+        this.books = response;
+      } else {
+        console.error('Unexpected API response format:', response);
+      }
     });
   }
 
