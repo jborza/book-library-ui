@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { BooksService } from '../books.service';
 
 @Component({
   standalone: true,
@@ -12,11 +13,12 @@ import { RouterModule } from '@angular/router';
 export class BookListComponent implements OnInit {
   books: Array<{ id: number; title: string }> = [];
 
+  constructor(private booksService: BooksService) {}
+
   ngOnInit(): void {
-    // TODO: Fetch books from API
-    this.books = [
-      { id: 1, title: 'Sapiens: A Brief History of Humankind' },
-      { id: 2, title: 'The Pragmatic Programmer' },
-    ];
+    console.log('BookListComponent initialized');
+    this.booksService.getBooks().subscribe((data) => {
+      this.books = data;
+    });
   }
 }
