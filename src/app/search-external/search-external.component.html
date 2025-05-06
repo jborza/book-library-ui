@@ -1,6 +1,7 @@
 <h2>Search Results</h2>
-<p *ngIf="searchQuery">Showing results for: "{{ searchQuery }}"</p>
+<p *ngIf="searchQuery">Showing results for: <b>{{ searchQuery }}</b></p>
 <ul>
+    {{ books.length > 0 ? 'Books found:' : 'No books found.' }}
     <li *ngFor="let book of books">
         {{ book.author_name }} - {{ book.title }}
     </li>
