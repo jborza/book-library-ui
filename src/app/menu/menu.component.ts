@@ -13,7 +13,7 @@ export class MenuComponent {
 
   menuSections : Array<{
     title: string;
-    items: Array<{ name: string; url: string; icon: string }>;
+    items: Array<{ name: string; url: string; icon: string, queryParams?: { [key: string]: any } }>;
   }> = 
   [
     {
@@ -32,18 +32,18 @@ export class MenuComponent {
     {
         title: 'Collections',
         items: [
-            {name: 'Ebooks', url: '/books?type=ebook', icon: '📲'},
-            {name: 'Physical', url: '/books?type=physical', icon: '📙'},
-            {name: 'Audiobooks', url: '/books?type=audiobook', icon: '🔊'}
+            {name: 'Ebooks', url: '/books', queryParams: { type: 'ebook' }, icon: '📲'},
+            {name: 'Physical', url: '/books', queryParams: { type: 'physical' },  icon: '📙'},
+            {name: 'Audiobooks', url: '/books', queryParams: { type: 'audiobook' }, icon: '🔊'}
         ]
     },
     {
         title: 'Status',
         items: [
-            {name: 'Read', url: '/books?status=read', icon: '✔'},
-            {name: 'To Read', url: '/books?status=to-read', icon: '🔜'},
-            {name: 'Currently Reading', url: '/books?status=currently-reading', icon: '⌛'},
-            {name: 'Wishist', url: '/books?status=wishlist', icon: '💡'}
+            {name: 'Read', url: '/books', queryParams: {status: 'read'}, icon: '✔'},
+            {name: 'To Read', url: '/books', queryParams: {status: 'to-read'}, icon: '🔜'},
+            {name: 'Currently Reading', url: '/books', queryParams: {status: 'currently-reading'}, icon: '⌛'},
+            {name: 'Wishist', url: '/books', queryParams: {status: 'wishlist'}, icon: '💡'}
         ]
     },
     {
