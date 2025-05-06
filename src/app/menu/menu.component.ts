@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-menu',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.less'
 })
@@ -71,5 +72,14 @@ export class MenuComponent {
   searchGoogleBooks(): void {
     console.log('Searching Google Books with query:', this.searchQueryGoogleBooks);
     // Add actual search logic here
+  }
+
+  searchQuery: string = 'Architecture'; // Default value (can be empty or changed dynamically)
+
+  constructor(private router: Router) {}
+
+  onSearch(): void {
+    // Navigate to the search route with the query parameter
+    this.router.navigate(['/search'], { queryParams: { search_query: this.searchQuery } });
   }
 }
