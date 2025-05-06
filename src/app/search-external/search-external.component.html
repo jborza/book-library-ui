@@ -3,7 +3,31 @@
 <ul>
     {{ books.length > 0 ? 'Books found:' : 'No books found.' }}
     <li *ngFor="let book of books">
-        {{ book.author_name }} - {{ book.title }}
+        <div class="card">
+            <div class="row no-gutters">
+            <div class="col-md-3">
+                <img src="{{book.cover_image}}" class="card-img-top cover-image thumbnail-small" alt="Cover Image" >
+            </div>
+            <div class="col-md-9">
+
+                <h6>{{book.author_name}} - {{book.title}}</h6>
+                <ul class="list-unstyled mt-3 mb-4">
+                <li>Title: {{book.title}}</li>
+                <li>Author: {{book.author_name}}</li>
+
+                <li *ngIf="book.isbn">ISBN: {{book.isbn}}</li>
+                <li *ngIf="book.rating">Rating: {{book.rating}} </li>
+                <li *ngIf="book.year_published">Published: {{book.year_published}}</li>
+                <li *ngIf="book.language">Language: {{book.language}}</li>
+                <li *ngIf="book.genre">Genre: {{book.genre}}</li>
+                </ul>
+                <button (click)="addToCollection(book)" class="btn btn-primary btn-sm">
+                    {{ book.inCollection ? 'Remove from Collection' : 'Add to Collection' }}
+                </button>
+
+            </div>
+            </div>
+        </div>
     </li>
 </ul>
 <p *ngIf="books.length === 0">No books available.</p>

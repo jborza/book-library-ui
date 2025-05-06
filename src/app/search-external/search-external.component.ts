@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SearchService } from '../search.service';
+import { BooksService } from '../books.service';
 
 @Component({
   selector: 'app-search-external',
@@ -19,7 +20,8 @@ export class SearchExternalComponent {
   count: number = 10;
   
     constructor(private route: ActivatedRoute,
-      private searchService: SearchService) {}
+      private searchService: SearchService,
+      private booksService: BooksService) {}
 
       ngOnInit(): void {
         this.route.queryParamMap.subscribe((params) => {
@@ -36,6 +38,18 @@ export class SearchExternalComponent {
         this.searchService.searchBooks(this.where, this.searchQuery, this.count)
         .subscribe((response) => {
           this.books = response;
+        });
+      }
+
+      addToCollection(book: any): void {
+        // Toggle the inCollection state
+        book.inCollection = !book.inCollection;
+    
+        // Call the API with the book data
+        this.booksService.toggleBookInCollection(book).subscribe(() => {
+          console.log(
+            `${book.inCollection ? 'Added to' : 'Removed from'} collection: ${book.title}`
+          );
         });
       }
 }
