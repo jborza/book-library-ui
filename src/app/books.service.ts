@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class BooksService {
   // TODO parametrize
-  private apiUrl = 'http://localhost:5000/books/api';
+  private apiUrl = 'http://localhost:5000/books/search_api';
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class BooksService {
   }
 
   // Method to fetch books by author
-  getBooksByAuthor(authorName: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?author=${encodeURIComponent(authorName)}`);
+  searchBooks(query: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?search_query=${encodeURIComponent(query)}`);
   }
 }

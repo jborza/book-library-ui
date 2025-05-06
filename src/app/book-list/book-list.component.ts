@@ -30,7 +30,7 @@ export class BookListComponent implements OnInit {
   }
 
   fetchBooksByAuthor(authorName: string): void {
-    this.booksService.getBooksByAuthor(authorName).subscribe((response) => {
+    this.booksService.searchBooks(authorName).subscribe((response) => {
       if (Array.isArray(response)) {
         this.books = response;
       } else {

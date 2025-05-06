@@ -3,7 +3,7 @@
 <ul>        
     <div class="book-item" *ngFor="let author of authors">
         <li>            
-            <a [routerLink]="['/books', author.name]" style="text-decoration: none;">
+            <a [routerLink]="['/search']" [queryParams]="{ search_query: author.name }" style="text-decoration: none;">
                 {{ author.name }}
             </a>
         </li>
