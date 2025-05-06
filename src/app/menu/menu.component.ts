@@ -50,7 +50,8 @@ export class MenuComponent {
         title: 'Tools',
         items: [
             {name: 'Import', url: '/import', icon: '📥'},
-            {name: 'Export', url: '/export', icon: '📤'}
+            {name: 'Export', url: '/export', icon: '📤'},
+            {name: 'Test', url: '/test', icon: '🧪'},
         ]
     },
     {

@@ -1,0 +1,22 @@
+<div class="book-list">
+    <!-- Example: Existing Book -->
+    <app-book-item
+      [sectionTitle]="'Existing Book'"
+      [bookData]="{ title: 'The Murder of Lehman Brothers', author: 'Joseph Tibman', type: 'ebook' }"
+      [isMergeOptionVisible]="true"
+    ></app-book-item>
+  
+    <!-- Example: Import Data -->
+    <app-book-item
+      [sectionTitle]="'Import Data'"
+      [bookData]="{ title: 'The Murder of Lehman Brothers', author: 'Joseph Tibman', type: 'ebook' }"
+      [isMergeOptionVisible]="false"
+    ></app-book-item>
+  
+    <!-- Example: Book to Add -->
+    <app-book-item
+      [sectionTitle]="'Book to Add'"
+      [bookData]="{ title: 'Nebud p*ca', author: 'Tomáš Morávek', type: 'ebook' }"
+      [isMergeOptionVisible]="false"
+    ></app-book-item>
+  </div>
