@@ -1,0 +1,8 @@
+
+<h2>Book List</h2>
+<ul>
+  <li *ngFor="let book of books">
+    <a [routerLink]="['/books', book.id]">{{ book.title }}</a>
+  </li>
+</ul>
+<p *ngIf="books.length === 0">No books available.</p>
