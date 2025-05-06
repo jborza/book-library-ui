@@ -3,11 +3,17 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { BookEditorComponent } from './book-editor/book-editor.component';
 import { ImportPageComponent } from './import-page/import-page.component';
+import { AuthorsComponent } from './authors/authors.component';
+import { GenresComponent } from './genres/genres.component';
+
 
 export const routes: Routes = [
   { path: '', component: BookListComponent, pathMatch: 'full' },
   { path: 'books', component: BookListComponent },
   { path: 'books/:id', component: BookDetailsComponent },
   { path: 'books/:id/edit', component: BookEditorComponent },
+  { path: 'add', component: BookEditorComponent },
+  { path: 'authors', component: AuthorsComponent },
+  { path: 'genres', component: GenresComponent },
   { path: 'import', component: ImportPageComponent },
 ];
