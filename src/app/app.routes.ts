@@ -6,6 +6,7 @@ import { ImportPageComponent } from './import-page/import-page.component';
 import { AuthorsComponent } from './authors/authors.component';
 import { GenresComponent } from './genres/genres.component';
 import { SearchComponent } from './search/search.component';
+import { SearchExternalComponent } from './search-external/search-external.component';
 
 
 export const routes: Routes = [
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'genres', component: GenresComponent },
   { path: 'import', component: ImportPageComponent },
   { path: 'search', component: SearchComponent, pathMatch: 'full' },
+  { path: 'search_external', component: SearchExternalComponent, pathMatch: 'full' },
 
 ];

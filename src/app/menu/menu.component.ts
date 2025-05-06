@@ -61,19 +61,8 @@ export class MenuComponent {
     }
   ];
 
-  searchQueryOpenLibrary: string = '';
-  searchQueryGoogleBooks: string = '';
-
-  searchOpenLibrary(): void {
-    console.log('Searching OpenLibrary with query:', this.searchQueryOpenLibrary);
-    // Add actual search logic here
-  }
-
-  searchGoogleBooks(): void {
-    console.log('Searching Google Books with query:', this.searchQueryGoogleBooks);
-    // Add actual search logic here
-  }
-
+  searchQueryOpenLibrary: string = 'the chronology of water';
+  searchQueryGoogleBooks: string = 'Ukraine war';
   searchQuery: string = 'Architecture'; // Default value (can be empty or changed dynamically)
 
   constructor(private router: Router) {}
@@ -82,4 +71,21 @@ export class MenuComponent {
     // Navigate to the search route with the query parameter
     this.router.navigate(['/search'], { queryParams: { search_query: this.searchQuery } });
   }
+
+  onSearchOpenLibrary(): void {
+    this.router.navigate(['/search_external/'],
+      { queryParams: {
+        search_query: this.searchQueryOpenLibrary,
+        count: 5,
+        where: 'openlibrary'
+       } });
+  }
+
+  onSearchGoogleBooks(): void {
+    this.router.navigate(['/search_external/'],
+      { queryParams: {
+        search_query: this.searchQueryGoogleBooks,
+        count: 5,
+        where: 'googlebooks'
+      } });  }
 }

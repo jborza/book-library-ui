@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
   searchQuery: string = '';
   books: any[] = [];
 
-  constructor(private route: ActivatedRoute, 
+  constructor(private route: ActivatedRoute,
     private booksService: BooksService) {}
 
   ngOnInit(): void {
