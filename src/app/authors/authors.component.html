@@ -1,1 +1,9 @@
-<p>authors works!</p>
+<h4>Authors</h4>
+
+<ul>        
+    <div class="book-item" *ngFor="let author of authors">
+        <li>
+        <a [routerLink]="['/authors', author]">{{ author }}</a>
+        </li>
+    </div>
+</ul>
