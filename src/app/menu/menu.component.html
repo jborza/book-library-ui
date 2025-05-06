@@ -1,116 +1,19 @@
 <nav class="col-md-3 col-lg-2 d-md-block sidebar">
     <h3>Book Library</h3>
-    
-    
 <div class="sidebar-sticky">        
 
-<h6 class="sidebar-heading"></h6>
-<ul class="nav flex-column">
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/">
-            📚 Books
-        </a>
+    <ul class="nav flex-column">
+    <li class="nav-item" *ngFor="let section of menuSections">
+      <h6 class="sidebar-heading">{{ section.title }}</h6>
+      <ul class="nav flex-column">
+        <li class="nav-item" *ngFor="let item of section.items">
+          <a class="nav-link pt-0 pb-0" [routerLink]="item.url">
+            {{item.icon}} {{ item.name }}
+          </a>
+        </li>
+      </ul>
     </li>
-    
-</ul>
-
-<h6 class="sidebar-heading">Library</h6>
-<ul class="nav flex-column">
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/authors">
-            👤 Authors
-        </a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/genres">
-            🎭 Genres
-        </a>
-    </li>
-    
-</ul>
-
-<h6 class="sidebar-heading">Collections</h6>
-<ul class="nav flex-column">
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/books?type=ebook">
-            📲 Ebooks
-        </a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/books?type=physical">
-            📙 Physical
-        </a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/books?type=audiobook">
-            🔊 Audiobooks
-        </a>
-    </li>
-    
-</ul>
-
-<h6 class="sidebar-heading">Status</h6>
-<ul class="nav flex-column">
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/books?status=read">
-            ✔ Read
-        </a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/books?status=to-read">
-            🔜 To Read
-        </a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/books?status=currently-reading">
-            ⌛ Currently Reading
-        </a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/books?status=wishlist">
-            💡 Wishist
-        </a>
-    </li>
-    
-</ul>
-
-<h6 class="sidebar-heading">Tools</h6>
-<ul class="nav flex-column">
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/import">
-            📥 Import
-        </a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/export">
-            📤 Export
-        </a>
-    </li>
-    
-</ul>
-
-<h6 class="sidebar-heading"></h6>
-<ul class="nav flex-column">
-    
-    <li class="nav-item">
-        <a class="nav-link  pt-0 pb-0" href="/add">
-            ➕ Add Book
-        </a>
-    </li>
-    
-</ul>
+  </ul>
            
 <form class="px-3" action="/search/openlibrary" method="get">
 <input type="hidden" name="count" value="5">

@@ -13,29 +13,50 @@ export class MenuComponent {
   menuSections : Array<{
     title: string;
     items: Array<{ name: string; url: string; icon: string }>;
-  }> = [
+  }> = 
+  [
     {
-      title: 'Library',
-      items: [
-        { name: 'Authors', url: '/authors', icon: '<i class="fas fa-user"></i>' },
-        { name: 'Genres', url: '/genres', icon: '<i class="fas fa-book"></i>' }
-      ]
+        title: '',
+        items:[
+            {name: 'Books', url: '/', icon: '📚'},
+        ]
     },
     {
-      title: 'Collections',
-      items: [
-        { name: 'Ebooks', url: '/ebooks', icon: '<i class="fas fa-tablet-alt"></i>' },
-        { name: 'Physical', url: '/physical', icon: '<i class="fas fa-book-open"></i>' },
-        { name: 'Audiobooks', url: '/audiobooks', icon: '<i class="fas fa-headphones"></i>' }
-      ]
+        title: 'Library',
+        items:[
+            {name: 'Authors', url: '/authors', icon: '👤'},
+            {name: 'Genres', url: '/genres', icon: '🎭'},
+        ]
     },
     {
-      title: 'Tools',
-      items: [
-        { name: 'Import', url: '/import', icon: '<i class="fas fa-file-import"></i>' },
-        { name: 'Export', url: '/export', icon: '<i class="fas fa-file-export"></i>' },
-        { name: 'Add Book', url: '/add-book', icon: '<i class="fas fa-plus-circle"></i>' }
-      ]
+        title: 'Collections',
+        items: [
+            {name: 'Ebooks', url: '/books?type=ebook', icon: '📲'},
+            {name: 'Physical', url: '/books?type=physical', icon: '📙'},
+            {name: 'Audiobooks', url: '/books?type=audiobook', icon: '🔊'}
+        ]
+    },
+    {
+        title: 'Status',
+        items: [
+            {name: 'Read', url: '/books?status=read', icon: '✔'},
+            {name: 'To Read', url: '/books?status=to-read', icon: '🔜'},
+            {name: 'Currently Reading', url: '/books?status=currently-reading', icon: '⌛'},
+            {name: 'Wishist', url: '/books?status=wishlist', icon: '💡'}
+        ]
+    },
+    {
+        title: 'Tools',
+        items: [
+            {name: 'Import', url: '/import', icon: '📥'},
+            {name: 'Export', url: '/export', icon: '📤'}
+        ]
+    },
+    {
+        title:'',
+        items: [
+            {name: 'Add Book', url: '/add', icon: '➕'},
+        ]
     }
   ];
 
