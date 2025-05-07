@@ -1,16 +1,39 @@
 
 <h2>Book Details</h2>
 <p *ngIf="bookId">Book ID: {{ bookId }}</p>
-<!-- TODO: Display more details fetched from API -->
-<h6>{{book.author_name}} - {{ book.title }}:</h6>
-    <ul class="list-unstyled mt-3 mb-4">
-      <img src="{{ book.cover_image_tiny }}" alt="{{ book.title }} Cover" class="book-cover">
-      <li>Title: {{ book.title }}</li>
-      <li>Author: {{ book.author_name }}</li>
-      <li *ngIf="book.year">Year: {{ book.year }}</li>
-      <li *ngIf="book.isbn">ISBN: {{ book.isbn }}</li>
-      <li *ngIf="book.book_type">Book type: {{ book.book_type }}</li>
-      <li *ngIf="book.status">Status: {{ book.status }}</li>
-      <li *ngIf="book.rating">Rating: {{ book.rating }}</li>
-      <li *ngIf="book.genre">Genre: {{ book.genre }}</li>
-</ul>
+
+<div class="book-detail-container">
+  <div class="book-main">
+    <!-- todo fill in http://localhost:5000/static/ -->
+    <img src="http://localhost:5000/static/{{book.cover_image}}" alt="{{ book.title }} cover" class="book-cover" />
+    <div class="book-info">
+      <h1 class="book-title">{{ book.title }}</h1>
+      <p class="book-authors">{{ book.author_name }}</p>
+      <div class="book-rating">
+        <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= book.rating">★</span>
+        <span class="rating-value">{{ book.rating }}</span>
+        <span class="rating-info">({{ book.ratingsCount }} ratings · {{ book.reviewsCount }} reviews)</span>
+      </div>
+      <p class="book-description">{{ book.description }}</p>
+      <button class="action-button">Want to read</button>
+      <div class="rate-book">
+        <span>Rate this book:</span>
+        <span class="star-rating">
+          <span *ngFor="let star of [1,2,3,4,5]" class="star">☆</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="book-details">
+    <h6 *ngIf="book.genre">Genres</h6>
+    <div *ngIf="book.genre" class="genres">
+      <span *ngFor="let genre of book.genres" class="genre">{{ genre }}</span>
+    </div>
+    <p *ngIf="book.pages" class="book-meta">{{ book.pages }} pages, {{ book.format }}</p>
+    <p *ngIf="book.year" class="book-meta">First published {{ book.year }}</p>
+    <p class="book-meta">Publisher: {{ book.publisher }}</p>
+    <p  *ngIf="book.isbn" class="book-meta">ISBN: {{ book.isbn }}</p>
+    <p class="book-meta">Language: {{ book.language }}</p>
+    <p class="book-meta">Pages: {{ book.page_count }}</p>
+  </div>
+</div>
