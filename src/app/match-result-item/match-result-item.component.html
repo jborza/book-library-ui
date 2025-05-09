@@ -4,6 +4,6 @@
     <div class="details">
       <h3 class="title">{{ result.title }}</h3>
       <p class="author">by {{ result.author_name }}</p>
-      <p class="description">{{ result.description || 'No description available' }}</p>
+      <p class="description">{{ abbreviateText(result.synopsis, 300) || 'No description available' }}</p>
     </div>
   </div>

@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { abbreviate } from '../string-utils';
 
 @Component({
   selector: 'app-match-result-item',
@@ -13,4 +14,9 @@ export class MatchResultItemComponent {
   onSelect(): void {
     this.select.emit(this.result); // Emit the selected item
   }
+
+  abbreviateText(text: string, maxLength: number): string {
+    return abbreviate(text, maxLength);
+  }
+
 }
