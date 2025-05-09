@@ -40,4 +40,9 @@ export class BookDetailsComponent implements OnInit {
     this.router.navigate(['/book', this.book.id, 'match'],
        { queryParams: { query: searchQuery } });
   }
+
+  edit() : void {
+    // book/:id/edit
+    this.router.navigate(['/books', this.book.id, 'edit']);
+  }
 }

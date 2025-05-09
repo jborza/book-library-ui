@@ -52,12 +52,18 @@ export class BookEditorComponent implements OnInit {
   //TODO handle select all click/unclick
 
   saveBook(): void {
+    console.log('Saving book:', this.book);
     // POST request to save the book
-    //this.booksService.saveBook(this.book).subscribe(
-
-  }
-
-  saveChanges(): void {
-    // TODO: Implement saving logic
+    //this.booksService.saveBook(this.book).subscribe( ) .... ?
+    // book/BOOK_ID/edit_api, POST the data
+    // TODO replace with observer!!!
+    // TODO seems like we're saving the OLD book, not the new one - WTF
+    this.booksService.saveBook(this.book).subscribe((response) => {
+      console.log('Book saved successfully:', response);
+      alert('Book saved successfully!');
+      // Optionally, navigate back to the book details page or show a success message
+    }, (error) => {
+      console.error('Error saving book:', error);
+    });
   }
 }

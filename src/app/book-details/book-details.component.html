@@ -15,6 +15,7 @@
         <span class="rating-info">({{ book.ratingsCount }} ratings · {{ book.reviewsCount }} reviews)</span>
       </div>
       <p class="book-description">{{ book.description }}</p>
+      <button class="btn btn-warning" (click)='edit()'>Edit</button>
       <button class="btn btn-primary">Want to read</button>
       <button class="btn btn-primary" (click)='match()'>Match (by search)</button>
       <div class="rate-book">

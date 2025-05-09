@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -10,7 +10,13 @@ import { CommonModule } from '@angular/common';
 })
 export class EditableFieldComponent {
   @Input() currentValue!: string | undefined; // The value being edited
+  @Output() currentValueChange = new EventEmitter<string>(); // Output to emit changes to the parent
   @Input() originalValue!: string | undefined; // The original value for comparison
   @Input() label!: string; // The label text
   @Input() controlId!: string; // Unique ID for input and checkbox
+
+  // Method to emit the updated value when the input changes
+  onInputChange(value: string): void {
+    this.currentValueChange.emit(value);
+  }
 }

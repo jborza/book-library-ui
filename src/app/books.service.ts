@@ -14,7 +14,7 @@ export class BooksService {
   private addBookApiUrl = 'http://localhost:5000/books/add_book_api';
   private bookApiUrl = 'http://localhost:5000/book/api';
   // TODO fix this
-  private saveBookApiUrl = 'http://localhost:5000/book/save_book_api';
+  private saveBookApiUrl = 'http://localhost:5000/book/BOOK_ID/edit_api';
 
   constructor(private http: HttpClient) {}
 
@@ -45,12 +45,14 @@ export class BooksService {
   }
 
   toggleBookInCollection(book: any) : Observable<any> {
-    // TODO implement?
+    // TODO implement? and test if book is Book
     return this.http.post(this.addBookApiUrl, book);
   }
 
-  saveBook(book: Book) {
-    throw new Error('Method not implemented.');
+  saveBook(book: Book) : Observable<any> {
+    // TODO figure out how to pass the book ID reasonably
+    const url = this.saveBookApiUrl.replace('BOOK_ID', book.id.toString());
+    return this.http.post(url, book);
   }
 
 }

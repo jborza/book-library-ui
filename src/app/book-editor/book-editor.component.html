@@ -25,15 +25,16 @@
         <small class="text-muted d-block text-center">128×204px</small>
       </div>
     </div>
+    <!-- TODO for some reason these fields don't map to the book object -->
     <app-editable-field
         [label]="'Title'"
-        [currentValue]="book.title"
+        [(currentValue)]="book.title"
         [originalValue]="originalBook.title"
         [controlId]="'title'">
     </app-editable-field>
     <app-editable-field
         [label]="'Author'"
-        [currentValue]="book.author_name"
+        [(currentValue)]="book.author_name"
         [originalValue]="originalBook.author_name"
         [controlId]="'author'">
     </app-editable-field>
@@ -55,61 +56,61 @@
     <!-- year published, isbn, genres, book type, status, series, tags -->
     <app-editable-field
         [label]="'Genre'"
-        [currentValue]="book.genre"
+        [(currentValue)]="book.genre"
         [originalValue]="originalBook.genre"
         [controlId]="'genres'">
     </app-editable-field>
     <app-editable-field
         [label]="'Book Type'"
-        [currentValue]="book.book_type"
+        [(currentValue)]="book.book_type"
         [originalValue]="originalBook.book_type"
         [controlId]="'book_type'">
     </app-editable-field>
     <app-editable-field
         [label]="'Status'"
-        [currentValue]="book.status"
+        [(currentValue)]="book.status"
         [originalValue]="originalBook.status"
         [controlId]="'status'">
     </app-editable-field>
     <app-editable-field
         [label]="'Series'"
-        [currentValue]="book.series"
+        [(currentValue)]="book.series"
         [originalValue]="originalBook.series"
         [controlId]="'series'">
     </app-editable-field>
     <app-editable-field
         [label]="'Year'"
-        [currentValue]="book.year"
+        [(currentValue)]="book.year"
         [originalValue]="originalBook.year"
         [controlId]="'year'">
     </app-editable-field>
     <app-editable-field
         [label]="'ISBN'"
-        [currentValue]="book.isbn"
+        [(currentValue)]="book.isbn"
         [originalValue]="originalBook.isbn"
         [controlId]="'isbn'">
     </app-editable-field>
     <app-editable-field
         [label]="'Tags'"
-        [currentValue]="book.tags"
+        [(currentValue)]="book.tags"
         [originalValue]="originalBook.tags"
         [controlId]="'tags'">
     </app-editable-field>
     <app-editable-field
         [label]="'Publisher'"
-        [currentValue]="book.publisher"
+        [(currentValue)]="book.publisher"
         [originalValue]="originalBook.publisher"
         [controlId]="'publisher'">
     </app-editable-field>
     <app-editable-field
         [label]="'Language'"
-        [currentValue]="book.language"
+        [(currentValue)]="book.language"
         [originalValue]="originalBook.language"
         [controlId]="'language'">
     </app-editable-field>
     <app-editable-field
         [label]="'Page Count'"
-        [currentValue]="book.page_count"
+        [(currentValue)]="book.page_count"
         [originalValue]="originalBook.page_count"
         [controlId]="'page_count'">
     </app-editable-field>
