@@ -1,7 +1,6 @@
 
 <h2>Book Editor</h2>
 <p *ngIf="bookId">Editing Book {{ bookId }}</p>
-<!-- TODO: Implement edit form -->
 <div class="container mt-4">
     <h2 class="mb-4">Update Details</h2>
   
@@ -36,7 +35,7 @@
       <div class="col">
         <label for="titleInput" class="form-label fw-bold">Title</label>
         <input type="text" class="form-control" id="titleInput" [(ngModel)]="book.title" placeholder="Book Title">
-        <small class="text-muted">Currently: {{ book.title }}</small>
+        <small class="text-muted">Currently: {{ originalBook.title }}</small>
       </div>
     </div>
   
@@ -48,7 +47,7 @@
       <div class="col">
         <label for="authorInput" class="form-label fw-bold">Author</label>
         <input type="text" class="form-control" id="authorInput" [(ngModel)]="book.author_name" placeholder="Author Name">
-        <small class="text-muted">Currently: {{ book.author_name }}</small>
+        <small class="text-muted">Currently: {{ originalBook.author_name }}</small>
     </div>
     </div>
   
@@ -61,6 +60,7 @@
         <label for="descriptionInput" class="form-label fw-bold">Description</label>
         <textarea class="form-control" id="descriptionInput" rows="3" [(ngModel)]="book.synopsis"
          placeholder="Book Description"></textarea>
+        <small *ngIf="originalBook.synopsis" class="text-muted">Currently: {{ originalBook.synopsis }}</small>
       </div>
     </div>
     <!-- TODO other rows -->
