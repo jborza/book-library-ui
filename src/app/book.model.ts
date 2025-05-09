@@ -16,6 +16,7 @@ export class Book {
     page_count?: number;
     series?: string;
     tags?: string;
+    publisher? : string;
 
     constructor(data: any) {
         this.id = data.id;
@@ -35,5 +36,6 @@ export class Book {
         this.page_count = data.page_count;
         this.series = data.series;
         this.tags = data.tags;
+        this.publisher = data.publisher;
       }
 }

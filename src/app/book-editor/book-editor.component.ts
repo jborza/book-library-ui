@@ -5,10 +5,11 @@ import { BookDataService } from '../book-data.service';
 import { Book } from '../book.model';
 import { FormsModule } from '@angular/forms';
 import { BooksService } from '../books.service';
+import { EditableFieldComponent } from '../editable-field/editable-field.component';
 
 @Component({
   selector: 'app-book-editor',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, EditableFieldComponent],
   templateUrl: './book-editor.component.html',
   styleUrl: './book-editor.component.less'
 })

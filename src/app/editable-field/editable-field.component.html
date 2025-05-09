@@ -1,0 +1,11 @@
+<div class="row align-items-center mb-4">
+    <div class="col-auto">
+      <input class="form-check-input" type="checkbox" [id]="controlId + 'Checkbox'"
+      [checked]="(currentValue || '').trim().length > 0">
+    </div>
+    <div class="col">
+      <label [for]="controlId" class="form-label fw-bold">{{ label }}</label>
+      <input type="text" class="form-control" [id]="controlId" [(ngModel)]="currentValue">
+      <small *ngIf="originalValue" class="text-muted">Currently: {{ originalValue }}</small>
+    </div>
+  </div>

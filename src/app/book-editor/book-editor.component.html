@@ -1,6 +1,4 @@
 
-<h2>Book Editor</h2>
-<p *ngIf="bookId">Editing Book {{ bookId }}</p>
 <div class="container mt-4">
     <h2 class="mb-4">Update Details</h2>
   
@@ -22,39 +20,29 @@
         <input type="text" class="form-control" id="coverInput" [(ngModel)]="book.cover_image" placeholder="Cover URL">
       </div>
       <div class="col-auto">
-        <img [src]="book.cover_image" alt="Cover" class="img-thumbnail" style="width: 128px; height: 204px;">
+        <img src="http://localhost:5000/static/{{book.cover_image}}" alt="Cover" class="img-thumbnail"
+        style="width: 128px; height: 204px;">
         <small class="text-muted d-block text-center">128×204px</small>
       </div>
     </div>
-  
-    <!-- Title Row -->
-    <div class="row align-items-center mb-4">
-      <div class="col-auto">
-        <input class="form-check-input" type="checkbox" id="titleCheckbox">
-      </div>
-      <div class="col">
-        <label for="titleInput" class="form-label fw-bold">Title</label>
-        <input type="text" class="form-control" id="titleInput" [(ngModel)]="book.title" placeholder="Book Title">
-        <small class="text-muted">Currently: {{ originalBook.title }}</small>
-      </div>
-    </div>
-  
-    <!-- Author Row -->
-    <div class="row align-items-center mb-4">
-      <div class="col-auto">
-        <input class="form-check-input" type="checkbox" id="authorCheckbox">
-      </div>
-      <div class="col">
-        <label for="authorInput" class="form-label fw-bold">Author</label>
-        <input type="text" class="form-control" id="authorInput" [(ngModel)]="book.author_name" placeholder="Author Name">
-        <small class="text-muted">Currently: {{ originalBook.author_name }}</small>
-    </div>
-    </div>
-  
+    <app-editable-field
+        [label]="'Title'"
+        [currentValue]="book.title"
+        [originalValue]="originalBook.title"
+        [controlId]="'title'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'Author'"
+        [currentValue]="book.author_name"
+        [originalValue]="originalBook.author_name"
+        [controlId]="'author'">
+    </app-editable-field>
+
     <!-- Description Row -->
     <div class="row align-items-center mb-4">
       <div class="col-auto">
-        <input class="form-check-input" type="checkbox" id="descriptionCheckbox">
+        <input class="form-check-input" type="checkbox" id="descriptionCheckbox"
+        [checked]="(book.synopsis || '').trim().length > 0">
       </div>
       <div class="col">
         <label for="descriptionInput" class="form-label fw-bold">Description</label>
@@ -64,6 +52,61 @@
       </div>
     </div>
     <!-- TODO other rows -->
+    <!-- year published, isbn, genres, book type, status, series, tags -->
+
+    <div class="row align-items-center mb-4">
+        <div class="col-auto">
+          <input class="form-check-input" type="checkbox" id="yearCheckbox">
+        </div>
+        <div class="col">
+          <label for="year_published" class="form-label fw-bold">Year</label>
+          <input type="text" class="form-control" id="year_published" [(ngModel)]="book.year_published">
+          <small class="text-muted">Currently: {{ originalBook.year_published }}</small>
+        </div>
+    </div>
+
+    <app-editable-field
+        [label]="'ISBN'"
+        [currentValue]="book.isbn"
+        [originalValue]="originalBook.isbn"
+        [controlId]="'isbn'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'Genre'"
+        [currentValue]="book.genre"
+        [originalValue]="originalBook.genre"
+        [controlId]="'genres'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'Book Type'"
+        [currentValue]="book.book_type"
+        [originalValue]="originalBook.book_type"
+        [controlId]="'book_type'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'Status'"
+        [currentValue]="book.status"
+        [originalValue]="originalBook.status"
+        [controlId]="'status'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'Series'"
+        [currentValue]="book.series"
+        [originalValue]="originalBook.series"
+        [controlId]="'series'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'Tags'"
+        [currentValue]="book.tags"
+        [originalValue]="originalBook.tags"
+        [controlId]="'tags'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'Publisher'"
+        [currentValue]="book.publisher"
+        [originalValue]="originalBook.publisher"
+        [controlId]="'publisher'">
+    </app-editable-field>
     <!-- Save Button -->
     <div class="text-center">
         <button class="btn btn-primary" (click)="saveBook()">Save</button>
