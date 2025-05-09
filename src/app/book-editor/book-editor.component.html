@@ -53,24 +53,6 @@
     </div>
     <!-- TODO other rows -->
     <!-- year published, isbn, genres, book type, status, series, tags -->
-
-    <div class="row align-items-center mb-4">
-        <div class="col-auto">
-          <input class="form-check-input" type="checkbox" id="yearCheckbox">
-        </div>
-        <div class="col">
-          <label for="year_published" class="form-label fw-bold">Year</label>
-          <input type="text" class="form-control" id="year_published" [(ngModel)]="book.year_published">
-          <small class="text-muted">Currently: {{ originalBook.year_published }}</small>
-        </div>
-    </div>
-
-    <app-editable-field
-        [label]="'ISBN'"
-        [currentValue]="book.isbn"
-        [originalValue]="originalBook.isbn"
-        [controlId]="'isbn'">
-    </app-editable-field>
     <app-editable-field
         [label]="'Genre'"
         [currentValue]="book.genre"
@@ -96,6 +78,18 @@
         [controlId]="'series'">
     </app-editable-field>
     <app-editable-field
+        [label]="'Year'"
+        [currentValue]="book.year"
+        [originalValue]="originalBook.year"
+        [controlId]="'year'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'ISBN'"
+        [currentValue]="book.isbn"
+        [originalValue]="originalBook.isbn"
+        [controlId]="'isbn'">
+    </app-editable-field>
+    <app-editable-field
         [label]="'Tags'"
         [currentValue]="book.tags"
         [originalValue]="originalBook.tags"
@@ -106,6 +100,18 @@
         [currentValue]="book.publisher"
         [originalValue]="originalBook.publisher"
         [controlId]="'publisher'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'Language'"
+        [currentValue]="book.language"
+        [originalValue]="originalBook.language"
+        [controlId]="'language'">
+    </app-editable-field>
+    <app-editable-field
+        [label]="'Page Count'"
+        [currentValue]="book.page_count"
+        [originalValue]="originalBook.page_count"
+        [controlId]="'page_count'">
     </app-editable-field>
     <!-- Save Button -->
     <div class="text-center">

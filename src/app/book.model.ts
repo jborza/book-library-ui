@@ -2,7 +2,7 @@ export class Book {
     id!: number;
     title!: string;
     author_name!: string;
-    year_published?: string;
+    year?: string;
     isbn?: string;
     rating?: number;
     book_type?: string;
@@ -13,7 +13,7 @@ export class Book {
     review?: string;
     cover_image?: string;
     cover_image_tiny?: string;
-    page_count?: number;
+    page_count?: string;
     series?: string;
     tags?: string;
     publisher? : string;
@@ -22,7 +22,7 @@ export class Book {
         this.id = data.id;
         this.title = data.title;
         this.author_name = data.author_name; // Map API response to camelCase
-        this.year_published = data.year_published;
+        this.year = data.year_published;
         this.isbn = data.isbn;
         this.rating = data.rating;
         this.book_type = data.book_type;
