@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SearchService } from '../search.service';
 import { MatchResultItemComponent } from '../match-result-item/match-result-item.component';
+import { BookDataService } from '../book-data.service';
 
 @Component({
   selector: 'app-book-match-results',
@@ -18,7 +19,8 @@ export class BookMatchResultsComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private bookDataService: BookDataService
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +54,8 @@ export class BookMatchResultsComponent {
 
   selectSearchResult(selectedItem: any): void {
     console.log('Selected Item:', selectedItem);
+    this.bookDataService.setSelectedBook(selectedItem);
     // book/:id/edit_match
-    this.router.navigate(['/book', this.bookId, 'edit_match'],);
+    this.router.navigate(['/books', this.bookId, 'edit'],);
   }
 }
