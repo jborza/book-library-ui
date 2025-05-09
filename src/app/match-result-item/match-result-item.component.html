@@ -1,0 +1,9 @@
+<!-- TODO style with bootstrap -->
+<div class="search-result-item" (click)="onSelect()">
+    <img [src]="result.cover_image || 'placeholder.png'"class="cover-image" />
+    <div class="details">
+      <h3 class="title">{{ result.title }}</h3>
+      <p class="author">by {{ result.author_name }}</p>
+      <p class="description">{{ result.description || 'No description available' }}</p>
+    </div>
+  </div>

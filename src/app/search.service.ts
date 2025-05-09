@@ -6,12 +6,14 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class SearchService {
+  public static readonly GOOGLEBOOKS = 'googlebooks';
+  public static readonly OPENLIBRARY = 'openlibrary';
   private openlibraryApiUrl =  'http://localhost:5000/search/openlibrary_api';
   private googleBooksApiUrl =  'http://localhost:5000/search/google_books_api';
 
   constructor(private http: HttpClient) {}
 
-    searchBooks(where:string, query: string, count:number): Observable<any> {
+    searchBooks(where:string, query: string, count:number = 5): Observable<any> {
       const apiUrls: { [key: string]: string } = {
         googlebooks: this.googleBooksApiUrl,
         openlibrary: this.openlibraryApiUrl,

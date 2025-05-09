@@ -8,6 +8,7 @@ import { GenresComponent } from './genres/genres.component';
 import { SearchComponent } from './search/search.component';
 import { SearchExternalComponent } from './search-external/search-external.component';
 import { TestComponent } from './test/test.component';
+import { BookMatchResultsComponent } from './book-match-results/book-match-results.component';
 
 
 export const routes: Routes = [
@@ -22,5 +23,7 @@ export const routes: Routes = [
   { path: 'import', component: ImportPageComponent },
   { path: 'search', component: SearchComponent, pathMatch: 'full' },
   { path: 'search_external', component: SearchExternalComponent, pathMatch: 'full' },
-  { path: 'test', component: TestComponent}
+  { path: 'test', component: TestComponent},
+  { path: 'book/:id/match', component: BookMatchResultsComponent },
+  //{ path: 'book/:id/edit_match', component: BookMatchEditorComponent },
 ];

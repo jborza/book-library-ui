@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-menu',
@@ -78,7 +79,7 @@ export class MenuComponent {
       { queryParams: {
         search_query: this.searchQueryOpenLibrary,
         count: 5,
-        where: 'openlibrary'
+        where: SearchService.OPENLIBRARY
        } });
   }
 
@@ -87,6 +88,6 @@ export class MenuComponent {
       { queryParams: {
         search_query: this.searchQueryGoogleBooks,
         count: 5,
-        where: 'googlebooks'
+        where: SearchService.GOOGLEBOOKS
       } });  }
 }
