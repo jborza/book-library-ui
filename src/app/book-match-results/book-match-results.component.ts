@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SearchService } from '../search.service';
 import { MatchResultItemComponent } from '../match-result-item/match-result-item.component';
 import { BookDataService } from '../book-data.service';
+import { levenshteinDistance } from '../string-utils';
 
 @Component({
   selector: 'app-book-match-results',
@@ -35,17 +36,32 @@ export class BookMatchResultsComponent {
     });
   }
 
+  sortByLevenshteinDistance(array: any[], title: string, author: string): any[] {
+    return array.sort((a, b) => {
+      const distanceA =
+        levenshteinDistance(a.title || '', title) + levenshteinDistance(a.author || '', author);
+      const distanceB =
+        levenshteinDistance(b.title || '', title) + levenshteinDistance(b.author || '', author);
+  
+      return distanceA - distanceB;
+    });
+  }
+
   performSearch(): void {
     // Replace with your API call
     this.searchService.searchBooks(SearchService.GOOGLEBOOKS, this.searchQuery).subscribe(
       {
         next: (response: any) => {
-          // Handle the response
           console.log('Search results:', response);
-          this.searchResults = response || [];
+          // sort the results by relevance
+          const sortedBooks = this.sortByLevenshteinDistance(
+            response,
+            this.searchQuery.split(' - ')[1] || '',
+            this.searchQuery.split(' - ')[0] || ''
+          );
+          this.searchResults = sortedBooks || [];
         },
         error: (err: any) => {
-          // Handle the error
           console.error('Error fetching search results:', err);
         },
         complete: () => { }
