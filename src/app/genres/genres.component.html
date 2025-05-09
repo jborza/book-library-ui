@@ -1,1 +1,11 @@
-<p>genres works!</p>
+<h4>Genres</h4>
+
+<ul>
+    <div class="book-item" *ngFor="let genre of genres">
+        <li>            
+            <a [routerLink]="['/search']" [queryParams]="{ search_query: genre.name }" style="text-decoration: none;">
+                {{ genre.name }}
+            </a>
+        </li>
+    </div>
+</ul>

@@ -3,7 +3,6 @@ import { Router, RouterModule } from '@angular/router';
 import { Component } from '@angular/core';
 import { AuthorsService } from '../authors.service';
 
-
 @Component({
   selector: 'app-authors',
   imports: [CommonModule, RouterModule],
