@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BooksService } from '../books.service';
+import { Book } from '../book.model';
 
 @Component({
   standalone: true,
@@ -11,19 +12,7 @@ import { BooksService } from '../books.service';
   imports: [CommonModule, RouterModule],
 })
 export class BookListComponent implements OnInit {
-  books: Array<{ id: number;
-    title: string,
-    author_name: string,
-    isbn: string,
-    cover_image: string,
-    cover_image_tiny: string,
-    year: string,
-    status: string,
-    type: string,
-    rating: number,
-    book_type: string,
-    genre: string,
-  }> = [];
+  books: Book[] = [];
   authorName: string = '';
   statusFilter: string = '';
   typeFilter: string = '';
@@ -39,7 +28,7 @@ export class BookListComponent implements OnInit {
       this.fetchBooksByAuthor(this.authorName);
     });
     this.booksService.getBooks().subscribe((data) => {
-      this.books = data;
+      this.books = data.map((b:any) => new Book(b))
     });
   }
 
@@ -47,7 +36,7 @@ export class BookListComponent implements OnInit {
     this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter)
       .subscribe((response) => {
       if (Array.isArray(response)) {
-        this.books = response;
+        this.books = response.map(bookData => new Book(bookData));
       } else {
         console.error('Unexpected API response format:', response);
       }

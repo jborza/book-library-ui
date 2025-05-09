@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BooksService } from '../books.service';
 import { CommonModule } from '@angular/common';
+import { Book } from '../book.model';
 
 @Component({
   selector: 'app-search',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.less'
 })
 export class SearchComponent implements OnInit {
   searchQuery: string = '';
-  books: any[] = [];
+  books: Book[] = [];
 
   constructor(private route: ActivatedRoute,
     private booksService: BooksService) {}
@@ -27,7 +28,7 @@ export class SearchComponent implements OnInit {
 
   fetchSearchResults(query: string): void {
     this.booksService.searchBooks(query).subscribe((response) => {
-      this.books = response;
+      this.books = response.map((bookData: any) => new Book(bookData));
     });
   }
 }

@@ -17,7 +17,7 @@
         <td>
             <img src="http://localhost:5000/static/{{book.cover_image_tiny}}" alt="{{ book.title }} Cover" class="book-cover">
         </td>
-        <td>{{ book.title }}</td>
+        <td><a [routerLink]="['/books', book.id]">{{ book.title }}</a></td>
         <td>{{ book.author_name }}</td>
         <td>{{ book.rating }}</td>
         <td>{{ book.status }}</td>

@@ -1,9 +1,32 @@
-<h2>Search Results</h2>
+<h5>Search Results</h5>
 <p *ngIf="searchQuery">Showing results for: "{{ searchQuery }}"</p>
-<ul>
-    <li *ngFor="let book of books">
-        {{ book.author_name }} - {{ book.title }}
-    </li>
-</ul>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Rating</th>
+            <th>Shelves</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let book of books">
+            <td>{{ book.id }}</td>  <!-- Book Number -->
+            <td>
+                <img src="http://localhost:5000/static/{{book.cover_image_tiny}}" alt="{{ book.title }} Cover" class="book-cover">
+            </td>
+            <td><a [routerLink]="['/books', book.id]">{{ book.title }}</a></td>
+            <td>{{ book.author_name }}</td>
+            <td>{{ book.rating }}</td>
+            <td>{{ book.status }}</td>
+            <td>
+                <a href="">Edit</a>
+                <!-- Add more actions as needed -->
+            </td>
+        </tr>
+    </tbody>
+</table>
 <p *ngIf="books.length === 0">No books available.</p>
-
