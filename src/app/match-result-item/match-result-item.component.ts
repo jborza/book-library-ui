@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { abbreviate } from '../string-utils';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-match-result-item',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './match-result-item.component.html',
   styleUrl: './match-result-item.component.less'
 })
