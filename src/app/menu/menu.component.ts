@@ -44,7 +44,7 @@ export class MenuComponent {
             {name: 'Read', url: '/books', queryParams: {status: 'read'}, icon: '✔'},
             {name: 'To Read', url: '/books', queryParams: {status: 'to-read'}, icon: '🔜'},
             {name: 'Currently Reading', url: '/books', queryParams: {status: 'currently-reading'}, icon: '⌛'},
-            {name: 'Wishist', url: '/books', queryParams: {status: 'wishlist'}, icon: '💡'}
+            {name: 'Wishlist', url: '/books', queryParams: {status: 'wishlist'}, icon: '💡'}
         ]
     },
     {
@@ -63,9 +63,9 @@ export class MenuComponent {
     }
   ];
 
-  searchQueryOpenLibrary: string = 'the chronology of water';
-  searchQueryGoogleBooks: string = 'Ukraine war';
-  searchQuery: string = 'Architecture'; // Default value (can be empty or changed dynamically)
+  searchQueryOpenLibrary: string = '';
+  searchQueryGoogleBooks: string = '';
+  searchQuery: string = ''; // Default value (can be empty or changed dynamically)
 
   constructor(private router: Router) {}
 
