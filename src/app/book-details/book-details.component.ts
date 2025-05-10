@@ -2,17 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BooksService } from '../books.service';
+import { Book } from '../book.model';
+import { ToNumberPipe } from '../to-number.pipe';
 
 @Component({
   selector: 'app-book-details',
-  imports: [CommonModule],
+  imports: [CommonModule, ToNumberPipe],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.less'
 })
 export class BookDetailsComponent implements OnInit {
 
   bookId: string | null = null;
-  book: any = null;
+  book!: Book;
 
   constructor(private route: ActivatedRoute,
     private booksService: BooksService,

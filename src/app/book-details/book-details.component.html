@@ -9,29 +9,24 @@
     <div class="book-info">
       <h1 class="book-title">{{ book.title }}</h1>
       <p class="book-authors">{{ book.author_name }}</p>
-      <div class="book-rating">
-        <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= book.rating">★</span>
+      <div *ngIf="book.rating" class="book-rating">
+        <span *ngFor="let star of [1,2,3,4,5]" class="star"
+          [class.filled]="star <= (book.rating | toNumber)">★</span>
         <span class="rating-value">{{ book.rating }}</span>
-        <span class="rating-info">({{ book.ratingsCount }} ratings · {{ book.reviewsCount }} reviews)</span>
       </div>
-      <p class="book-description">{{ book.description }}</p>
+      <span *ngIf="book.review" class="rating-info">{{ book.review }}</span>
+      <p class="book-description">{{ book.synopsis }}</p>
       <button class="btn btn-warning" (click)='edit()'>Edit</button>
       <button class="btn btn-primary">Want to read</button>
       <button class="btn btn-primary" (click)='match()'>Match (by search)</button>
-      <div class="rate-book">
-        <span>Rate this book:</span>
-        <span class="star-rating">
-          <span *ngFor="let star of [1,2,3,4,5]" class="star">☆</span>
-        </span>
-      </div>
     </div>
   </div>
   <div class="book-details">
     <h6 *ngIf="book.genre">Genres</h6>
     <div *ngIf="book.genre" class="genres">
-      <span *ngFor="let genre of book.genres" class="genre">{{ genre }}</span>
+      <span *ngFor="let genre of book.genre" class="genre">{{ genre }}</span>
     </div>
-    <p *ngIf="book.pages" class="book-meta">{{ book.pages }} pages, {{ book.format }}</p>
+    <p *ngIf="book.page_count" class="book-meta">{{ book.page_count }} pages, {{ book.book_type }}</p>
     <p *ngIf="book.year" class="book-meta">First published {{ book.year }}</p>
     <p class="book-meta">Publisher: {{ book.publisher }}</p>
     <p  *ngIf="book.isbn" class="book-meta">ISBN: {{ book.isbn }}</p>

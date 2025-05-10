@@ -4,7 +4,7 @@ export class Book {
     author_name!: string;
     year?: string;
     isbn?: string;
-    rating?: number;
+    rating?: string;
     book_type?: string;
     status?: string;
     genre?: string;

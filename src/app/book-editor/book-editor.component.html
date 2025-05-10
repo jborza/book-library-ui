@@ -106,6 +106,14 @@
         (isCheckedChange)="updateSelectAllStatus()">
     </app-editable-field>
     <app-editable-field
+        [label]="'Rating'"
+        [(currentValue)]="book.rating"
+        [originalValue]="originalBook.rating"
+        (currentValueChange)="onFieldChange('rating', $event)"
+        [controlId]="'rating'"
+        (isCheckedChange)="updateSelectAllStatus()">
+    </app-editable-field>
+    <app-editable-field
         [label]="'Tags'"
         [(currentValue)]="book.tags"
         [originalValue]="originalBook.tags"
