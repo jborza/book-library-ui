@@ -10,7 +10,11 @@
       class="book-cover thumbnail-small" />
     <div class="book-info">
       <h1 class="book-title">{{ book.title }}</h1>
-      <p class="book-authors">{{ book.author_name }}</p>
+      <p class="book-authors">
+        <a [routerLink]="['/search']" [queryParams]="{ search_query: book.author_name }" style="text-decoration: none;">
+          {{ book.author_name }}
+        </a>
+      </p>
       <p *ngIf="book.status" >Status: {{ book.status }}</p>
       <div *ngIf="book.rating" class="book-rating">
         <span *ngFor="let star of [1,2,3,4,5]" class="star"

@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BooksService } from '../books.service';
 import { Book } from '../book.model';
 import { ToNumberPipe } from '../to-number.pipe';
 
+
 @Component({
   selector: 'app-book-details',
-  imports: [CommonModule, ToNumberPipe],
+  imports: [CommonModule, ToNumberPipe, RouterModule],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.less'
 })
