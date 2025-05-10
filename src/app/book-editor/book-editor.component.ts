@@ -75,6 +75,10 @@ export class BookEditorComponent implements OnInit {
       this.book.synopsis = searchBook.synopsis;
     if (searchBook.genre)
       this.book.genre = searchBook.genre;
+    // genre can be a list of genres
+    if (Array.isArray(searchBook.genre)) {
+      this.book.genre = searchBook.genre.join(', ');
+    }
     console.log('Setting genre:', this.book.genre);
   }
 
