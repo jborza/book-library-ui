@@ -1,3 +1,71 @@
+<h4>Import Books</h4>
+<form [formGroup]="importCsvForm" (ngSubmit)="onSubmitCsv()">
+<div class="p-3">
+    <label for="file">Import your Goodreads books: </label>
+    <a
+      href="https://help.goodreads.com/s/article/How-do-I-import-or-export-my-books-1553870934590"
+      target="_blank"
+      >How to export</a
+    >
+    <p>
+      Export your books from Goodreads and upload the CSV or JSON file here.
+    </p>
 
-<h2>Import Books</h2>
-<input type="file" (change)="uploadFile($event)" />
+    <div class="mb-3">
+      <label for="formFile" class="form-label"
+        >Default file input example</label
+      >
+      <input
+        class="form-control"
+        name="csv_file"
+        type="file"
+        accept=".csv, .json"
+        id="csv_file"
+        formControlName="csvFile"
+        required
+      />
+    </div>
+    <br />
+     <button type="submit" [disabled]="!importCsvForm.valid">Submit</button>
+</div>
+</form>
+<hr />
+<form [formGroup]="importNotesForm" (ngSubmit)="onSubmitNotes()">
+<div class="p-3">
+    Import your books from notes:
+    <p>
+      Format: title (author) <br />
+      or <br />
+    </p>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="flexRadioDefault"
+        id="title_author"
+        formControlName="titleAuthor"
+      />
+      <label class="form-check-label" for="title_author">
+        title - author
+      </label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="flexRadioDefault"
+        id="author_title"
+        formControlName="authorTitle"
+        checked
+      />
+      <label class="form-check-label" for="author_title">
+        author - title
+      </label>
+    </div>
+    <textarea name="notes" rows="10" cols="80" formControlName="notes" required>
+    </textarea>
+    <br />
+    <button type="submit" [disabled]="!importNotesForm.valid">Submit</button>
+</div>
+</form>
