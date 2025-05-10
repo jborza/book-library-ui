@@ -88,6 +88,8 @@ export class BookEditorComponent implements OnInit {
     if (Array.isArray(searchBook.genre)) {
       this.book.genre = searchBook.genre.join(', ');
     }
+    if(searchBook.cover_image)
+      this.book.cover_image = searchBook.cover_image;
     console.log('Setting genre:', this.book.genre);
   }
 

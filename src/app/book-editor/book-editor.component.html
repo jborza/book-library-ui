@@ -18,7 +18,10 @@
     <!-- Cover Row -->
     <div class="row align-items-center mb-4">
       <div class="col-auto">
-        <input class="form-check-input" type="checkbox" id="coverCheckbox">
+        <input class="form-check-input"
+        type="checkbox"
+        id="coverCheckbox"
+        [checked]="((book.cover_image || '').trim().length > 0)">
       </div>
       <div class="col">
         <label for="coverInput" class="form-label fw-bold">Cover</label>
@@ -26,7 +29,7 @@
         [(ngModel)]="book.cover_image" placeholder="Cover URL">
       </div>
       <div class="col-auto" *ngIf="book.cover_image">
-        <img src="http://localhost:5000/static/{{book.cover_image}}" alt="Cover" class="cover-image">
+        <img src="{{book.cover_image}}" alt="Cover" class="cover-image">
       </div>
     </div>
     <app-editable-field
