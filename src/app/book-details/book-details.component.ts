@@ -47,4 +47,24 @@ export class BookDetailsComponent implements OnInit {
     // book/:id/edit
     this.router.navigate(['/books', this.book.id, 'edit']);
   }
+
+  updateBookStatus(status: string) : void {
+    // use book service to update the book status
+    this.book.status = status;
+    this.booksService.saveBook(this.book).subscribe((data) => {
+      console.log('Book status updated:', data);
+    });
+  }
+
+  wantToRead() : void {
+    this.updateBookStatus(Book.TO_READ);
+  }
+
+  currentlyReading() : void {
+    this.updateBookStatus(Book.CURRENTLY_READING);
+  }
+
+  read() : void {
+    this.updateBookStatus(Book.READ);
+  }
 }

@@ -1,4 +1,15 @@
+
+
 export class Book {
+  public static readonly READ = 'read';
+  public static readonly TO_READ = 'to-read';
+  public static readonly CURRENTLY_READING = 'currently-reading';
+  public static readonly WISHLIST = 'wishlist';
+
+  public static readonly PHYSICAL = 'physical';
+  public static readonly EBOOK = 'ebook';
+  public static readonly AUDIOBOOK = 'audiobook';
+
     id!: number;
     title!: string;
     author_name!: string;
