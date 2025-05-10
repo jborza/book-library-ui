@@ -25,5 +25,4 @@ export const routes: Routes = [
   { path: 'search_external', component: SearchExternalComponent, pathMatch: 'full' },
   { path: 'test', component: TestComponent},
   { path: 'book/:id/match', component: BookMatchResultsComponent },
-  //{ path: 'book/:id/edit_match', component: BookMatchEditorComponent },
 ];

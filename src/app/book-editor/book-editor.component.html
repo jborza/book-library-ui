@@ -26,9 +26,7 @@
         [(ngModel)]="book.cover_image" placeholder="Cover URL">
       </div>
       <div class="col-auto" *ngIf="book.cover_image">
-        <img src="http://localhost:5000/static/{{book.cover_image}}" alt="Cover" class="img-thumbnail"
-        style="width: 128px; height: 204px;">
-        <small class="text-muted d-block text-center">128×204px</small>
+        <img src="http://localhost:5000/static/{{book.cover_image}}" alt="Cover" class="cover-image">
       </div>
     </div>
     <app-editable-field
