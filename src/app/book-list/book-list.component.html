@@ -22,7 +22,7 @@
         <td>{{ book.rating }}</td>
         <td>{{ book.status }}</td>
         <td>
-            <a href="">Edit</a>
+            <a [routerLink]="['/books',book.id,'edit']" >Edit</a>
             <!-- Add more actions as needed -->
         </td>
     </tr>
