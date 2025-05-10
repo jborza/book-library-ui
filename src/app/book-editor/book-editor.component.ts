@@ -20,6 +20,7 @@ export class BookEditorComponent implements OnInit {
   originalBook!: Book;
   searchBook!: any; // should it be also Book?
   selectAllChecked: boolean = false;
+  editMode: boolean = false;
 
   @ViewChildren(EditableFieldComponent) editableFields!: QueryList<EditableFieldComponent>;
 
@@ -34,6 +35,11 @@ export class BookEditorComponent implements OnInit {
     // load book data from the service
     if (this.bookId) {
       this.fetchBookDetails(this.bookId);
+    }
+    else{
+      // if we're in add mode, create a new book object
+      this.book = new Book({});
+      this.originalBook = { ...this.book };
     }
     // if we come in from book match results, pre-fill the form with the selected book
     this.bookDataService.selectedBook$.subscribe(searchBook => {
@@ -56,6 +62,9 @@ export class BookEditorComponent implements OnInit {
   }
 
   private updateBookFromSearch() {
+    if(this.searchBook === undefined) {
+      return;
+    }
     const searchBook = this.searchBook;
     if (searchBook.title)
       this.book.title = searchBook.title;
@@ -84,6 +93,7 @@ export class BookEditorComponent implements OnInit {
 
   fetchBookDetails(bookId: string) {
     this.booksService.getBookById(bookId).subscribe((data) => {
+      this.editMode = true;
       this.book = data;
       this.originalBook = { ...data }; // Create a copy of the original book data
       // now apply search match book fields to the book object
@@ -98,6 +108,25 @@ export class BookEditorComponent implements OnInit {
     this.book[field] = value; // Dynamically update the field
   }
 
+  createBook(): void {
+    // POST request to create a new book
+    // book/create_api, POST the data
+    this.booksService.createBook(this.book)
+    .subscribe({
+      next: response => {
+        console.log('Book created successfully:', response);
+        //TODO save the book ID to the book object
+        this.book.id = response.id; // Assuming the API returns the created book with its ID
+      },
+      error: error => {
+        console.error('Error occurred:', error);
+      },
+      complete: () => {
+          // navigate back to the book details page
+          this.router.navigate(['/books', this.book.id]);
+      }
+    });
+  }
 
   saveBook(): void {
     // POST request to save the book

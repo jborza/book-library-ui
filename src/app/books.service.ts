@@ -38,9 +38,14 @@ export class BooksService {
     return this.http.get<any>(`${this.apiService.getSearchUrl()}?search_query=${encodeURIComponent(query)}`);
   }
 
-  toggleBookInCollection(book: any) : Observable<any> {
-    // TODO implement? and test if book is Book
-    return this.http.post(this.apiService.getAddBookUrl(), book);
+  toggleBookInCollection(book: Book) : Observable<any> {
+    // it's not really a toggle - we can't remove a book from the collection yet
+    return this.http.post(this.apiService.getCreateBookUrl(), book);
+  }
+
+  createBook(book: Book) : Observable<any> {
+    const url = this.apiService.getCreateBookUrl();
+    return this.http.post(url, book);
   }
 
   saveBook(book: Book) : Observable<any> {

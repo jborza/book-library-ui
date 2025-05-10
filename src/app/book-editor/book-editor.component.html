@@ -146,6 +146,7 @@
     </app-editable-field>
     <!-- Save Button -->
     <div class="text-center">
-        <button class="btn btn-primary" (click)="saveBook()">Save</button>
+        <button *ngIf="editMode" class="btn btn-primary" (click)="saveBook()">Save existing</button>
+        <button *ngIf="!editMode" class="btn btn-primary" (click)="createBook()">Save new</button>
     </div>
   </div>
