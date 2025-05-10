@@ -41,8 +41,4 @@ export class EditableFieldComponent {
     console.log('onCheckboxChange - '+this.label+" is " + this.isChecked);
   }
 
-  // onCheckboxChange(checked: boolean): void {
-  //   this.isChecked = checked;
-  //   this.isCheckedChange.emit(this.isChecked);
-  // }
 }

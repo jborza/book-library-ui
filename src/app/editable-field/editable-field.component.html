@@ -5,12 +5,9 @@
       type="checkbox"
       [id]="controlId + 'Checkbox'"
       (change)="onCheckboxChange($event)"
-      [checked]="isChecked"
-
+      [checked]="isChecked || ((currentValue || '').trim().length > 0)"
     />
-    <!-- it was [checked]="(currentValue || '').trim().length > 0"
-    (change)="onCheckboxChange($event.target.checked)"
-  -->
+
   </div>
   <div class="col">
     <label [for]="controlId" class="form-label fw-bold">{{ label }}</label>
