@@ -22,13 +22,12 @@ export class BookListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('BookListComponent initialized');
-    this.route.paramMap.subscribe((params) => {
+    this.route.queryParamMap.subscribe((params) => {
       this.authorName = params.get('author') || '';
-      this.fetchBooksByAuthor(this.authorName);
-    });
-    this.booksService.getBooks().subscribe((data) => {
-      this.books = data.map((b:any) => new Book(b))
+      this.typeFilter = params.get('type') || '';
+      this.statusFilter = params.get('status') || '';
+
+      this.fetchBooks();
     });
   }
 
@@ -37,16 +36,6 @@ export class BookListComponent implements OnInit {
       .subscribe((response) => {
       if (Array.isArray(response)) {
         this.books = response.map(bookData => new Book(bookData));
-      } else {
-        console.error('Unexpected API response format:', response);
-      }
-    });
-  }
-
-  fetchBooksByAuthor(authorName: string): void {
-    this.booksService.searchBooks(authorName).subscribe((response) => {
-      if (Array.isArray(response)) {
-        this.books = response;
       } else {
         console.error('Unexpected API response format:', response);
       }

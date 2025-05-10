@@ -11,6 +11,7 @@ export class BooksService {
 
   // TODO parametrize
   private apiUrl = 'http://localhost:5000/books/search_api';
+  private searchApiUrl = 'http://localhost:5000/books/api';
   private addBookApiUrl = 'http://localhost:5000/books/add_book_api';
   private bookApiUrl = 'http://localhost:5000/book/api';
   // TODO fix this
@@ -31,7 +32,7 @@ export class BooksService {
       params = params.set('type', type);
     }
 
-    return this.http.get(this.bookApiUrl, { params });
+    return this.http.get(this.searchApiUrl, { params });
   }
 
   getBookById(id: string): Observable<any> {
