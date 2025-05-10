@@ -25,7 +25,8 @@
   </div>
   <div class="book-details">
     <p *ngIf="book.genre" class="book-meta">Genre: {{ book.genre }} </p>
-    <p *ngIf="book.pages" class="book-meta">{{ book.pages }} pages, {{ book.book_type }}</p>
+    <p *ngIf="book.book_type" class="book-meta">Type: {{ book.book_type }}</p>
+    <p *ngIf="book.pages" class="book-meta">{{ book.pages }} pages</p>
     <p *ngIf="book.year" class="book-meta">First published {{ book.year }}</p>
     <p *ngIf="book.publisher" class="book-meta">Publisher: {{ book.publisher }}</p>
     <p *ngIf="book.isbn" class="book-meta">ISBN: {{ book.isbn }}</p>
