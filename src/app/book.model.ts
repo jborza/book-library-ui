@@ -13,7 +13,7 @@ export class Book {
     review?: string;
     cover_image?: string;
     cover_image_tiny?: string;
-    page_count?: string;
+    pages?: string;
     series?: string;
     tags?: string;
     publisher? : string;
@@ -33,7 +33,7 @@ export class Book {
         this.review = data.review;
         this.cover_image = data.cover_image;
         this.cover_image_tiny = data.cover_image_tiny;
-        this.page_count = data.page_count;
+        this.pages = data.page_count;
         this.series = data.series;
         this.tags = data.tags;
         this.publisher = data.publisher;

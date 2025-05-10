@@ -140,10 +140,10 @@
     </app-editable-field>
     <app-editable-field
         [label]="'Page Count'"
-        [(currentValue)]="book.page_count"
-        [originalValue]="originalBook.page_count"
-        (currentValueChange)="onFieldChange('page_count', $event)"
-        [controlId]="'page_count'"
+        [(currentValue)]="book.pages"
+        [originalValue]="originalBook.pages"
+        (currentValueChange)="onFieldChange('pages', $event)"
+        [controlId]="'pages'"
         (isCheckedChange)="updateSelectAllStatus()">
     </app-editable-field>
     <!-- Save Button -->

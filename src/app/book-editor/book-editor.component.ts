@@ -70,7 +70,7 @@ export class BookEditorComponent implements OnInit {
     if (searchBook.language)
       this.book.language = searchBook.language;
     if (searchBook.page_count)
-      this.book.page_count = searchBook.page_count;
+      this.book.pages = searchBook.page_count;
     if (searchBook.synopsis)
       this.book.synopsis = searchBook.synopsis;
     if (searchBook.genre)
