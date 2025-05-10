@@ -37,20 +37,54 @@ export class BookEditorComponent implements OnInit {
     }
     // if we come in from book match results, pre-fill the form with the selected book
     this.bookDataService.selectedBook$.subscribe(searchBook => {
-      console.log('Selected Book from service:', searchBook);
       if (searchBook) {
         // Use the selected book data to populate your form
         this.searchBook = searchBook;
         //this.bookForm.patchValue(book);
         console.log('Search Book:', searchBook);
+        // now apply search book fields to the book object
+        // sometimes this.book is undefined ?!
+        if (!this.book) {
+          console.error('Book is undefined');
+          return;
+        }
+        console.log('setting title to:', searchBook.title+" on "+this.book);
+        this.updateBookFromSearch();
+        // TODO cover image
       }
     });
+  }
+
+  private updateBookFromSearch() {
+    const searchBook = this.searchBook;
+    if (searchBook.title)
+      this.book.title = searchBook.title;
+    if (searchBook.author_name)
+      this.book.author_name = searchBook.author_name;
+    if (searchBook.isbn)
+      this.book.isbn = searchBook.isbn;
+    if (searchBook.publisher)
+      this.book.publisher = searchBook.publisher;
+    if (searchBook.year_published)
+      this.book.year = searchBook.year_published;
+    if (searchBook.language)
+      this.book.language = searchBook.language;
+    if (searchBook.page_count)
+      this.book.page_count = searchBook.page_count;
+    if (searchBook.synopsis)
+      this.book.synopsis = searchBook.synopsis;
+    if (searchBook.genre)
+      this.book.genre = searchBook.genre;
+    console.log('Setting genre:', this.book.genre);
   }
 
   fetchBookDetails(bookId: string) {
     this.booksService.getBookById(bookId).subscribe((data) => {
       this.book = data;
       this.originalBook = { ...data }; // Create a copy of the original book data
+      // now apply search match book fields to the book object
+      //this.bookForm.patchValue(data);
+      this.updateBookFromSearch();
     });
   }
 
