@@ -30,12 +30,14 @@
         [label]="'Title'"
         [(currentValue)]="book.title"
         [originalValue]="originalBook.title"
+        (currentValueChange)="onFieldChange('title', $event)"
         [controlId]="'title'">
     </app-editable-field>
     <app-editable-field
         [label]="'Author'"
         [(currentValue)]="book.author_name"
         [originalValue]="originalBook.author_name"
+        (currentValueChange)="onFieldChange('author_name', $event)"
         [controlId]="'author'">
     </app-editable-field>
 
@@ -58,60 +60,70 @@
         [label]="'Genre'"
         [(currentValue)]="book.genre"
         [originalValue]="originalBook.genre"
+        (currentValueChange)="onFieldChange('genre', $event)"
         [controlId]="'genres'">
     </app-editable-field>
     <app-editable-field
         [label]="'Book Type'"
         [(currentValue)]="book.book_type"
         [originalValue]="originalBook.book_type"
+        (currentValueChange)="onFieldChange('book_type', $event)"
         [controlId]="'book_type'">
     </app-editable-field>
     <app-editable-field
         [label]="'Status'"
         [(currentValue)]="book.status"
         [originalValue]="originalBook.status"
+        (currentValueChange)="onFieldChange('status', $event)"
         [controlId]="'status'">
     </app-editable-field>
     <app-editable-field
         [label]="'Series'"
         [(currentValue)]="book.series"
         [originalValue]="originalBook.series"
+        (currentValueChange)="onFieldChange('series', $event)"
         [controlId]="'series'">
     </app-editable-field>
     <app-editable-field
         [label]="'Year'"
         [(currentValue)]="book.year"
         [originalValue]="originalBook.year"
+        (currentValueChange)="onFieldChange('year', $event)"
         [controlId]="'year'">
     </app-editable-field>
     <app-editable-field
         [label]="'ISBN'"
         [(currentValue)]="book.isbn"
         [originalValue]="originalBook.isbn"
+        (currentValueChange)="onFieldChange('isbn', $event)"
         [controlId]="'isbn'">
     </app-editable-field>
     <app-editable-field
         [label]="'Tags'"
         [(currentValue)]="book.tags"
         [originalValue]="originalBook.tags"
+        (currentValueChange)="onFieldChange('tags', $event)"
         [controlId]="'tags'">
     </app-editable-field>
     <app-editable-field
         [label]="'Publisher'"
         [(currentValue)]="book.publisher"
         [originalValue]="originalBook.publisher"
+        (currentValueChange)="onFieldChange('publisher', $event)"
         [controlId]="'publisher'">
     </app-editable-field>
     <app-editable-field
         [label]="'Language'"
         [(currentValue)]="book.language"
         [originalValue]="originalBook.language"
+        (currentValueChange)="onFieldChange('language', $event)"
         [controlId]="'language'">
     </app-editable-field>
     <app-editable-field
         [label]="'Page Count'"
         [(currentValue)]="book.page_count"
         [originalValue]="originalBook.page_count"
+        (currentValueChange)="onFieldChange('page_count', $event)"
         [controlId]="'page_count'">
     </app-editable-field>
     <!-- Save Button -->

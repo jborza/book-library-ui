@@ -49,10 +49,18 @@ export class BookEditorComponent implements OnInit {
     });
   }
 
+
+  // Update the book object dynamically when a field changes
+  onFieldChange<K extends keyof Book>(field: K, value: Book[K]): void {
+    console.log(`Field changed: ${field}, New value: ${value}`);
+    this.book[field] = value; // Dynamically update the field
+  }
+
   //TODO handle select all click/unclick
 
   saveBook(): void {
     console.log('Saving book:', this.book);
+    console.log('Book data before save:', JSON.stringify(this.book, null, 2));
     // POST request to save the book
     //this.booksService.saveBook(this.book).subscribe( ) .... ?
     // book/BOOK_ID/edit_api, POST the data

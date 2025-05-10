@@ -19,4 +19,11 @@ export class EditableFieldComponent {
   onInputChange(value: string): void {
     this.currentValueChange.emit(value);
   }
+
+  onInput(event: Event): void {
+    const inputElement = event.target as HTMLInputElement; // Safely cast EventTarget to HTMLInputElement
+    if (inputElement) {
+      this.onInputChange(inputElement.value); // Emit the value
+    }
+  }
 }

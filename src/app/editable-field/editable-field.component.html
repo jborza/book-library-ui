@@ -14,6 +14,7 @@
       class="form-control"
       [id]="controlId"
       [(ngModel)]="currentValue"
+      (input)="onInput($event)"
     />
     <small *ngIf="originalValue" class="text-muted"
       >Currently: {{ originalValue }}</small>
