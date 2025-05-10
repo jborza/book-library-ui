@@ -57,7 +57,6 @@ export class BookEditorComponent implements OnInit {
 
   // Update the book object dynamically when a field changes
   onFieldChange<K extends keyof Book>(field: K, value: Book[K]): void {
-    console.log(`Field changed: ${field}, New value: ${value}`);
     this.book[field] = value; // Dynamically update the field
   }
 

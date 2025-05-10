@@ -5,7 +5,9 @@
 <div class="book-detail-container">
   <div class="book-main">
     <!-- todo fill in http://localhost:5000/static/ -->
-    <img src="http://localhost:5000/static/{{book.cover_image}}" alt="{{ book.title }} cover" class="book-cover" />
+    <img src="http://localhost:5000/static/{{book.cover_image}}"
+      alt="{{ book.title }} cover"
+      class="book-cover thumbnail-small" />
     <div class="book-info">
       <h1 class="book-title">{{ book.title }}</h1>
       <p class="book-authors">{{ book.author_name }}</p>
@@ -22,15 +24,12 @@
     </div>
   </div>
   <div class="book-details">
-    <h6 *ngIf="book.genre">Genres</h6>
-    <div *ngIf="book.genre" class="genres">
-      <span *ngFor="let genre of book.genre" class="genre">{{ genre }}</span>
-    </div>
+    <p *ngIf="book.genre" class="book-meta">Genre: {{ book.genre }} </p>
     <p *ngIf="book.page_count" class="book-meta">{{ book.page_count }} pages, {{ book.book_type }}</p>
     <p *ngIf="book.year" class="book-meta">First published {{ book.year }}</p>
-    <p class="book-meta">Publisher: {{ book.publisher }}</p>
-    <p  *ngIf="book.isbn" class="book-meta">ISBN: {{ book.isbn }}</p>
-    <p class="book-meta">Language: {{ book.language }}</p>
-    <p class="book-meta">Pages: {{ book.page_count }}</p>
+    <p *ngIf="book.publisher" class="book-meta">Publisher: {{ book.publisher }}</p>
+    <p *ngIf="book.isbn" class="book-meta">ISBN: {{ book.isbn }}</p>
+    <p *ngIf="book.language" class="book-meta">Language: {{ book.language }}</p>
+    <p *ngIf="book.page_count" class="book-meta">Pages: {{ book.page_count }}</p>
   </div>
 </div>
