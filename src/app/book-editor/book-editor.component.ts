@@ -56,7 +56,7 @@ export class BookEditorComponent implements OnInit {
         }
         console.log('setting title to:', searchBook.title+" on "+this.book);
         this.updateBookFromSearch();
-        // TODO cover image
+        this.bookDataService.clearSelectedBook();
       }
     });
   }
