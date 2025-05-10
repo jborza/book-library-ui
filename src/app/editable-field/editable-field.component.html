@@ -4,18 +4,31 @@
       class="form-check-input"
       type="checkbox"
       [id]="controlId + 'Checkbox'"
-      [checked]="(currentValue || '').trim().length > 0"
+      (change)="onCheckboxChange($event)"
+      [checked]="isChecked"
+
     />
+    <!-- it was [checked]="(currentValue || '').trim().length > 0"
+    (change)="onCheckboxChange($event.target.checked)"
+  -->
   </div>
   <div class="col">
     <label [for]="controlId" class="form-label fw-bold">{{ label }}</label>
+
     <input
+      *ngIf="!multiline"
       type="text"
       class="form-control"
       [id]="controlId"
       [(ngModel)]="currentValue"
       (input)="onInput($event)"
     />
+    <textarea
+      *ngIf="multiline"
+      rows="5"
+      [(ngModel)]="currentValue"
+       (input)="onInput($event)"
+       class="form-control"></textarea>
     <small *ngIf="originalValue" class="text-muted"
       >Currently: {{ originalValue }}</small>
   </div>
