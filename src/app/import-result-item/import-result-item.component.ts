@@ -12,7 +12,7 @@ export class ImportResultItemComponent {
   @Input() book: any; // Input to receive the result data
   @Output() actionChange = new EventEmitter<string>(); // Output to notify parent of action change
 
-  selectedAction: string = 'add'; // Default action
+  selectedAction: string = 'merge'; // Default action
 
   // Emit the selected action whenever it changes
   onActionChange(action: string): void {

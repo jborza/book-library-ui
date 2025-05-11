@@ -48,12 +48,13 @@
     </div>
   </div>
   <!-- radio buttons to pick action -->
-  <div>
-    <label>
+  <div *ngIf="book.existing_book">
+    <label class="m-3">
       <input
         type="radio"
-        name="action-{{ result.title }}"
+        name="action-{{ book.existing_book_data.existingBook.id }}"
         value="add"
+
         [checked]="selectedAction === 'add'"
         (change)="onActionChange('add')"
       />
@@ -62,7 +63,7 @@
     <label>
       <input
         type="radio"
-        name="action-{{ result.title }}"
+        name="action-{{ book.existing_book_data.existingBook.id }}"
         value="merge"
         [checked]="selectedAction === 'merge'"
         (change)="onActionChange('merge')"
@@ -70,7 +71,5 @@
       Merge with Existing Book
     </label>
   </div>
-  <button class="btn btn-primary m-1" (click)="addBook()">Add as New Book</button>
-  <button *ngIf="book.existing_book" class="btn btn-primary m-1" (click)="mergeBook()">Merge with Existing Book</button>
 
 </div>
