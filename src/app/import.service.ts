@@ -18,7 +18,10 @@ export class ImportService {
     return this.http.post(apiUrl, formData);
   }
 
-  // TODO add import notes
+  importNotes(formData: FormData): Observable<any> {
+    const apiUrl = this.apiService.getImportNotesUrl();
+    return this.http.post(apiUrl, formData);
+  }
 
   confirmImport(importResults: any) : Observable<any> {
     const apiUrl = this.apiService.getConfirmImportUrl();

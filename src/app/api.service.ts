@@ -14,6 +14,7 @@ export class ApiService {
     book: `${this.baseUrl}/book/api`,
     saveBook: (bookId: string) => `${this.baseUrl}/book/${bookId}/edit_api`, // Dynamic URL
     importCsv: `${this.baseUrl}/import/import_csv_api`,
+    importNotes: `${this.baseUrl}/import/import_notes_api`,
     confirmImport: `${this.baseUrl}/import/confirm_import_api`,
     getBooksByIds: (ids: string[]) => `${this.baseUrl}/books/api/byid?ids=${ids.join(',')}`,
   };
@@ -40,6 +41,10 @@ export class ApiService {
 
   getImportCsvUrl() : string {
     return this.endpoints.importCsv;
+  }
+
+  getImportNotesUrl() : string {
+    return this.endpoints.importNotes;
   }
 
   getBooksByIdsUrl(ids: string[]): string {
