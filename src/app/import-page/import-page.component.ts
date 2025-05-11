@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import {FormControl, ReactiveFormsModule, FormGroup, Validators} from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { ImportCsvService } from '../import-csv.service';
 import { Router } from '@angular/router';
+import { ImportDataService } from '../import-data.service';
 @Component({
   selector: 'app-import-page',
   imports: [ReactiveFormsModule, CommonModule],
@@ -25,8 +26,8 @@ export class ImportPageComponent {
   private response: any;
 
   constructor(private importCsvService: ImportCsvService,
-    private router: Router
-
+    private router: Router,
+    private importDataService: ImportDataService
   ) {}
 
   ngOnInit() {
@@ -65,8 +66,8 @@ export class ImportPageComponent {
             // navigate back to the book details page
             // response is { ... import_books: [ ... ] }
             const importBooks = this.response.import_books;
-            // todo store import books SOMEWHERE
-            this.router.navigate(['/import_results', importBooks]);
+            this.importDataService.setImportResults(importBooks);
+            this.router.navigate(['/import_results']);
         }
       }
       );

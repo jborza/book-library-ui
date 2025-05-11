@@ -9,6 +9,7 @@ import { SearchComponent } from './search/search.component';
 import { SearchExternalComponent } from './search-external/search-external.component';
 import { TestComponent } from './test/test.component';
 import { BookMatchResultsComponent } from './book-match-results/book-match-results.component';
+import { ImportResultsComponent } from './import-results/import-results.component';
 
 
 export const routes: Routes = [
@@ -25,4 +26,5 @@ export const routes: Routes = [
   { path: 'search_external', component: SearchExternalComponent, pathMatch: 'full' },
   { path: 'test', component: TestComponent},
   { path: 'book/:id/match', component: BookMatchResultsComponent },
+  { path: 'import_results', component: ImportResultsComponent },
 ];

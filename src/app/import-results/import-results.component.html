@@ -1,0 +1,9 @@
+<div class="import-results">
+  <h2>Import Results</h2>
+  <div *ngFor="let result of importResults">
+    <app-import-result-item
+      [result]="result"
+      (action)="handleAction($event, result)">
+    </app-import-result-item>
+  </div>
+</div>
