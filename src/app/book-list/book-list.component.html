@@ -15,7 +15,7 @@
     <tr *ngFor="let book of books">
         <td>{{ book.id }}</td>  <!-- Book Number -->
         <td>
-            <img src="http://localhost:5000/static/{{book.cover_image_tiny}}" class="book-cover">
+            <img *ngIf="book.cover_image_tiny" src="http://localhost:5000/static/{{book.cover_image_tiny}}" class="book-cover">
         </td>
         <td><a [routerLink]="['/books', book.id]">{{ book.title }}</a></td>
         <td>{{ book.author_name }}</td>

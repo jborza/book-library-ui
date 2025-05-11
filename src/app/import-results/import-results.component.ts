@@ -21,7 +21,9 @@ export class ImportResultsComponent {
 
   ngOnInit() {
     this.importResults = this.importDataService.getImportResults();
-    this.importDataService.clearImportResults();
+    // remove comment after testing
+    // this.importDataService.clearImportResults();
+    
     // retrieve the existing book data from the API
     const existingBookIds = this.importResults
         .filter((book:any)=>book.existing_book)

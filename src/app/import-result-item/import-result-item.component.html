@@ -1,7 +1,76 @@
-<div class="result-item">
+<div class="result-item container border rounded p-3 mb-3">
+  <div class="row">
     <!-- TODO style similar to book details -->
-  <h5>{{ result.title }}</h5>
-  <p>Author: {{ result.author }}</p>
-  <button class="btn btn-primary" (click)="addBook()">Add as New Book</button>
-  <button class="btn btn-secondary" (click)="mergeBook()">Merge with Existing Book</button>
+    <h4 class="book-title">{{ book.title }} by {{book.author_name}}</h4>
+    <div class="book-main col-6">
+      Book to add:
+      <div class="book-details">
+        <div *ngIf="book.rating" class="book-rating">
+          Rating:
+          <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= (book.rating | toNumber)">★</span>
+          <span class="rating-value"> {{ book.rating }}</span>
+        </div>
+        <p *ngIf="book.series" class="book-meta">Series: {{ book.series }}</p>
+        <p *ngIf="book.genre" class="book-meta">Genre: {{ book.genre }} </p>
+        <p *ngIf="book.book_type" class="book-meta">Type: {{ book.book_type }}</p>
+        <p *ngIf="book.pages" class="book-meta">{{ book.pages }} pages</p>
+        <p *ngIf="book.year" class="book-meta">First published {{ book.year }}</p>
+        <p *ngIf="book.publisher" class="book-meta">Publisher: {{ book.publisher }}</p>
+        <p *ngIf="book.isbn" class="book-meta">ISBN: {{ book.isbn }}</p>
+        <p *ngIf="book.language" class="book-meta">Language: {{ book.language }}</p>
+      </div>
+      <div *ngIf="book.cover_image" class="book-cover-container ">
+        <img src="http://localhost:5000/static/{{book.cover_image}}" alt="{{ book.title }} cover"
+          class="book-cover thumbnail-small" />
+      </div>
+    </div>
+    <div *ngIf="book.existing_book" class="existing-book-info col-6">
+      <p *ngIf="book.existing_book_data.existingBook.title" class="book-meta">Title: {{ book.existing_book_data.existingBook.title }} </p>
+      <p *ngIf="book.existing_book_data.existingBook.author_name" class="book-meta">Author: {{ book.existing_book_data.existingBook.author_name }} </p>
+      <div *ngIf="book.existing_book_data.existingBook.rating" class="book-rating">
+        Rating:
+        <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= (book.rating | toNumber)">★</span>
+        <span class="rating-value"> {{ book.rating }}</span>
+      </div>
+      <p *ngIf="book.existing_book_data.existingBook.series" class="book-meta">Series: {{ book.existing_book_data.existingBook.series }}</p>
+      <p *ngIf="book.existing_book_data.existingBook.genre" class="book-meta">Genre: {{ book.existing_book_data.existingBook.genre }} </p>
+      <p *ngIf="book.existing_book_data.existingBook.book_type" class="book-meta">Type: {{ book.existing_book_data.existingBook.book_type }}</p>
+      <p *ngIf="book.existing_book_data.existingBook.pages" class="book-meta">{{ book.existing_book_data.existingBook.pages }} pages</p>
+      <p *ngIf="book.existing_book_data.existingBook.year" class="book-meta">First published {{ book.existing_book_data.existingBook.year }}</p>
+      <p *ngIf="book.existing_book_data.existingBook.publisher" class="book-meta">Publisher: {{ book.existing_book_data.existingBook.publisher }}</p>
+      <p *ngIf="book.existing_book_data.existingBook.isbn" class="book-meta">ISBN: {{ book.existing_book_data.existingBook.isbn }}</p>
+      <p *ngIf="book.existing_book_data.existingBook.language" class="book-meta">Language: {{ book.existing_book_data.existingBook.language }}</p>
+
+      <div *ngIf="book.existing_book_data.existingBook.cover_image">
+        <img src="http://localhost:5000/static/{{book.existing_book_data.existingBook.cover_image}}"
+          class="book-cover thumbnail-small">
+      </div>
+    </div>
+  </div>
+  <!-- radio buttons to pick action -->
+  <div>
+    <label>
+      <input
+        type="radio"
+        name="action-{{ result.title }}"
+        value="add"
+        [checked]="selectedAction === 'add'"
+        (change)="onActionChange('add')"
+      />
+      Add as New Book
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="action-{{ result.title }}"
+        value="merge"
+        [checked]="selectedAction === 'merge'"
+        (change)="onActionChange('merge')"
+      />
+      Merge with Existing Book
+    </label>
+  </div>
+  <button class="btn btn-primary m-1" (click)="addBook()">Add as New Book</button>
+  <button *ngIf="book.existing_book" class="btn btn-primary m-1" (click)="mergeBook()">Merge with Existing Book</button>
+
 </div>

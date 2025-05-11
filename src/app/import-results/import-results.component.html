@@ -2,7 +2,7 @@
   <h2>Import Results</h2>
   <div *ngFor="let result of importResults">
     <app-import-result-item
-      [result]="result"
+      [book]="result"
       (action)="handleAction($event, result)">
     </app-import-result-item>
   </div>
