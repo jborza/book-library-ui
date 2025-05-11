@@ -1,37 +1,37 @@
 <h4>Import Books</h4>
 <form [formGroup]="importCsvForm" (ngSubmit)="onSubmitCsv()">
-<div class="p-3">
+  <div class="p-3">
     <label for="file">Import your Goodreads books: </label>
     <a
       href="https://help.goodreads.com/s/article/How-do-I-import-or-export-my-books-1553870934590"
       target="_blank"
       >How to export</a
     >
-    <p>
-      Export your books from Goodreads and upload the CSV or JSON file here.
-    </p>
-
     <div class="mb-3">
       <label for="formFile" class="form-label"
-        >Default file input example</label
-      >
+        >Export your books from Goodreads and upload the CSV file here.
+      </label>
       <input
         class="form-control"
-        name="csv_file"
+        name="csvFile"
         type="file"
-        accept=".csv, .json"
-        id="csv_file"
-        formControlName="csvFile"
+        accept=".csv"
+        id="csvFile"
+        (change)="onFileChange($event)"
         required
       />
+      <div *ngIf="importCsvForm.get('csvFile')?.invalid && importCsvForm.get('csvFile')?.touched" class="text-danger">
+      <small *ngIf="importCsvForm.get('csvFile')?.errors?.['required']">File is required.</small>
+      <small *ngIf="importCsvForm.get('csvFile')?.errors?.['pattern']">Only .csv files are allowed.</small>
+      </div>
     </div>
     <br />
-     <button type="submit" [disabled]="!importCsvForm.valid">Submit</button>
-</div>
+    <button type="submit" [disabled]="!importCsvForm.valid">Submit</button>
+  </div>
 </form>
 <hr />
 <form [formGroup]="importNotesForm" (ngSubmit)="onSubmitNotes()">
-<div class="p-3">
+  <div class="p-3">
     Import your books from notes:
     <p>
       Format: title (author) <br />
@@ -42,11 +42,11 @@
       <input
         class="form-check-input"
         type="radio"
-        name="flexRadioDefault"
-        id="title_author"
+        name="titleAuthor"
+        id="titleAuthor"
         formControlName="titleAuthor"
       />
-      <label class="form-check-label" for="title_author">
+      <label class="form-check-label" for="titleAuthor">
         title - author
       </label>
     </div>
@@ -54,12 +54,12 @@
       <input
         class="form-check-input"
         type="radio"
-        name="flexRadioDefault"
-        id="author_title"
+        name="authorTitle"
+        id="authorTitle"
         formControlName="authorTitle"
         checked
       />
-      <label class="form-check-label" for="author_title">
+      <label class="form-check-label" for="authorTitle">
         author - title
       </label>
     </div>
@@ -67,5 +67,5 @@
     </textarea>
     <br />
     <button type="submit" [disabled]="!importNotesForm.valid">Submit</button>
-</div>
+  </div>
 </form>
