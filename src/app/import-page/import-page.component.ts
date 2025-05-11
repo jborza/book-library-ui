@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
-import { ImportCsvService } from '../import-csv.service';
+import { ImportService } from '../import.service';
 import { Router } from '@angular/router';
 import { ImportDataService } from '../import-data.service';
 @Component({
@@ -25,7 +25,7 @@ export class ImportPageComponent {
   private selectedFile: File | null = null;
   private response: any;
 
-  constructor(private importCsvService: ImportCsvService,
+  constructor(private importCsvService: ImportService,
     private router: Router,
     private importDataService: ImportDataService
   ) {}

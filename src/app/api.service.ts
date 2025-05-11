@@ -5,8 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class ApiService {
 
-
-
   private baseUrl = 'http://localhost:5000';
 
   private readonly endpoints = {
@@ -16,6 +14,7 @@ export class ApiService {
     book: `${this.baseUrl}/book/api`,
     saveBook: (bookId: string) => `${this.baseUrl}/book/${bookId}/edit_api`, // Dynamic URL
     importCsv: `${this.baseUrl}/import/import_csv_api`,
+    confirmImport: `${this.baseUrl}/import/confirm_import_api`,
     getBooksByIds: (ids: string[]) => `${this.baseUrl}/books/api/byid?ids=${ids.join(',')}`,
   };
 
@@ -39,11 +38,15 @@ export class ApiService {
     return this.endpoints.get;
   }
 
-  getImportCsvUrl() {
+  getImportCsvUrl() : string {
     return this.endpoints.importCsv;
   }
 
   getBooksByIdsUrl(ids: string[]): string {
     return this.endpoints.getBooksByIds(ids);
+  }
+
+  getConfirmImportUrl() : string {
+    return this.endpoints.confirmImport;
   }
 }

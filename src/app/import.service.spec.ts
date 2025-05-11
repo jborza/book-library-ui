@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ImportCsvService } from './import-csv.service';
+import { ImportService } from './import.service';
 
 describe('ImportCsvService', () => {
-  let service: ImportCsvService;
+  let service: ImportService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ImportCsvService);
+    service = TestBed.inject(ImportService);
   });
 
   it('should be created', () => {
