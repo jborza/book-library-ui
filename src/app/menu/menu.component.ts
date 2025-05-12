@@ -28,6 +28,7 @@ export class MenuComponent {
         items:[
             {name: 'Authors', url: '/authors', icon: '👤'},
             {name: 'Genres', url: '/genres', icon: '🎭'},
+            {name: 'Series', url: '/series', icon: '📦'},
         ]
     },
     {
