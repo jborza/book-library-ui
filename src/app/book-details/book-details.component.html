@@ -1,12 +1,10 @@
-
 <h2>Book Details</h2>
 <p *ngIf="bookId">Book ID: {{ bookId }}</p>
 
 <div class="book-detail-container">
   <div class="book-main">
     <!-- todo fill in http://localhost:5000/static/ -->
-    <img src="http://localhost:5000/static/{{book.cover_image}}"
-      alt="{{ book.title }} cover"
+    <img src="http://localhost:5000/static/{{book.cover_image}}" alt="{{ book.title }} cover"
       class="book-cover thumbnail-small" />
     <div class="book-info">
       <h1 class="book-title">{{ book.title }}</h1>
@@ -15,20 +13,25 @@
           {{ book.author_name }}
         </a>
       </p>
-      <p *ngIf="book.status" >Status: {{ book.status }}</p>
+      <p *ngIf="book.status">Status: {{ book.status }}</p>
       <div *ngIf="book.rating" class="book-rating">
-        <span *ngFor="let star of [1,2,3,4,5]" class="star"
-          [class.filled]="star <= (book.rating | toNumber)">★</span>
+        <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= (book.rating | toNumber)">★</span>
         <span class="rating-value">{{ book.rating }}</span>
       </div>
       <span *ngIf="book.review" class="rating-info">{{ book.review }}</span>
       <p class="book-description">{{ book.synopsis }}</p>
-      <button class="btn btn-primary mx-1" (click)='edit()'>Edit</button>
-      <button class="btn btn-secondary mx-1" (click)='match()'>Match (by search)</button>
+      <button class="btn btn-primary m-1" (click)='edit()'>Edit</button>
+      <button class="btn btn-secondary m-1" (click)='match()'>Match (by search)</button>
       <br />
-      <button class="btn btn-info mx-1" (click)='wantToRead()'>Want to read</button>
-      <button class="btn btn-info mx-1" (click)='currentlyReading()'>Set to currently reading</button>
-      <button class="btn btn-info mx-1" (click)='read()'>Read</button>
+      <button class="btn btn-info m-1" (click)='wantToRead()'>Want to read</button>
+      <button class="btn btn-info m-1" (click)='currentlyReading()'>Set to currently reading</button>
+      <button class="btn btn-info m-1" (click)='read()'>Read</button>
+      <br />
+      <button class="btn btn-secondary m-1" (click)='buy("amazon")'>Buy - Amazon</button>
+      <button class="btn btn-secondary m-1" (click)='buy("martinus")'>Buy - Martinus</button>
+      <button class="btn btn-secondary m-1" (click)='buy("knihobot")'>Buy - Knihobot</button>
+      <br />
+      <button class="btn btn-danger m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
     </div>
   </div>
   <div class="book-details">
@@ -41,4 +44,5 @@
     <p *ngIf="book.isbn" class="book-meta">ISBN: {{ book.isbn }}</p>
     <p *ngIf="book.language" class="book-meta">Language: {{ book.language }}</p>
   </div>
+  <!-- TODO show dialog for book deletion -->
 </div>

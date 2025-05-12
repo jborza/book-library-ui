@@ -68,4 +68,38 @@ export class BookDetailsComponent implements OnInit {
   read() : void {
     this.updateBookStatus(Book.READ);
   }
+
+  buy(where: string) : void {
+    // where can be 'amazon', 'martinus', 'knihobot'
+    //
+    // book/:id/buy
+    // ideally in a second tab
+    // this.router.navigate(['/books', this.book.id, 'buy'], { queryParams: { where: where } });
+    let url = '';
+    if(where === 'amazon') {    
+      url = 'https://www.amazon.com/s?k=' + this.book.title + ' ' + this.book.author_name;
+    }
+    else if(where === 'martinus') {
+      url = 'https://www.martinus.sk/search?q=' + this.book.title + ' ' + this.book.author_name;
+    }
+    else if(where === 'knihobot') {
+      url = 'https://www.knihobot.sk/p/q/' + this.book.title + ' ' + this.book.author_name;
+    }
+    else{
+      console.error('Unknown book source:', where);
+      return;
+    }
+    
+    window.open(url, "_blank");
+  }
+
+  delete() : void {
+    // book/:id/delete
+    this.booksService.deleteBook(this.book.id).subscribe((data) => {
+       console.log('Book deleted:', data);
+        // navigate back to the book list
+        this.router.navigate(['/books']);
+     });
+
+  }
 }
