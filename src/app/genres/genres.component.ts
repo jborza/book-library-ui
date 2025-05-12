@@ -21,8 +21,4 @@ export class GenresComponent {
       this.genres = data.genres;
     });
   }
-
-  viewBooksByGenre(authorName: string): void {
-    this.router.navigate(['/books', authorName]);
-  }
 }

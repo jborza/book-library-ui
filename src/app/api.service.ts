@@ -17,7 +17,9 @@ export class ApiService {
     importNotes: `${this.baseUrl}/import/import_notes_api`,
     confirmImport: `${this.baseUrl}/import/confirm_import_api`,
     getBooksByIds: (ids: string[]) => `${this.baseUrl}/books/api/byid?ids=${ids.join(',')}`,
-    bookById: (bookId: string) => `${this.baseUrl}/book/${bookId}`
+    bookById: (bookId: string) => `${this.baseUrl}/book/${bookId}`,
+    genres: `${this.baseUrl}/genres/api`,
+    series: `${this.baseUrl}/series/api`,
   };
 
   getSearchUrl(): string {
@@ -58,5 +60,13 @@ export class ApiService {
 
   getBookByIdUrl(bookId: string): string {
     return this.endpoints.bookById(bookId);
+  }
+
+  getGenresUrl(): string {
+    return this.endpoints.genres;
+  }
+
+  getSeriesUrl(): string {
+    return this.endpoints.series;
   }
 }

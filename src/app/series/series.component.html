@@ -1,0 +1,17 @@
+<p>series works!</p>
+<!-- list of series
+ each series displayed as a card
+ with series name, number of books, and a button to view the series
+-->
+<div class="container">
+    <div class="row row-cols-2">
+        <div class="card" *ngFor="let series of seriesList">
+            <div class="card-body">
+                 <h5 class="card-title">{{ series.name }}</h5>
+                 <p class="card-text">Number of books: {{ series.books.length }}</p>
+                <a [routerLink]="['/series', series.name]" class="btn btn-primary">View Series</a>
+            </div>
+        </div>
+    </div>
+</div>
+
