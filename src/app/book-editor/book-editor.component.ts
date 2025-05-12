@@ -39,7 +39,7 @@ export class BookEditorComponent implements OnInit {
     else{
       // if we're in add mode, create a new book object
       this.book = new Book({});
-      this.originalBook = { ...this.book };
+      this.originalBook = new Book({});
     }
     // if we come in from book match results, pre-fill the form with the selected book
     this.bookDataService.selectedBook$.subscribe(searchBook => {
