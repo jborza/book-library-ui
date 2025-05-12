@@ -1,17 +1,33 @@
-<p>series works!</p>
 <!-- list of series
  each series displayed as a card
  with series name, number of books, and a button to view the series
 -->
 <div class="container">
-    <div class="row row-cols-2">
-        <div class="card" *ngFor="let series of seriesList">
-            <div class="card-body">
-                 <h5 class="card-title">{{ series.name }}</h5>
-                 <p class="card-text">Number of books: {{ series.books.length }}</p>
-                <a [routerLink]="['/series', series.name]" class="btn btn-primary">View Series</a>
-            </div>
+  <div class="row row-cols-2">
+    <div class="card mb-2" *ngFor="let series of seriesList">
+      <div class="card-body">
+        <!-- Container for the images -->
+        <div class="image-container" style="background-color: grey">
+          <div
+            *ngFor="let url of series.cover_images; let i = index"
+            [style.left]="
+              getImagePosition(i, series.cover_images.length, series.name)
+            "
+            class="image-wrapper"
+          >
+            <img
+              [src]="'http://localhost:5000/static/' + url"
+              class="cover-image"
+              alt="Book cover"
+            />
+          </div>
         </div>
+        <div class="col-12 text-center">
+          <a [routerLink]="['/series', series.name]" class="stretched-link">{{
+            series.name
+          }}</a>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-
