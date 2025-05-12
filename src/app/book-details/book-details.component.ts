@@ -36,6 +36,15 @@ export class BookDetailsComponent implements OnInit {
     });
   }
 
+  getCoverImageUrl(): string {
+    if (this.book.cover_image) {
+      return 'http://localhost:5000/static/'+this.book.cover_image;
+    }
+    else {
+      return 'http://localhost:5000/static/placeholder_book.svg';
+    }
+  }
+
   match(): void {
     // retrieve search results from the service
     const searchQuery = this.book.author_name + " - " + this.book.title;
