@@ -46,7 +46,7 @@ export class BookEditorComponent implements OnInit {
       if (searchBook) {
         // Use the selected book data to populate your form
         this.searchBook = searchBook;
-        //this.bookForm.patchValue(book);
+
         console.log('Search Book:', searchBook);
         // now apply search book fields to the book object
         // sometimes this.book is undefined ?!
@@ -99,7 +99,6 @@ export class BookEditorComponent implements OnInit {
       this.book = data;
       this.originalBook = { ...data }; // Create a copy of the original book data
       // now apply search match book fields to the book object
-      //this.bookForm.patchValue(data);
       this.updateBookFromSearch();
     });
   }
