@@ -17,6 +17,7 @@ export class ApiService {
     importNotes: `${this.baseUrl}/import/import_notes_api`,
     confirmImport: `${this.baseUrl}/import/confirm_import_api`,
     getBooksByIds: (ids: string[]) => `${this.baseUrl}/books/api/byid?ids=${ids.join(',')}`,
+    bookById: (bookId: string) => `${this.baseUrl}/book/${bookId}`
   };
 
   getSearchUrl(): string {
@@ -53,5 +54,9 @@ export class ApiService {
 
   getConfirmImportUrl() : string {
     return this.endpoints.confirmImport;
+  }
+
+  getBookByIdUrl(bookId: string): string {
+    return this.endpoints.bookById(bookId);
   }
 }

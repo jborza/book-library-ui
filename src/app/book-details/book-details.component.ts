@@ -20,7 +20,7 @@ export class BookDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private booksService: BooksService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.bookId = this.route.snapshot.paramMap.get('id');
@@ -36,20 +36,20 @@ export class BookDetailsComponent implements OnInit {
     });
   }
 
-  match() : void {
+  match(): void {
     // retrieve search results from the service
     const searchQuery = this.book.author_name + " - " + this.book.title;
     // book/:id/match
     this.router.navigate(['/book', this.book.id, 'match'],
-       { queryParams: { query: searchQuery } });
+      { queryParams: { query: searchQuery } });
   }
 
-  edit() : void {
+  edit(): void {
     // book/:id/edit
     this.router.navigate(['/books', this.book.id, 'edit']);
   }
 
-  updateBookStatus(status: string) : void {
+  updateBookStatus(status: string): void {
     // use book service to update the book status
     this.book.status = status;
     this.booksService.saveBook(this.book).subscribe((data) => {
@@ -57,49 +57,50 @@ export class BookDetailsComponent implements OnInit {
     });
   }
 
-  wantToRead() : void {
+  wantToRead(): void {
     this.updateBookStatus(Book.TO_READ);
   }
 
-  currentlyReading() : void {
+  currentlyReading(): void {
     this.updateBookStatus(Book.CURRENTLY_READING);
   }
 
-  read() : void {
+  read(): void {
     this.updateBookStatus(Book.READ);
   }
 
-  buy(where: string) : void {
+  buy(where: string): void {
     // where can be 'amazon', 'martinus', 'knihobot'
     //
     // book/:id/buy
     // ideally in a second tab
     // this.router.navigate(['/books', this.book.id, 'buy'], { queryParams: { where: where } });
     let url = '';
-    if(where === 'amazon') {    
+    if (where === 'amazon') {
       url = 'https://www.amazon.com/s?k=' + this.book.title + ' ' + this.book.author_name;
     }
-    else if(where === 'martinus') {
+    else if (where === 'martinus') {
       url = 'https://www.martinus.sk/search?q=' + this.book.title + ' ' + this.book.author_name;
     }
-    else if(where === 'knihobot') {
+    else if (where === 'knihobot') {
       url = 'https://www.knihobot.sk/p/q/' + this.book.title + ' ' + this.book.author_name;
     }
-    else{
+    else {
       console.error('Unknown book source:', where);
       return;
     }
-    
+
     window.open(url, "_blank");
   }
 
-  delete() : void {
-    // book/:id/delete
-    this.booksService.deleteBook(this.book.id).subscribe((data) => {
-       console.log('Book deleted:', data);
+  delete(): void {
+    if (confirm('Are you sure you want to delete this book?')) {
+      // book/:id/delete
+      this.booksService.deleteBook(this.book.id).subscribe((data) => {
+        console.log('Book deleted:', data);
         // navigate back to the book list
         this.router.navigate(['/books']);
-     });
-
+      });
+    }
   }
 }

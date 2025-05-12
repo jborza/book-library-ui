@@ -57,4 +57,9 @@ export class BooksService {
     return this.http.post(url, book);
   }
 
+  deleteBook(id: number) : Observable<any> {
+    const url = this.apiService.getBookByIdUrl(id.toString());
+    return this.http.delete(url);
+  }
+
 }
