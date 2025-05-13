@@ -30,6 +30,16 @@ export class SeriesComponent {
     const rightmost = containerWidth - imageWidth;
     const otherBooksWidth = rightmost / (total - 1);
     const left = index * otherBooksWidth;
+    // special case if total is 1 or 2
+    if (total === 1) {
+      return `${(containerWidth - imageWidth) / 2}px`; // Center the image
+    } else if (total === 2) {
+      if (index === 0) {
+        return `$36px`;
+      } else {
+        return `$236px`;
+      }
+    }
     return `${left}px`; // Return the left position as a string
   }
 }
