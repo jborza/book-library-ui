@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthorsService } from '../authors.service';
-import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-authors',
@@ -12,28 +11,14 @@ import { ViewportScroller } from '@angular/common';
 })
 export class AuthorsComponent {
   authors: Array<{ name: string, surname: string }> = [];
-  uniqueInitials: string[] = [];
-  initial: string = '';
-  anchorAdded: Set<string> = new Set();
-  anchorMap: { [letter: string]: boolean } = {};
   groupedAuthors: { [key: string]: string[] } = {}; // Authors grouped by the first letter of their surname
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   constructor(private authorsService: AuthorsService,
     private router: Router,
-    private viewportScroller: ViewportScroller
   ) { }
 
-  getUniqueInitials(authors: Array<{ name: string, surname: string }>): string[] {
-    const initials = new Set<string>();
-    authors.forEach(author => {
-      const initial = author.name.charAt(0).toUpperCase();
-      initials.add(initial);
-    });
-    return Array.from(initials).sort();
-  }
-
   ngOnInit(): void {
-   
     this.authorsService.getAuthors().subscribe((data) => {
       console.log('Authors:', data);
       this.authors = data.authors;
@@ -41,9 +26,15 @@ export class AuthorsComponent {
     });
   }
 
-  // Scroll to the selected group using ViewportScroller
+  // Scroll to the selected group with an offset
   scrollTo(letter: string): void {
-    this.viewportScroller.scrollToAnchor('group-' + letter); // Scroll to the anchor
+    const element = document.getElementById(`group-${letter}`);
+    if (element) {
+      const stickyNavHeight = this.scrollContainer.nativeElement.offsetHeight || 0; // Height of the sticky navigation bar
+      const yOffset = -stickyNavHeight; // Negative offset to scroll above the element
+      const yPosition = element.getBoundingClientRect().top + window.scrollY + yOffset; // Adjusted scroll position
+      window.scrollTo({ top: yPosition, behavior: 'smooth' }); // Smooth scroll to the adjusted position
+    }
   }
 
   // Group authors by the first letter of their surname
