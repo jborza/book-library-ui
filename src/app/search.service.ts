@@ -16,7 +16,7 @@ export class SearchService {
   searchBooks(
     where: string,
     query: string,
-    count: number = 5
+    count: number = 10
   ): Observable<any> {
     const apiUrls: { [key: string]: string } = {
       googlebooks: this.googleBooksApiUrl,
