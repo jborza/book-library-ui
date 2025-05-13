@@ -1,11 +1,28 @@
-<h4>Authors</h4>
-
-<ul>        
-    <div class="book-item" *ngFor="let author of authors">
-        <li>            
-            <a [routerLink]="['/search']" [queryParams]="{ search_query: author.name }" style="text-decoration: none;">
-                {{ author.name }}
-            </a>
-        </li>
+<div #scrollContainer class="scroll-container" class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+        <ul class="navbar-nav">
+            <li class="nav-item" *ngFor="let letter of groupedAuthors | keyvalue">
+                <a class="nav-link" (click)="scrollTo(letter.key)">
+                    <h4>{{ letter.key }}</h4>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="authors">
+    <!-- Display grouped authors -->
+    <div *ngFor="let group of groupedAuthors | keyvalue">
+        <!-- Add a div for each group -->
+        <div [id]="'group-' + group.key">
+            <h2>{{ group.key }}</h2>
+            <ul>
+                <li *ngFor="let author of group.value">
+                    <a [routerLink]="['/search']" [queryParams]="{ search_query: author }"
+                        style="text-decoration: none;">
+                        {{ author }}
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-</ul>
+</div>
