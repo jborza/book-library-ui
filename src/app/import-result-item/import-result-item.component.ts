@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToNumberPipe } from '../to-number.pipe';
+import { ToNumberPipe } from '../pipe/to-number.pipe';
 
 @Component({
   selector: 'app-import-result-item',
