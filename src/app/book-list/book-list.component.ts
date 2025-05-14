@@ -61,18 +61,12 @@ export class BookListComponent implements OnInit {
     }
 
     this.books = [...this.originalBooks]; // Reset to original list before sorting
-      console.log('Sorting by:', column, 'Direction:', this.sortDirection);
     this.books.sort((a: any, b: any) => {
-      const valueA = a[column];
-      const valueB = b[column];
+      const valueA = a[column] === null || a[column] === undefined ? '' : a[column];
+      const valueB = b[column] === null || b[column] === undefined ? '' : b[column];
 
-      if (valueA < valueB) {
-        return this.sortDirection ? -1 : 1;
-      }
-      if (valueA > valueB) {
-        return this.sortDirection ? 1 : -1;
-      }
-      return 0;
+      const compared = valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+      return compared * (this.sortDirection ? 1 : -1);     
     });
   }
 
