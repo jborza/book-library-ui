@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BooksService } from '../books.service';
@@ -19,7 +19,8 @@ export class BookDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private booksService: BooksService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -107,8 +108,8 @@ export class BookDetailsComponent implements OnInit {
       // book/:id/delete
       this.booksService.deleteBook(this.book.id).subscribe((data) => {
         console.log('Book deleted:', data);
-        // navigate back to the book list
-        this.router.navigate(['/books']);
+        // navigate back to wherever the user came from
+        this.location.back();
       });
     }
   }
