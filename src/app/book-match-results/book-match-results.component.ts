@@ -16,7 +16,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './book-match-results.component.less'
 })
 export class BookMatchResultsComponent {
-  searchQuery: string = '';
+  // searchQuery: string = '';
   bookId!: number;
   searchResults: any[] = [];
   searchForm: FormGroup;
@@ -39,10 +39,11 @@ export class BookMatchResultsComponent {
     // Get the search query from the route parameters
     this.route.params.subscribe(params => {
       this.bookId = +params['id']; // '+' converts it to a number
-      console.log('Book ID:', this.bookId);
     });
     this.route.queryParams.subscribe(params => {
-      this.searchQuery = params['query'] || '';      
+      const searchQuery = params['query'] || '';
+      // set the search title in the form
+      this.searchForm.get('searchTitle')?.setValue(searchQuery);
       this.performSearch();
     });
 
@@ -63,17 +64,23 @@ export class BookMatchResultsComponent {
     });
   }
 
+  searchTitle(): string {
+    return this.searchForm.get('searchTitle')?.value;
+  }
+
   performSearch(): void {
     // Replace with your API call
-    this.searchService.searchBooks(SearchService.GOOGLEBOOKS, this.searchQuery).subscribe(
+    console.warn(this.searchForm.value);
+    this.searchService.searchBooks(SearchService.GOOGLEBOOKS, this.searchTitle()).subscribe(
       {
         next: (response: any) => {
           console.log('Search results:', response);
           // sort the results by relevance
+          const searchQuery = this.searchTitle();
           const sortedBooks = this.sortByLevenshteinDistance(
             response,
-            this.searchQuery.split(' - ')[1] || '',
-            this.searchQuery.split(' - ')[0] || ''
+            searchQuery.split(' - ')[1] || '',
+            searchQuery.split(' - ')[0] || ''
           );
           this.searchResults = sortedBooks || [];
         },

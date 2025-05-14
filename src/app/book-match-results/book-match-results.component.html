@@ -10,7 +10,7 @@
       <div class="col-md-3">
         <label for="searchTitle" class="form-label">Search Title</label>
         <input type="text" class="form-control" id="searchTitle" formControlName="searchTitle"
-        placeholder="Enter title" value="{{ searchQuery}}" >
+        placeholder="Enter title"  >
       </div>
       <div class="col-md-2">
         <button type="submit" class="btn btn-primary mt-3 w-100">Search</button>
@@ -20,7 +20,7 @@
 </div>
 
 <div class="search-results">
-  <h6>Search Results for "{{ searchQuery }}"</h6>
+  <h6>Search Results for "{{ searchForm.get('searchTitle')?.value }}"</h6>
 
   <div *ngIf="searchResults.length === 0">No results found.</div>
   <div *ngFor="let result of searchResults">
