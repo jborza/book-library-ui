@@ -37,9 +37,13 @@ export class BooksService {
     return this.http.get(this.apiService.getBooksByIdsUrl(ids));
   }
 
-  // Method to fetch books by author
+  // Method to fetch books
   searchBooks(query: string): Observable<any> {
     return this.http.get<any>(`${this.apiService.getSearchUrl()}?search_query=${encodeURIComponent(query)}`);
+  }
+
+  searchBooksBySeries(series: string): Observable<any> {
+    return this.http.get<any>(`${this.apiService.getSearchUrl()}?series=${encodeURIComponent(series)}`);
   }
 
   toggleBookInCollection(book: Book) : Observable<any> {
