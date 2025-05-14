@@ -51,14 +51,15 @@ export class BookMatchResultsComponent {
 
   onSearch(): void {
     console.log('Search Form Values:', this.searchForm.value);
+    this.performSearch();
   }
 
   sortByLevenshteinDistance(array: any[], title: string, author: string): any[] {
     return array.sort((a, b) => {
       const distanceA =
-        levenshteinDistance(a.title || '', title) + levenshteinDistance(a.author || '', author);
+        levenshteinDistance(a.title || '', title) + levenshteinDistance(a.author_name || '', author);
       const distanceB =
-        levenshteinDistance(b.title || '', title) + levenshteinDistance(b.author || '', author);
+        levenshteinDistance(b.title || '', title) + levenshteinDistance(b.author_name || '', author);
 
       return distanceA - distanceB;
     });
@@ -70,7 +71,6 @@ export class BookMatchResultsComponent {
 
   performSearch(): void {
     // Replace with your API call
-    console.warn(this.searchForm.value);
     this.searchService.searchBooks(SearchService.GOOGLEBOOKS, this.searchTitle()).subscribe(
       {
         next: (response: any) => {
