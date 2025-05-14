@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class ApiService {
 
   private baseUrl = 'http://localhost:5000';
+  // private baseUrl = 'http://192.168.100.9:5000';
 
   private readonly endpoints = {
     search: `${this.baseUrl}/books/search_api`,
@@ -20,6 +21,7 @@ export class ApiService {
     bookById: (bookId: string) => `${this.baseUrl}/book/${bookId}`,
     genres: `${this.baseUrl}/genres/api`,
     series: `${this.baseUrl}/series/api`,
+    authors: `${this.baseUrl}/authors/api`,
   };
 
   getSearchUrl(): string {
@@ -68,5 +70,9 @@ export class ApiService {
 
   getSeriesUrl(): string {
     return this.endpoints.series;
+  }
+
+  getAuthorsUrl(): string {
+    return this.endpoints.authors;
   }
 }
