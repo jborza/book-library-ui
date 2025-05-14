@@ -1,155 +1,197 @@
-
 <div class="container mt-4">
-    <h2 class="mb-4">Update Details</h2>
-  
-    <!-- Select All Checkbox -->
-    <div class="form-check mb-4">
-      <input class="form-check-input"
-        type="checkbox"
-        id="selectAll"
-        [checked]="selectAllChecked"
-        (change)="toggleSelectAll()"
-        >
-      <label class="form-check-label" for="selectAll">
-        Select all
-      </label>
+  <form [formGroup]="bookForm">
+    <!-- Title -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="title" class="form-label">Title</label>
+        <input id="title" type="text" class="form-control" formControlName="title" placeholder="Enter book title" />
+      </div>
+      <div class="col-md-6">
+        <label for="author" class="form-label">Author</label>
+        <input id="author"  type="text" class="form-control" formControlName="author" placeholder="Book author" />
+      </div>
     </div>
-  
-    <!-- Cover Row -->
-    <div class="row align-items-center mb-4">
-      <div class="col-auto">
-        <input class="form-check-input"
-        type="checkbox"
-        id="coverCheckbox"
+
+    <!-- Series -->
+    <div class="row mb-3">
+      <div class="col-md-8">
+        <label for="series" class="form-label">Series</label>
+        <input id="series"  type="text" class="form-control" formControlName="series" placeholder="Series" />
+      </div>
+      <div class="col-md-4">
+        <label for="publishYear" class="form-label">Publish Year</label>
+        <input id="publishYear" type="number" class="form-control" formControlName="publishYear"
+          placeholder="Year" />
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" class="form-control rich-text-editor" formControlName="description"
+          rows="5"></textarea>
+      </div>
+    </div>
+
+    <!-- Genres and Tags -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="genres" class="form-label">Genres</label>
+        <app-tag-input id="genres" formControlName="genres" [placeholder]="'Add genre'"></app-tag-input>
+      </div>
+      <div class="col-md-6">
+        <label for="tags" class="form-label">Tags</label>
+        <app-tag-input id="tags" formControlName="tags" [placeholder]="'Add tag'"></app-tag-input>
+      </div>
+    </div>
+
+    <!-- Narrators, ISBN, ASIN -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="type" class="form-label">Book type</label>
+        <select id="type" class="form-select" formControlName="type">
+          <option *ngFor="let type of bookTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="isbn" class="form-label">ISBN</label>
+        <input id="isbn" type="text" class="form-control" formControlName="isbn" placeholder="Enter ISBN" />
+      </div>
+      <div class="col-md-4">
+        <label for="asin" class="form-label">Page Count</label>
+        <input id="pages" type="text" class="form-control" formControlName="pages" placeholder="Enter Page Count" />
+      </div>
+
+      <!-- Publisher and Language -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="publisher" class="form-label">Publisher</label>
+          <input id="publisher" type="text" class="form-control" formControlName="publisher"
+            placeholder="Enter publisher" />
+        </div>
+        <div class="col-md-6">
+          <label for="language" class="form-label">Language</label>
+          <select id="language" class="form-select" formControlName="language">
+            <option *ngFor="let lang of languages" [value]="lang">{{ lang }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Rating and Status -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="rating" class="form-label">Rating</label>
+          <input id="rating" type="number" class="form-control" formControlName="rating" placeholder="Enter rating" />
+        </div>
+        <div class="col-md-6">
+          <label for="status" class="form-label">Status</label>
+          <select id="status" class="form-select" formControlName="status">
+            <!-- to-read, currently-reading, read, wishlist -->
+            <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TODO add cover - image to the left, upload cover button (NEW) or URL -->
+
+      <!-- Action Buttons -->
+      <div class="row mt-4">
+        <div class="col-md-12 text-end">
+          <button type="button" class="btn btn-primary me-2" (click)="onSubmit('save')">Save</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit('saveAndClose')">Save & Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- OLD design -->
+  <h2 class="mb-4">Update Details</h2>
+
+  <!-- Select All Checkbox -->
+  <div class="form-check mb-4">
+    <input class="form-check-input" type="checkbox" id="selectAll" [checked]="selectAllChecked"
+      (change)="toggleSelectAll()">
+    <label class="form-check-label" for="selectAll">
+      Select all
+    </label>
+  </div>
+
+  <!-- Cover Row -->
+  <div class="row align-items-center mb-4">
+    <div class="col-auto">
+      <input class="form-check-input" type="checkbox" id="coverCheckbox"
         [checked]="((book.cover_image || '').trim().length > 0)">
-      </div>
-      <div class="col">
-        <label for="coverInput" class="form-label fw-bold">Cover</label>
-        <input type="text" class="form-control" id="coverInput"
-        [(ngModel)]="book.cover_image" placeholder="Cover URL">
-      </div>
-      <div class="col-auto" *ngIf="book.cover_image">
-        <img *ngIf="book.cover_image" src="{{book.cover_image}}" alt="Cover" class="cover-image">
-      </div>
     </div>
-    <app-editable-field
-        [label]="'Title'"
-        [(currentValue)]="book.title"
-        [originalValue]="originalBook.title"
-        (currentValueChange)="onFieldChange('title', $event)"
-        [controlId]="'title'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Author'"
-        [(currentValue)]="book.author_name"
-        [originalValue]="originalBook.author_name"
-        (currentValueChange)="onFieldChange('author_name', $event)"
-        [controlId]="'author'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <!-- Description Row -->
-    <app-editable-field
-      [label]="'Description'"
-      [(currentValue)]="book.synopsis"
-      [originalValue]="originalBook.synopsis"
-      (currentValueChange)="onFieldChange('synopsis', $event)"
-      [controlId]="'synopsis'"
-      [multiline]="true"
-      (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <!-- year published, isbn, genres, book type, status, series, tags -->
-    <app-editable-field
-        [label]="'Genre'"
-        [(currentValue)]="book.genre"
-        [originalValue]="originalBook.genre"
-        (currentValueChange)="onFieldChange('genre', $event)"
-        [controlId]="'genres'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Book Type'"
-        [(currentValue)]="book.book_type"
-        [originalValue]="originalBook.book_type"
-        (currentValueChange)="onFieldChange('book_type', $event)"
-        [controlId]="'book_type'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Status'"
-        [(currentValue)]="book.status"
-        [originalValue]="originalBook.status"
-        (currentValueChange)="onFieldChange('status', $event)"
-        [controlId]="'status'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Series'"
-        [(currentValue)]="book.series"
-        [originalValue]="originalBook.series"
-        (currentValueChange)="onFieldChange('series', $event)"
-        [controlId]="'series'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Year'"
-        [(currentValue)]="book.year"
-        [originalValue]="originalBook.year"
-        (currentValueChange)="onFieldChange('year', $event)"
-        [controlId]="'year'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'ISBN'"
-        [(currentValue)]="book.isbn"
-        [originalValue]="originalBook.isbn"
-        (currentValueChange)="onFieldChange('isbn', $event)"
-        [controlId]="'isbn'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Rating'"
-        [(currentValue)]="book.rating"
-        [originalValue]="originalBook.rating"
-        (currentValueChange)="onFieldChange('rating', $event)"
-        [controlId]="'rating'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Tags'"
-        [(currentValue)]="book.tags"
-        [originalValue]="originalBook.tags"
-        (currentValueChange)="onFieldChange('tags', $event)"
-        [controlId]="'tags'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Publisher'"
-        [(currentValue)]="book.publisher"
-        [originalValue]="originalBook.publisher"
-        (currentValueChange)="onFieldChange('publisher', $event)"
-        [controlId]="'publisher'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Language'"
-        [(currentValue)]="book.language"
-        [originalValue]="originalBook.language"
-        (currentValueChange)="onFieldChange('language', $event)"
-        [controlId]="'language'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <app-editable-field
-        [label]="'Page Count'"
-        [(currentValue)]="book.pages"
-        [originalValue]="originalBook.pages"
-        (currentValueChange)="onFieldChange('pages', $event)"
-        [controlId]="'pages'"
-        (isCheckedChange)="updateSelectAllStatus()">
-    </app-editable-field>
-    <!-- Save Button -->
-    <div class="text-center">
-        <button *ngIf="editMode" class="btn btn-primary" (click)="saveBook()">Save existing</button>
-        <button *ngIf="!editMode" class="btn btn-primary" (click)="createBook()">Save new</button>
+    <div class="col">
+      <label for="coverInput" class="form-label fw-bold">Cover</label>
+      <input type="text" class="form-control" id="coverInput" [(ngModel)]="book.cover_image" placeholder="Cover URL">
+    </div>
+    <div class="col-auto" *ngIf="book.cover_image">
+      <img *ngIf="book.cover_image" src="{{book.cover_image}}" alt="Cover" class="cover-image">
     </div>
   </div>
+  <app-editable-field [label]="'Title'" [(currentValue)]="book.title" [originalValue]="originalBook.title"
+    (currentValueChange)="onFieldChange('title', $event)" [controlId]="'title'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Author'" [(currentValue)]="book.author_name" [originalValue]="originalBook.author_name"
+    (currentValueChange)="onFieldChange('author_name', $event)" [controlId]="'author'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <!-- Description Row -->
+  <app-editable-field [label]="'Description'" [(currentValue)]="book.synopsis" [originalValue]="originalBook.synopsis"
+    (currentValueChange)="onFieldChange('synopsis', $event)" [controlId]="'synopsis'" [multiline]="true"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <!-- year published, isbn, genres, book type, status, series, tags -->
+  <app-editable-field [label]="'Genre'" [(currentValue)]="book.genre" [originalValue]="originalBook.genre"
+    (currentValueChange)="onFieldChange('genre', $event)" [controlId]="'genres'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Book Type'" [(currentValue)]="book.book_type" [originalValue]="originalBook.book_type"
+    (currentValueChange)="onFieldChange('book_type', $event)" [controlId]="'book_type'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Status'" [(currentValue)]="book.status" [originalValue]="originalBook.status"
+    (currentValueChange)="onFieldChange('status', $event)" [controlId]="'status'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Series'" [(currentValue)]="book.series" [originalValue]="originalBook.series"
+    (currentValueChange)="onFieldChange('series', $event)" [controlId]="'series'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Year'" [(currentValue)]="book.year" [originalValue]="originalBook.year"
+    (currentValueChange)="onFieldChange('year', $event)" [controlId]="'year'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'ISBN'" [(currentValue)]="book.isbn" [originalValue]="originalBook.isbn"
+    (currentValueChange)="onFieldChange('isbn', $event)" [controlId]="'isbn'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Rating'" [(currentValue)]="book.rating" [originalValue]="originalBook.rating"
+    (currentValueChange)="onFieldChange('rating', $event)" [controlId]="'rating'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Tags'" [(currentValue)]="book.tags" [originalValue]="originalBook.tags"
+    (currentValueChange)="onFieldChange('tags', $event)" [controlId]="'tags'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Publisher'" [(currentValue)]="book.publisher" [originalValue]="originalBook.publisher"
+    (currentValueChange)="onFieldChange('publisher', $event)" [controlId]="'publisher'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Language'" [(currentValue)]="book.language" [originalValue]="originalBook.language"
+    (currentValueChange)="onFieldChange('language', $event)" [controlId]="'language'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <app-editable-field [label]="'Page Count'" [(currentValue)]="book.pages" [originalValue]="originalBook.pages"
+    (currentValueChange)="onFieldChange('pages', $event)" [controlId]="'pages'"
+    (isCheckedChange)="updateSelectAllStatus()">
+  </app-editable-field>
+  <!-- Save Button -->
+  <div class="text-center">
+    <button *ngIf="editMode" class="btn btn-primary" (click)="saveBook(book)">Save existing</button>
+    <button *ngIf="!editMode" class="btn btn-primary" (click)="createBook()">Save new</button>
+  </div>
+</div>

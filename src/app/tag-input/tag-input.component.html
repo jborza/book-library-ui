@@ -1,0 +1,15 @@
+<div class="tag-input-container">
+  <div class="tags">
+    <span *ngFor="let tag of tags; let i = index" class="tag">
+      {{ tag }}
+      <button type="button" class="btn-close" aria-label="Remove" (click)="removeTag(i)"></button>
+    </span>
+  </div>
+  <input
+    type="text"
+    class="form-control"
+    [placeholder]="placeholder"
+    [(ngModel)]="newTag"
+    (keydown)="handleKeydown($event)"
+  />
+</div>
