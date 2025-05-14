@@ -95,6 +95,14 @@
 
       <!-- TODO add cover - image to the left, upload cover button (NEW) or URL -->
 
+      <!-- Validation Errors -->
+      <div *ngIf="validationErrors.length > 0" class="mt-3 text-danger">
+        <strong>Please fix the following errors:</strong>
+        <ul>
+          <li *ngFor="let error of validationErrors">{{ error }}</li>
+        </ul>
+      </div>
+
       <!-- Action Buttons -->
       <div class="row mt-4">
         <div class="col-md-12 text-end">
@@ -104,94 +112,4 @@
       </div>
     </div>
   </form>
-
-  <!-- OLD design -->
-  <h2 class="mb-4">Update Details</h2>
-
-  <!-- Select All Checkbox -->
-  <div class="form-check mb-4">
-    <input class="form-check-input" type="checkbox" id="selectAll" [checked]="selectAllChecked"
-      (change)="toggleSelectAll()">
-    <label class="form-check-label" for="selectAll">
-      Select all
-    </label>
-  </div>
-
-  <!-- Cover Row -->
-  <div class="row align-items-center mb-4">
-    <div class="col-auto">
-      <input class="form-check-input" type="checkbox" id="coverCheckbox"
-        [checked]="((book.cover_image || '').trim().length > 0)">
-    </div>
-    <div class="col">
-      <label for="coverInput" class="form-label fw-bold">Cover</label>
-      <input type="text" class="form-control" id="coverInput" [(ngModel)]="book.cover_image" placeholder="Cover URL">
-    </div>
-    <div class="col-auto" *ngIf="book.cover_image">
-      <img *ngIf="book.cover_image" src="{{book.cover_image}}" alt="Cover" class="cover-image">
-    </div>
-  </div>
-  <app-editable-field [label]="'Title'" [(currentValue)]="book.title" [originalValue]="originalBook.title"
-    (currentValueChange)="onFieldChange('title', $event)" [controlId]="'title'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Author'" [(currentValue)]="book.author_name" [originalValue]="originalBook.author_name"
-    (currentValueChange)="onFieldChange('author_name', $event)" [controlId]="'author'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <!-- Description Row -->
-  <app-editable-field [label]="'Description'" [(currentValue)]="book.synopsis" [originalValue]="originalBook.synopsis"
-    (currentValueChange)="onFieldChange('synopsis', $event)" [controlId]="'synopsis'" [multiline]="true"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <!-- year published, isbn, genres, book type, status, series, tags -->
-  <app-editable-field [label]="'Genre'" [(currentValue)]="book.genre" [originalValue]="originalBook.genre"
-    (currentValueChange)="onFieldChange('genre', $event)" [controlId]="'genres'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Book Type'" [(currentValue)]="book.book_type" [originalValue]="originalBook.book_type"
-    (currentValueChange)="onFieldChange('book_type', $event)" [controlId]="'book_type'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Status'" [(currentValue)]="book.status" [originalValue]="originalBook.status"
-    (currentValueChange)="onFieldChange('status', $event)" [controlId]="'status'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Series'" [(currentValue)]="book.series" [originalValue]="originalBook.series"
-    (currentValueChange)="onFieldChange('series', $event)" [controlId]="'series'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Year'" [(currentValue)]="book.year" [originalValue]="originalBook.year"
-    (currentValueChange)="onFieldChange('year', $event)" [controlId]="'year'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'ISBN'" [(currentValue)]="book.isbn" [originalValue]="originalBook.isbn"
-    (currentValueChange)="onFieldChange('isbn', $event)" [controlId]="'isbn'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Rating'" [(currentValue)]="book.rating" [originalValue]="originalBook.rating"
-    (currentValueChange)="onFieldChange('rating', $event)" [controlId]="'rating'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Tags'" [(currentValue)]="book.tags" [originalValue]="originalBook.tags"
-    (currentValueChange)="onFieldChange('tags', $event)" [controlId]="'tags'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Publisher'" [(currentValue)]="book.publisher" [originalValue]="originalBook.publisher"
-    (currentValueChange)="onFieldChange('publisher', $event)" [controlId]="'publisher'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Language'" [(currentValue)]="book.language" [originalValue]="originalBook.language"
-    (currentValueChange)="onFieldChange('language', $event)" [controlId]="'language'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <app-editable-field [label]="'Page Count'" [(currentValue)]="book.pages" [originalValue]="originalBook.pages"
-    (currentValueChange)="onFieldChange('pages', $event)" [controlId]="'pages'"
-    (isCheckedChange)="updateSelectAllStatus()">
-  </app-editable-field>
-  <!-- Save Button -->
-  <div class="text-center">
-    <button *ngIf="editMode" class="btn btn-primary" (click)="saveBook(book)">Save existing</button>
-    <button *ngIf="!editMode" class="btn btn-primary" (click)="createBook()">Save new</button>
-  </div>
 </div>

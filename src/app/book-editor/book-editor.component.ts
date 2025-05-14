@@ -26,9 +26,9 @@ export class BookEditorComponent implements OnInit {
   book!: Book;
   originalBook!: Book;
   searchBook!: any; // should it be also Book?
-  selectAllChecked: boolean = false;
   editMode: boolean = false;
   bookForm!: FormGroup;
+  validationErrors: string[] = [];
 
   languages = ['English', 'German', 'Slovak', 'Czech']; // TODO add country icons
   statuses = ['Read', 'Reading', 'To Read', 'Abandoned', 'Wish List'];
@@ -144,26 +144,6 @@ export class BookEditorComponent implements OnInit {
     });
   }
 
-  resetForm(): void {
-    this.bookForm.reset({
-      title: '',
-      subtitle: '',
-      authors: [],
-      publishYear: null,
-      series: [],
-      description: '',
-      genres: [],
-      tags: [],
-      narrators: [],
-      isbn: '',
-      asin: '',
-      publisher: '',
-      language: 'English',
-      explicit: false,
-      abridged: false
-    });
-  }
-
   private updateBookFromSearch() {
     if (this.searchBook === undefined) {
       return;
@@ -193,7 +173,9 @@ export class BookEditorComponent implements OnInit {
     }
     if (searchBook.cover_image)
       this.book.cover_image = searchBook.cover_image;
-    console.log('Setting genre:', this.book.genre);
+    
+    // maybe this will work ?!
+    this.updateBookForm(this.book);
   }
 
   updateBookForm(book: Book) {
@@ -201,7 +183,6 @@ export class BookEditorComponent implements OnInit {
     const displayLanguage = this.languageMapping[book.language ?? 'en'] || 'English';
     const displayType = this.typeMapping[book.book_type ?? 'ebook'] || 'Ebook';
     // genres can be a list of genres
-    // TODO split by comma
     const genres = [book.genre?.split(', ') ?? []].flat();
 
     this.bookForm.patchValue({
@@ -295,6 +276,7 @@ export class BookEditorComponent implements OnInit {
       // TODO cover picture
       const saveData ={
         ...formData,
+        id: this.book.id,
         status: dbStatus,
         book_type: dbType,
         language: dbLanguage,
@@ -311,17 +293,57 @@ export class BookEditorComponent implements OnInit {
     } else {
       // Mark all controls as touched to display validation errors
       this.bookForm.markAllAsTouched();
+      this.validationErrors = this.getAllValidationErrors();
       console.log('Form is invalid. Please fix the errors.');
     }
   }
 
 
-  toggleSelectAll(): void {
-    this.selectAllChecked = !this.selectAllChecked;
-    this.editableFields.forEach(field => field.isChecked = this.selectAllChecked);
-  }
+  private getAllValidationErrors(): string[] {
+  const errors: string[] = [];
 
-  updateSelectAllStatus(): void {
-    this.selectAllChecked = this.editableFields.toArray().every(field => field.isChecked);
-  }
+  Object.keys(this.bookForm.controls).forEach((controlName) => {
+    const control = this.bookForm.get(controlName);
+
+    if (control && control.errors) {
+      Object.keys(control.errors).forEach((errorKey) => {
+        const errorMessage = this.getErrorMessage(controlName, errorKey, control.errors![errorKey]);
+        if (errorMessage) {
+          errors.push(errorMessage);
+        }
+      });
+    }
+  });
+
+  return errors;
+}
+
+private getErrorMessage(controlName: string, errorKey: string, errorValue: any): string | null {
+  const controlLabels: Record<string, string> = {
+    title: 'Title',
+    subtitle: 'Subtitle',
+    authors: 'Authors',
+    publishYear: 'Publish Year',
+    isbn: 'ISBN',
+    series: 'Series',
+    description: 'Description',
+    genres: 'Genres',
+    tags: 'Tags',
+    status: 'Status',
+    rating: 'Rating',
+    publisher: 'Publisher',    
+  };
+
+  const errorMessages: Record<string, string> = {
+    required: `${controlLabels[controlName]} is required.`,
+    maxlength: `${controlLabels[controlName]} must not exceed ${errorValue.requiredLength} characters.`,
+    minlength: `${controlLabels[controlName]} must be at least ${errorValue.requiredLength} characters.`,
+    pattern: `${controlLabels[controlName]} format is invalid.`,
+    min: `${controlLabels[controlName]} must be at least ${errorValue.min}.`,
+    max: `${controlLabels[controlName]} must be at most ${errorValue.max}.`,
+  };
+
+  return errorMessages[errorKey] || null;
+}
+
 }
