@@ -28,6 +28,7 @@ export class Book {
   series?: string;
   tags?: string;
   publisher?: string;
+  author_surname?: string; // Added surname property
 
   constructor(data: any) {
     this.id = data.id;

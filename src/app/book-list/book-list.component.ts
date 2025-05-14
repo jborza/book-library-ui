@@ -39,6 +39,12 @@ export class BookListComponent implements OnInit {
       .subscribe((response) => {
         if (Array.isArray(response)) {
           this.books = response.map(bookData => new Book(bookData));
+          // generate surnames for each book
+          for (const book of this.books) {
+            const authorName = book.author_name;
+            const surname = authorName.split(' ').slice(-1)[0]; // Get the last name
+            book.author_surname = surname; // Add surname property to the book object
+          }
           this.originalBooks = [...this.books]; // Store the original list for filtering
         } else {
           console.error('Unexpected API response format:', response);
@@ -55,6 +61,7 @@ export class BookListComponent implements OnInit {
     }
 
     this.books = [...this.originalBooks]; // Reset to original list before sorting
+      console.log('Sorting by:', column, 'Direction:', this.sortDirection);
     this.books.sort((a: any, b: any) => {
       const valueA = a[column];
       const valueB = b[column];

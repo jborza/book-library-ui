@@ -1,12 +1,10 @@
 <h4>Books</h4>
-{{ books[1] | json}}
 <table class="table table-striped">
   <thead>
       <tr>
-          <th>#</th>
           <th>Cover</th>
           <th (click)="sortBy('title')">Title <span [class]="getSortIcon('title')"></span></th>
-          <th (click)="sortBy('author_name')">Author <span [class]="getSortIcon('author_name')"></span></th>
+          <th (click)="sortBy('author_surname')">Author <span [class]="getSortIcon('author_surname')"></span></th>
           <th (click)="sortBy('rating')">Rating <span [class]="getSortIcon('rating')"></span></th>
           <th (click)="sortBy('status')">Shelves <span [class]="getSortIcon('status')"></span></th>
           <th (click)="sortBy('book_type')">Type <span [class]="getSortIcon('book_type')"></span></th>
@@ -15,7 +13,6 @@
   </thead>
   <tbody>
     <tr *ngFor="let book of books">
-        <td>{{ book.id }}</td>  <!-- Book Number -->
         <td>
             <img *ngIf="book.cover_image_tiny" src="http://localhost:5000/static/{{book.cover_image_tiny}}" class="book-cover">
         </td>
