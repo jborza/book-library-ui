@@ -1,13 +1,15 @@
 <h4>Books</h4>
+{{ books[1] | json}}
 <table class="table table-striped">
   <thead>
       <tr>
           <th>#</th>
           <th>Cover</th>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Rating</th>
-          <th>Shelves</th>
+          <th (click)="sortBy('title')">Title <span [class]="getSortIcon('title')"></span></th>
+          <th (click)="sortBy('author_name')">Author <span [class]="getSortIcon('author_name')"></span></th>
+          <th (click)="sortBy('rating')">Rating <span [class]="getSortIcon('rating')"></span></th>
+          <th (click)="sortBy('status')">Shelves <span [class]="getSortIcon('status')"></span></th>
+          <th (click)="sortBy('book_type')">Type <span [class]="getSortIcon('book_type')"></span></th>
           <th>Actions</th>
       </tr>
   </thead>
@@ -21,6 +23,7 @@
         <td><a [routerLink]="['/search']" [queryParams]="{ search_query: book.author_name }"> {{ book.author_name }}</a></td>
         <td>{{ book.rating }}</td>
         <td>{{ book.status }}</td>
+        <td>{{ book.book_type }}</td>
         <td>
             <a [routerLink]="['/books',book.id,'edit']" >Edit</a>
             <!-- Add more actions as needed -->
