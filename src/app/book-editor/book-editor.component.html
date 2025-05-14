@@ -29,7 +29,7 @@
         [(ngModel)]="book.cover_image" placeholder="Cover URL">
       </div>
       <div class="col-auto" *ngIf="book.cover_image">
-        <img src="{{book.cover_image}}" alt="Cover" class="cover-image">
+        <img *ngIf="book.cover_image" src="{{book.cover_image}}" alt="Cover" class="cover-image">
       </div>
     </div>
     <app-editable-field

@@ -1,6 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { BookDataService } from '../book-data.service';
 import { Book } from '../book.model';
 import { FormsModule } from '@angular/forms';
@@ -27,7 +27,8 @@ export class BookEditorComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private bookDataService: BookDataService,
     private booksService: BooksService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -123,8 +124,8 @@ export class BookEditorComponent implements OnInit {
         console.error('Error occurred:', error);
       },
       complete: () => {
-          // navigate back to the book details page
-          this.router.navigate(['/books', this.book.id]);
+          // navigate back to where the user came from
+          this.location.back();
       }
     });
   }
@@ -141,8 +142,8 @@ export class BookEditorComponent implements OnInit {
         console.error('Error occurred:', error);
       },
       complete: () => {
-          // navigate back to the book details page
-          this.router.navigate(['/books', this.book.id]);
+          // navigate back to where the user came from
+          this.location.back();
       }
     });
   }
