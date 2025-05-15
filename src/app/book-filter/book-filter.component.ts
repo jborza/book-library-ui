@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autocomplete.component';
@@ -19,7 +19,7 @@ export class BookFilterComponent {
     search: '',
     genre: '',
     language: '',
-    yearMin: 1950,
+    yearMin: 1900,
     yearMax: 2025,
     pagesMin: 0,
     pagesMax: 1000,
@@ -37,17 +37,18 @@ export class BookFilterComponent {
 
   // TODO read from the API
   yearOptions: Options = {
-    floor: 1950,
-    ceil: 2025
+    floor: 1900,
+    ceil: 2025 //TODO change to this year
   };
 
   // TODO read from the API
   pagesOptions: Options = {
     floor: 0,
-    ceil: 1000
+    ceil: 1000,
   };
 
   @Input() authors: string[] = [];
+  @Input() minmax: any;
 
   // Emit the filter changes to the parent component
   @Output() filtersChanged = new EventEmitter<any>();
@@ -66,7 +67,23 @@ export class BookFilterComponent {
     console.log('BookFilterComponent authors:', this.authors);
   }
 
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['minmax'] && this.minmax) {
+      this.pagesOptions = {
+        floor: this.minmax.page_count?.min || 0,
+        ceil: this.minmax.page_count?.max || 1000,
+      };
+      this.ratingOptions = {
+        floor: this.minmax.rating?.min || 0.1,
+        ceil: this.minmax.rating?.max || 5,
+        step: 0.1,
+      };
+      this.yearOptions = {
+        floor: this.minmax.year?.min || 1900,
+        ceil: this.minmax.year?.max || new Date().getFullYear(),
+      };
+    }
+  }
 
   // Emit the updated filters whenever a filter is changed
   onFilterChange() {
