@@ -16,13 +16,16 @@ export class BooksService {
     return this.http.get(this.apiService.getBookApiUrl());
   }
 
-  getBooksFiltered(status?:string, type?:string): Observable<any> {
+  getBooksFiltered(status?:string, type?:string, count?: number): Observable<any> {
     let params = new HttpParams();
     if (status) {
       params = params.set('status', status);
     }
     if (type) {
       params = params.set('type', type);
+    }
+    if(count) {
+      params = params.set('count', count.toString());
     }
 
     return this.http.get(this.apiService.getGetUrl(), { params });

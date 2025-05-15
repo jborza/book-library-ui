@@ -19,6 +19,7 @@ export class BookListComponent implements OnInit {
   typeFilter: string = '';
   sortColumn: string = ''; // Column to sort by
   sortDirection: boolean = true; // true = ascending, false = descending
+  bookPerPage: number = 1000;
 
   constructor(private booksService: BooksService,
     private route: ActivatedRoute
@@ -35,7 +36,7 @@ export class BookListComponent implements OnInit {
   }
 
   fetchBooks(): void {
-    this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter)
+    this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter, this.bookPerPage)
       .subscribe((response) => {
         if (Array.isArray(response)) {
           this.books = response.map(bookData => new Book(bookData));
