@@ -24,6 +24,8 @@ export class BookListComponent implements OnInit {
   sortColumn: string = ''; // Column to sort by
   sortDirection: boolean = true; // true = ascending, false = descending
   bookPerPage: number = 1000;
+  authors: string[] = [];
+  minmax: any;
 
   constructor(private booksService: BooksService,
     private route: ActivatedRoute
@@ -42,8 +44,11 @@ export class BookListComponent implements OnInit {
   fetchBooks(): void {
     this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter, this.bookPerPage)
       .subscribe((response) => {
-        if (Array.isArray(response)) {
-          this.books = response.map(bookData => new Book(bookData));
+        this.minmax = response.minmax;
+        this.authors = response.authors;
+        const books = response.books;
+        if (Array.isArray(books)) {
+          this.books = books.map(bookData => new Book(bookData));
           // generate surnames for each book
           for (const book of this.books) {
             const authorName = book.author_name;
@@ -57,6 +62,7 @@ export class BookListComponent implements OnInit {
       });
   }
 
+  // TODO we'll have to sort on server side
   sortBy(column: string): void {
     if (this.sortColumn === column) {
       this.sortDirection = !this.sortDirection; // Toggle sort direction

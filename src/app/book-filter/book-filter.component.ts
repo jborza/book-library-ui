@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autocomplete.component';
@@ -46,18 +46,8 @@ export class BookFilterComponent {
     floor: 0,
     ceil: 1000
   };
-  
-  // TODO read from the API, or have as @Input()
-  authors: string[] = [
-    'George Orwell',
-    'Aldous Huxley',
-    'J.K. Rowling',
-    'J.R.R. Tolkien',
-    'Agatha Christie',
-    'Stephen King',
-    'Isaac Asimov',
-    'Jane Austen',
-  ];
+
+  @Input() authors: string[] = [];
 
   // Emit the filter changes to the parent component
   @Output() filtersChanged = new EventEmitter<any>();
@@ -73,7 +63,11 @@ export class BookFilterComponent {
   years = Array.from({ length: new Date().getFullYear() - 1900 }, (_, i) => 1900 + i); // Years from 1900 to 2023
 
   ngOnInit() {
+    console.log('BookFilterComponent authors:', this.authors);
   }
+
+
+
   // Emit the updated filters whenever a filter is changed
   onFilterChange() {
     //this.filtersChanged.emit(this.filters);

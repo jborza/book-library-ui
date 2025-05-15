@@ -1,5 +1,7 @@
 <h4>Books</h4>
-<app-book-filter (filtersChanged)="onFiltersChanged($event)"></app-book-filter>
+<app-book-filter
+    [authors]="authors"
+    (filtersChanged)="onFiltersChanged($event)"></app-book-filter>
 <p>{{ books.length }} books found</p>
 <table class="table table-striped">
   <thead>
