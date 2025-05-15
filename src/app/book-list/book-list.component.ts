@@ -3,13 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BooksService } from '../books.service';
 import { Book } from '../book.model';
+import { BookFilterComponent } from '../book-filter/book-filter.component';
 
 @Component({
   standalone: true,
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.less'],
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    BookFilterComponent],
 })
 export class BookListComponent implements OnInit {
   books: Book[] = [];
@@ -67,7 +71,7 @@ export class BookListComponent implements OnInit {
       const valueB = b[column] === null || b[column] === undefined ? '' : b[column];
 
       const compared = valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
-      return compared * (this.sortDirection ? 1 : -1);     
+      return compared * (this.sortDirection ? 1 : -1);
     });
   }
 
@@ -76,5 +80,11 @@ export class BookListComponent implements OnInit {
       return this.sortDirection ? 'sort-icon asc' : 'sort-icon desc';
     }
     return '';
+  }
+
+  // Update the list when filters change
+  onFiltersChanged(filters: any) {
+    //this.fetchBooks(filters);
+    console.log('Filters changed:', filters);
   }
 }

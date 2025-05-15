@@ -1,0 +1,62 @@
+<div class="filter-bar">
+    <!-- Search by Title -->
+    <div class="filter-item">
+        <label for="search-title">Search</label>
+        <input id="search-title" type="text" class="form-control" placeholder="Search by title, author, or keyword"
+            [(ngModel)]="filters.search" (ngModelChange)="onFilterChange()" />
+    </div>
+
+    <!-- Filter by Genre -->
+    <div class="filter-item">
+        <label for="genre-select">Genre</label>
+        <select id="genre-select" class="form-select" [(ngModel)]="filters.genre" (ngModelChange)="onFilterChange()">
+            <option value="">All Genres</option>
+            <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+        </select>
+    </div>
+
+    <!-- Filter by Language -->
+    <div class="filter-item">
+        <label for="language-select">Language</label>
+        <select id="language-select" class="form-select" [(ngModel)]="filters.language"
+            (ngModelChange)="onFilterChange()">
+            <option value="">All Languages</option>
+            <option *ngFor="let language of languages" [value]="language">{{ language }}</option>
+        </select>
+    </div>
+
+    <!-- Filter by Page Count Range -->
+    <div class="filter-item">
+        <label for="page-range">Page Count</label>
+        <input id="min-pages" type="number" class="form-control" placeholder="Min" [(ngModel)]="filters.minPages"
+            (ngModelChange)="onFilterChange()" />
+        <input id="max-pages" type="number" class="form-control" placeholder="Max" [(ngModel)]="filters.maxPages"
+            (ngModelChange)="onFilterChange()" />
+    </div>
+
+    <!-- Filter by Publication Year Range -->
+    <div class="filter-item">
+        <label for="year-range">Publication Year</label>
+        <ngx-slider
+            [(value)]="filters.yearMin"
+            [(highValue)]="filters.yearMax"
+            [options]="yearOptions"
+        ></ngx-slider>
+
+        <!-- Display Selected Values -->
+        <p>Selected Range: {{ filters.yearMin }} - {{ filters.yearMax }}</p>
+    </div>
+
+    <!-- Filter by Book Type -->
+    <div class="filter-item">
+        <label for="book-type">Book Type</label>
+        <select id="book-type" class="form-select" [(ngModel)]="filters.bookType" (ngModelChange)="onFilterChange()">
+            <option value="">All Types</option>
+            <option value="ebook">Ebook</option>
+            <option value="audiobook">Audiobook</option>
+            <option value="physical">Physical Book</option>
+        </select>
+    </div>
+    <button type="button" class="btn btn-primary me-2" (click)="filter()">Filter</button>
+
+</div>
