@@ -36,6 +36,7 @@ export class BookDetailsComponent implements OnInit {
       this.book = data;
       // ugly hack - page_count
       this.book.pages = this.book.pages ? this.book.pages : data.page_count;
+      this.book.year = data.year_published;
     });
   }
 
