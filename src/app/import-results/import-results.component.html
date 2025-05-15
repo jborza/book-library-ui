@@ -1,5 +1,8 @@
 <div class="import-results">
   <h2>Import Results</h2>
+  <button class="btn btn-primary m-1" (click)="confirmImport()">
+    Confirm Import
+  </button>
   <div *ngFor="let result of importResults">
     <app-import-result-item
       [book]="result"
