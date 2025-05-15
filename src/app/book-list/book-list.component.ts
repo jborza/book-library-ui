@@ -26,6 +26,9 @@ export class BookListComponent implements OnInit {
   bookPerPage: number = 1000;
   authors: string[] = [];
   minmax: any;
+  genres: string[] = [];
+  languages: string[] = [];
+  series: string[] = [];
 
   constructor(private booksService: BooksService,
     private route: ActivatedRoute
@@ -46,6 +49,9 @@ export class BookListComponent implements OnInit {
       .subscribe((response) => {
         this.minmax = response.minmax;
         this.authors = response.authors;
+        this.genres = response.genres;
+        this.languages = response.languages;
+        this.series = response.series;
         const books = response.books;
         if (Array.isArray(books)) {
           this.books = books.map(bookData => new Book(bookData));

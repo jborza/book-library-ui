@@ -27,6 +27,7 @@ export class BookFilterComponent {
     ratingMax: 5,
     bookType: '',
     author: '',
+    series: ''
   };
 
   ratingOptions: Options = {
@@ -35,13 +36,11 @@ export class BookFilterComponent {
     step: 0.1,
   }
 
-  // TODO read from the API
   yearOptions: Options = {
     floor: 1900,
-    ceil: 2025 //TODO change to this year
+    ceil: 2025
   };
 
-  // TODO read from the API
   pagesOptions: Options = {
     floor: 0,
     ceil: 1000,
@@ -56,16 +55,12 @@ export class BookFilterComponent {
   // Example: Genres and languages (replace with data from your backend)
   // TODO move these to a service
   // TODO fetch these from the backend
-  genres = ['Fiction', 'Non-fiction', 'Fantasy', 'Science Fiction', 'Biography'];
-  languages = ['English', 'German', 'Slovak', 'Czech']; // TODO add country icons
+  @Input() genres: string[] = [];
+  @Input() series: string[] = [];
+  @Input() languages: string[] = [];
+
   statuses = ['Read', 'Reading', 'To Read', 'Abandoned', 'Wish List'];
   bookTypes = ['Ebook', 'Audiobook', 'Physical Book'];
-  // TODO fetch from the DB
-  years = Array.from({ length: new Date().getFullYear() - 1900 }, (_, i) => 1900 + i); // Years from 1900 to 2023
-
-  ngOnInit() {
-    console.log('BookFilterComponent authors:', this.authors);
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['minmax'] && this.minmax) {
@@ -82,6 +77,13 @@ export class BookFilterComponent {
         floor: this.minmax.year?.min || 1900,
         ceil: this.minmax.year?.max || new Date().getFullYear(),
       };
+    }
+    if(changes['genres']) {
+      this.genres = changes['genres'].currentValue;
+    }
+    if(changes['series']) {
+      this.series = changes['series'].currentValue;
+      console.log('BookFilterComponent series:', this.series);
     }
   }
 

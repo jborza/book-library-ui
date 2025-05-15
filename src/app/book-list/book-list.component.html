@@ -2,6 +2,9 @@
 <app-book-filter
     [authors]="authors"
     [minmax]="minmax"
+    [genres]="genres"
+    [series]="series"
+    [languages]="languages"
     (filtersChanged)="onFiltersChanged($event)"></app-book-filter>
 <p>{{ books.length }} books found</p>
 <table class="table table-striped">

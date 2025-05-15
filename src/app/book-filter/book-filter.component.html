@@ -1,5 +1,4 @@
 <div class="filter-bar">
-    Minmax: {{ minmax | json }} <br />
     <!-- Search by Title -->
     <div class="filter-item">
         <label for="search-title">Search</label>
@@ -23,6 +22,15 @@
         <select id="genre-select" class="form-select" [(ngModel)]="filters.genre" (ngModelChange)="onFilterChange()">
             <option value="">All Genres</option>
             <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+        </select>
+    </div>
+
+    <!-- Filter by Series -->
+    <div class="filter-item">
+        <label for="series-select">Series</label>
+        <select id="series-select" class="form-select" [(ngModel)]="filters.series" (ngModelChange)="onFilterChange()">
+            <option value="">All Series</option>
+            <option *ngFor="let s of series" [value]="s">{{ s }}</option>
         </select>
     </div>
 
@@ -77,7 +85,7 @@
         </select>
     </div>
 
-    <!-- todo add series, tags, author, isbn -->
+    <!-- todo add series, tags, isbn -->
 
     <button type="button" class="btn btn-primary me-2" (click)="filter()">Filter</button>
 
