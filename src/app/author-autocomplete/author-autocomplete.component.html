@@ -1,0 +1,25 @@
+<div class="form-group position-relative">
+  <label for="author-input" class="form-label">Author</label>
+  <input
+    id="author-input"
+    type="text"
+    class="form-control"
+    [(ngModel)]="authorInput"
+    (input)="onInputChange()"
+    placeholder="Search for an author"
+  />
+  <!-- Autocomplete Dropdown -->
+  <ul
+    class="dropdown-menu show w-100"
+    *ngIf="filteredAuthors.length > 0"
+    style="position: absolute; z-index: 1000;"
+  >
+    <li
+      class="dropdown-item"
+      *ngFor="let author of filteredAuthors"
+      (click)="selectAuthor(author)"
+    >
+      {{ author }}
+    </li>
+  </ul>
+</div>

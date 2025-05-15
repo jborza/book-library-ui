@@ -6,6 +6,16 @@
             [(ngModel)]="filters.search" (ngModelChange)="onFilterChange()" />
     </div>
 
+    <!-- Filter by Author -->
+    <div class="filter-item">
+        <app-author-autocomplete
+            [authors]="authors"
+            [(ngModel)]="filters.author"
+            (ngModelChange)="onFilterChange()"
+            placeholder="Search for an author"
+        ></app-author-autocomplete>
+    </div>
+
     <!-- Filter by Genre -->
     <div class="filter-item">
         <label for="genre-select">Genre</label>
@@ -66,7 +76,7 @@
         </select>
     </div>
 
-    <!-- toodo add series, tags, author, isbn -->
+    <!-- todo add series, tags, author, isbn -->
 
     <button type="button" class="btn btn-primary me-2" (click)="filter()">Filter</button>
 

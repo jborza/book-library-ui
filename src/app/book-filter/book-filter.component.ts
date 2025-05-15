@@ -2,12 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
+import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autocomplete.component';
 
 @Component({
   selector: 'app-book-filter',
   imports: [CommonModule,
     FormsModule,
-    NgxSliderModule
+    NgxSliderModule,
+    AuthorAutocompleteComponent
   ],
   templateUrl: './book-filter.component.html',
   styleUrl: './book-filter.component.less'
@@ -24,6 +26,7 @@ export class BookFilterComponent {
     ratingMin: 0.1,
     ratingMax: 5,
     bookType: '',
+    author: '',
   };
 
   ratingOptions: Options = {
@@ -43,6 +46,18 @@ export class BookFilterComponent {
     floor: 0,
     ceil: 1000
   };
+  
+  // TODO read from the API, or have as @Input()
+  authors: string[] = [
+    'George Orwell',
+    'Aldous Huxley',
+    'J.K. Rowling',
+    'J.R.R. Tolkien',
+    'Agatha Christie',
+    'Stephen King',
+    'Isaac Asimov',
+    'Jane Austen',
+  ];
 
   // Emit the filter changes to the parent component
   @Output() filtersChanged = new EventEmitter<any>();
