@@ -28,10 +28,11 @@
     <!-- Filter by Page Count Range -->
     <div class="filter-item">
         <label for="page-range">Page Count</label>
-        <input id="min-pages" type="number" class="form-control" placeholder="Min" [(ngModel)]="filters.minPages"
-            (ngModelChange)="onFilterChange()" />
-        <input id="max-pages" type="number" class="form-control" placeholder="Max" [(ngModel)]="filters.maxPages"
-            (ngModelChange)="onFilterChange()" />
+        <ngx-slider
+            [(value)]="filters.pagesMin"
+            [(highValue)]="filters.pagesMax"
+            [options]="pagesOptions"
+        ></ngx-slider>
     </div>
 
     <!-- Filter by Publication Year Range -->
@@ -42,9 +43,16 @@
             [(highValue)]="filters.yearMax"
             [options]="yearOptions"
         ></ngx-slider>
+    </div>
 
-        <!-- Display Selected Values -->
-        <p>Selected Range: {{ filters.yearMin }} - {{ filters.yearMax }}</p>
+    <!-- Filter by Rating  Range -->
+    <div class="filter-item">
+        <label for="rating-range">Rating</label>
+        <ngx-slider
+            [(value)]="filters.ratingMin"
+            [(highValue)]="filters.ratingMax"
+            [options]="ratingOptions"
+        ></ngx-slider>
     </div>
 
     <!-- Filter by Book Type -->
@@ -57,6 +65,9 @@
             <option value="physical">Physical Book</option>
         </select>
     </div>
+
+    <!-- toodo add series, tags, author, isbn -->
+
     <button type="button" class="btn btn-primary me-2" (click)="filter()">Filter</button>
 
 </div>

@@ -17,17 +17,31 @@ export class BookFilterComponent {
     search: '',
     genre: '',
     language: '',
-    minPages: null,
-    maxPages: null,
-    year: [2000, 2010],
-    yearMin: 2000,
-    yearMax: 2015,
+    yearMin: 1950,
+    yearMax: 2025,
+    pagesMin: 0,
+    pagesMax: 1000,
+    ratingMin: 0.1,
+    ratingMax: 5,
     bookType: '',
   };
 
+  ratingOptions: Options = {
+    floor: 0,
+    ceil: 5,
+    step: 0.1,
+  }
+
+  // TODO read from the API
   yearOptions: Options = {
     floor: 1950,
     ceil: 2025
+  };
+
+  // TODO read from the API
+  pagesOptions: Options = {
+    floor: 0,
+    ceil: 1000
   };
 
   // Emit the filter changes to the parent component
