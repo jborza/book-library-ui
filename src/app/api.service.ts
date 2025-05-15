@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-
   private baseUrl = 'http://localhost:5000';
   // private baseUrl = 'http://192.168.100.9:5000';
 
@@ -22,6 +21,7 @@ export class ApiService {
     genres: `${this.baseUrl}/genres/api`,
     series: `${this.baseUrl}/series/api`,
     authors: `${this.baseUrl}/authors/api`,
+    imageUrl: `${this.baseUrl}/static/`
   };
 
   getSearchUrl(): string {
@@ -74,5 +74,9 @@ export class ApiService {
 
   getAuthorsUrl(): string {
     return this.endpoints.authors;
+  }
+
+  getImageUrl(coverImage: any): string {
+    return `${this.endpoints.imageUrl}${coverImage}`;
   }
 }

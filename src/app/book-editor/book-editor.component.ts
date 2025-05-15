@@ -5,9 +5,9 @@ import { BookDataService } from '../book-data.service';
 import { Book } from '../book.model';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BooksService } from '../books.service';
-import { EditableFieldComponent } from '../editable-field/editable-field.component';
 import { Router } from '@angular/router';
 import { TagInputComponent } from '../tag-input/tag-input.component';
+import { ApiService } from '../api.service';
 
 // TODO convert rating entered like 4,6 to 4.6
 
@@ -16,7 +16,6 @@ import { TagInputComponent } from '../tag-input/tag-input.component';
   imports: [CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    EditableFieldComponent,
     TagInputComponent],
   templateUrl: './book-editor.component.html',
   styleUrl: './book-editor.component.less'
@@ -87,11 +86,10 @@ export class BookEditorComponent implements OnInit {
     {} as Record<string, string>
   );
 
-  @ViewChildren(EditableFieldComponent) editableFields!: QueryList<EditableFieldComponent>;
-
   constructor(private route: ActivatedRoute,
     private bookDataService: BookDataService,
     private booksService: BooksService,
+    private apiService: ApiService,
     private router: Router,
     private location: Location,
     private fb: FormBuilder,
@@ -113,6 +111,7 @@ export class BookEditorComponent implements OnInit {
       language: ['English'], // Default language
       pages: [null, [Validators.min(1)]],
       type: ['Ebook'], // Book type
+      coverImage: ['']
     });
     this.bookId = this.route.snapshot.paramMap.get('id');
     // load book data from the service
@@ -200,6 +199,7 @@ export class BookEditorComponent implements OnInit {
       pageCount: book.pages,
       rating: book.rating,
       type: displayType,
+      coverImage: book.cover_image,
     });
   }
 
@@ -215,6 +215,16 @@ export class BookEditorComponent implements OnInit {
     });
   }
 
+  // Getter for the image URL
+  get coverImageUrl(): string {
+    const coverImage = this.bookForm.get('coverImage')?.value;
+    if (coverImage?.startsWith('covers/')) {
+      // Prepend the base path for saved URLs
+      return this.apiService.getImageUrl(coverImage);
+    }
+    // Return the external URL as-is
+    return coverImage || '';
+  }
 
   // Update the book object dynamically when a field changes
   onFieldChange<K extends keyof Book>(field: K, value: Book[K]): void {
@@ -260,6 +270,7 @@ export class BookEditorComponent implements OnInit {
   }
 
   onSubmit(action: 'save' | 'saveAndClose'): void {
+    // TODO handle action 'save' - save the book and stay on the page
     if (this.bookForm.valid) {
       // Extract the form values
       const formData = this.bookForm.value;
@@ -272,8 +283,9 @@ export class BookEditorComponent implements OnInit {
       const dbType = this.reverseTypeMapping[formData.type];
       const dbLanguage = this.reverseLanguageMapping[formData.language];
       const dbGenres = formData.genres.map((genre: string) => genre.trim()).join(', '); // Join genres with commas
-      const dbTags = formData.tags.map((tag: string) => tag.trim()).join(', '); // Join tags with commas
-      // TODO cover picture
+      // tags can be a list of tags
+      const dbTags = Array.isArray(formData.tags) ?
+      formData.tags.map((tag: string) => tag.trim()).join(', ') : formData.tags;
       const saveData ={
         ...formData,
         id: this.book.id,
@@ -285,7 +297,8 @@ export class BookEditorComponent implements OnInit {
         year: formData.publishYear,
         author_name: formData.author,
         synopsis: formData.description,
-        pages: formData.pageCount,
+        cover_image: formData.coverImage,
+        page_count: formData.pages,
       };
       
       // Call the backend API to save the data

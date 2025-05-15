@@ -34,6 +34,8 @@ export class BookDetailsComponent implements OnInit {
   fetchBookDetails(bookId: string) {
     this.booksService.getBookById(bookId).subscribe((data) => {
       this.book = data;
+      // ugly hack - page_count
+      this.book.pages = this.book.pages ? this.book.pages : data.page_count;
     });
   }
 
