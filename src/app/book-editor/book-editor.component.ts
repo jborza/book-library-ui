@@ -99,7 +99,7 @@ export class BookEditorComponent implements OnInit {
     this.bookForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(255)]],
       author: [[], Validators.required], // Tag input for authors
-      publishYear: [null, [Validators.min(1000), Validators.max(9999)]],
+      year: [null, [Validators.min(1000), Validators.max(9999)]],
       series: [[]], // Tag input for series
       description: [''],
       genres: [[]], // Tag input for genres
@@ -173,7 +173,6 @@ export class BookEditorComponent implements OnInit {
     if (searchBook.cover_image)
       this.book.cover_image = searchBook.cover_image;
     
-    // maybe this will work ?!
     this.updateBookForm(this.book);
   }
 
@@ -183,11 +182,12 @@ export class BookEditorComponent implements OnInit {
     const displayType = this.typeMapping[book.book_type ?? 'ebook'] || 'Ebook';
     // genres can be a list of genres
     const genres = [book.genre?.split(', ') ?? []].flat();
+    //const year = book.year ?? book.year_published;
 
     this.bookForm.patchValue({
       title: book.title,
       author: book.author_name ?? [],
-      publishYear: book.year,
+      year: book.year,
       series: book.series,
       description: book.synopsis,
       genres: genres,
@@ -196,22 +196,25 @@ export class BookEditorComponent implements OnInit {
       publisher: book.publisher,
       language: displayLanguage,
       status: displayStatus,
-      pageCount: book.pages,
+      pages: book.pages,
       rating: book.rating,
       type: displayType,
       coverImage: book.cover_image,
     });
+    console.log('Updating year:', this.book);
   }
 
   fetchBookDetails(bookId: string) {
     this.booksService.getBookById(bookId).subscribe((data) => {
       this.editMode = true;
+      // patch year, pages
+      data.year = data.year_published;
+      data.pages = data.page_count;
       this.book = data;
       this.originalBook = { ...data }; // Create a copy of the original book data
       // now apply search match book fields to the book object
       this.updateBookFromSearch();
       this.updateBookForm(this.book);
-
     });
   }
 
@@ -294,7 +297,7 @@ export class BookEditorComponent implements OnInit {
         language: dbLanguage,
         genre: dbGenres,
         tags: dbTags,
-        year: formData.publishYear,
+        year: formData.year,
         author_name: formData.author,
         synopsis: formData.description,
         cover_image: formData.coverImage,
@@ -336,7 +339,7 @@ private getErrorMessage(controlName: string, errorKey: string, errorValue: any):
     title: 'Title',
     subtitle: 'Subtitle',
     authors: 'Authors',
-    publishYear: 'Publish Year',
+    year: 'Publish Year',
     isbn: 'ISBN',
     series: 'Series',
     description: 'Description',
