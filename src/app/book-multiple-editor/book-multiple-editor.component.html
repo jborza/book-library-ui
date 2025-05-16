@@ -1,11 +1,10 @@
 <div class="container mt-4">
+  <span class="badge text-bg-info">All items will be saved to the multiple books, if the entries are filled in</span>
+  Book IDs: {{ bookIds }}
   <form [formGroup]="bookForm">
     <!-- Title -->
     <div class="row mb-3">
-      <div class="col-md-6">
-        <label for="title" class="form-label">Title</label>
-        <input id="title" type="text" class="form-control" formControlName="title" placeholder="Enter book title" />
-      </div>
+      
       <div class="col-md-6">
         <label for="author" class="form-label">Author</label>
         <input id="author" type="text" class="form-control" formControlName="author" placeholder="Book author" />
@@ -89,33 +88,6 @@
             <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
           </select>
         </div>
-      </div>
-
-      <!-- TODO add upload cover button (NEW) -->
-      <div class="row mb-3">
-        <!-- Cover Image Preview -->
-        <div class="col-md-6">
-          <label class="form-label">Cover Image</label>
-          <div class="cover-preview">
-            <img *ngIf="bookForm.get('coverImage')?.value" 
-            [src]="coverImageUrl"
-            alt="Cover Image"
-              class="img-thumbnail thumbnail-small" style="max-width: 100%; max-height: 300px;" />
-            <p *ngIf="!bookForm.get('coverImage')?.value" class="text-muted">
-              No cover image provided.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <!-- <img *ngIf="cover_image" [src]="getCoverImageUrl()" alt="Cover Preview" class="img-thumbnail mt-2" /> -->
-        </div>
-        <!-- Cover Image URL Input -->
-        <div class="col-md-6">
-          <label for="coverImage" class="form-label">URL</label>
-          <input id="coverImage" type="text" class="form-control" formControlName="coverImage"
-            placeholder="Enter cover image URL" />
-        </div>
-
       </div>
 
       <!-- Validation Errors -->

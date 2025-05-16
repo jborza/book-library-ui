@@ -12,11 +12,13 @@ import { BookMatchResultsComponent } from './book-match-results/book-match-resul
 import { ImportResultsComponent } from './import-results/import-results.component';
 import { SeriesComponent } from './series/series.component';
 import { SettingsComponent } from './settings/settings.component';
+import { BookMultipleEditorComponent } from './book-multiple-editor/book-multiple-editor.component';
 
 
 export const routes: Routes = [
   { path: '', component: BookListComponent, pathMatch: 'full' },
   { path: 'books', component: BookListComponent, pathMatch: 'full' },
+  { path: 'books/edit_multiple', component: BookMultipleEditorComponent, pathMatch: 'full' },
   { path: 'books/:id', component: BookDetailsComponent },
   { path: 'books/:id/edit', component: BookEditorComponent },
   { path: 'books/:author', component: BookListComponent },
