@@ -1,39 +1,88 @@
 <h4>Books</h4>
-<app-book-filter
-    [authors]="authors"
-    [minmax]="minmax"
-    [genres]="genres"
-    [series]="series"
-    [languages]="languages"
+<app-book-filter [authors]="authors" [minmax]="minmax" [genres]="genres" [series]="series" [languages]="languages"
     (filtersChanged)="onFiltersChanged($event)"></app-book-filter>
-<p>{{ books.length }} books found</p>
+<p>{{ count }} books found</p>
 <table class="table table-striped">
-  <thead>
-      <tr>
-          <th>Cover</th>
-          <th (click)="sortBy('title')">Title <span [class]="getSortIcon('title')"></span></th>
-          <th (click)="sortBy('author_surname')">Author <span [class]="getSortIcon('author_surname')"></span></th>
-          <th (click)="sortBy('rating')">Rating <span [class]="getSortIcon('rating')"></span></th>
-          <th (click)="sortBy('status')">Shelves <span [class]="getSortIcon('status')"></span></th>
-          <th (click)="sortBy('book_type')">Type <span [class]="getSortIcon('book_type')"></span></th>
-          <th>Actions</th>
-      </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let book of books">
-        <td>
-            <img *ngIf="book.cover_image_tiny" src="http://localhost:5000/static/{{book.cover_image_tiny}}" class="book-cover">
-        </td>
-        <td><a [routerLink]="['/books', book.id]">{{ book.title }}</a></td>
-        <td><a [routerLink]="['/search']" [queryParams]="{ search_query: book.author_name }"> {{ book.author_name }}</a></td>
-        <td>{{ book.rating }}</td>
-        <td>{{ book.status }}</td>
-        <td>{{ book.book_type }}</td>
-        <td>
-            <a [routerLink]="['/books',book.id,'edit']" >Edit</a>
-            <!-- Add more actions as needed -->
-        </td>
-    </tr>
-</tbody>
+    <thead>
+        <tr>
+            <th>Cover</th>
+            <th (click)="sortBy('title')">Title <span [class]="getSortIcon('title')"></span></th>
+            <th (click)="sortBy('author_surname')">Author <span [class]="getSortIcon('author_surname')"></span></th>
+            <th (click)="sortBy('rating')">Rating <span [class]="getSortIcon('rating')"></span></th>
+            <th (click)="sortBy('status')">Shelves <span [class]="getSortIcon('status')"></span></th>
+            <th (click)="sortBy('book_type')">Type <span [class]="getSortIcon('book_type')"></span></th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let book of books">
+            <td>
+                <img *ngIf="book.cover_image_tiny" src="http://localhost:5000/static/{{book.cover_image_tiny}}"
+                    class="book-cover">
+            </td>
+            <td><a [routerLink]="['/books', book.id]">{{ book.title }}</a></td>
+            <td><a [routerLink]="['/search']" [queryParams]="{ search_query: book.author_name }"> {{ book.author_name
+                    }}</a></td>
+            <td>{{ book.rating }}</td>
+            <td>{{ book.status }}</td>
+            <td>{{ book.book_type }}</td>
+            <td>
+                <a [routerLink]="['/books',book.id,'edit']">Edit</a>
+                <!-- Add more actions as needed -->
+            </td>
+        </tr>
+    </tbody>
 </table>
+<!-- Pagination Controls -->
+<div class="container mt-4">
+  <!-- Book List -->
+  <div class="row">
+    <div class="col-12">
+      <h2>Book List</h2>
+      <ul class="list-group">
+        <li *ngFor="let book of paginatedBooks" class="list-group-item">
+          {{ book.title }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Pagination Controls -->
+  <nav aria-label="Page navigation" class="mt-3">
+    <ul class="pagination">
+      <!-- Previous Button -->
+      <li
+        class="page-item"
+        [class.disabled]="currentPage === 1"
+        (click)="changePage(currentPage - 1)"
+      >
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+
+      <!-- Dynamic Page Numbers and Ellipsis -->
+      <li
+        *ngFor="let page of paginationDisplay"
+        class="page-item"
+        [class.disabled]="page === '...'"
+        [class.active]="page === currentPage"
+        (click)="changePage(page)"
+      >
+        <a class="page-link" href="#">{{ page }}</a>
+      </li>
+
+      <!-- Next Button -->
+      <li
+        class="page-item"
+        [class.disabled]="currentPage === totalPages"
+        (click)="changePage(currentPage + 1)"
+      >
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
 <p *ngIf="books.length === 0">No books available.</p>
