@@ -47,42 +47,10 @@
     </div>
   </div>
 
-  <!-- Pagination Controls -->
-  <nav aria-label="Page navigation" class="mt-3">
-    <ul class="pagination">
-      <!-- Previous Button -->
-      <li
-        class="page-item"
-        [class.disabled]="currentPage === 1"
-        (click)="changePage(currentPage - 1)"
-      >
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-
-      <!-- Dynamic Page Numbers and Ellipsis -->
-      <li
-        *ngFor="let page of paginationDisplay"
-        class="page-item"
-        [class.disabled]="page === '...'"
-        [class.active]="page === currentPage"
-        (click)="changePage(page)"
-      >
-        <a class="page-link" href="#">{{ page }}</a>
-      </li>
-
-      <!-- Next Button -->
-      <li
-        class="page-item"
-        [class.disabled]="currentPage === totalPages"
-        (click)="changePage(currentPage + 1)"
-      >
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <app-books-pagination
+    [totalPages]="totalPages"    
+    [pageSize]="10"
+    (pageChanged)="onPageChanged($event)">
+</app-books-pagination>
 </div>
 <p *ngIf="books.length === 0">No books available.</p>
