@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BooksService } from '../books.service';
 import { Book } from '../book.model';
 import { BookFilterComponent } from '../book-filter/book-filter.component';
 import { BooksPaginationComponent } from '../books-pagination/books-pagination.component';
 import { BookFilter } from '../book-filter';
+import { SettingsService } from '../settings.service';
 
 @Component({
   standalone: true,
@@ -34,13 +35,16 @@ export class BookListComponent implements OnInit {
   series: string[] = [];
   count: number = 0;
   totalPages: number = 0;
-  readonly pageSize: number = 10; // Number of items per page
+  pageSize: number = 10; // Number of items per page
   paginatedBooks: Book[] = [];
   currentPage: number = 1; // Current page number
-  filters: any; //TODO type this
+  filters: any; //TODO type this - BookFilter
+  selectedBookIds: number[] = []; // IDs of selected books
 
   constructor(private booksService: BooksService,
     private route: ActivatedRoute,
+    private settingsService: SettingsService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -51,6 +55,7 @@ export class BookListComponent implements OnInit {
       this.fetchBooks();
       this.fetchAuthors();
     });
+    this.pageSize = this.settingsService.getSetting('pageSize') || this.pageSize;
   }
 
   onPageChanged(page: number): void {
@@ -127,5 +132,42 @@ export class BookListComponent implements OnInit {
     this.filters = filters;
     this.fetchBooks();
     // TODO probably also reset the page to 1
+  }
+
+  isSelected(bookId: number): boolean {
+    return this.selectedBookIds.includes(bookId);
+  }
+
+  // Toggle selection for a single book
+  toggleSelection(bookId: number): void {
+    if (this.isSelected(bookId)) {
+      this.selectedBookIds = this.selectedBookIds.filter((id) => id !== bookId);
+    } else {
+      this.selectedBookIds.push(bookId);
+    }
+  }
+
+  // Toggle selection for all books
+  toggleAllSelections(event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+    if (checked) {
+      this.selectedBookIds = this.paginatedBooks.map((book) => book.id);
+    } else {
+      this.selectedBookIds = [];
+    }
+  }
+
+
+  // Check if all books are selected
+  areAllSelected(): boolean {
+    return this.paginatedBooks.every((book) => this.isSelected(book.id));
+  }
+
+  // Navigate to the edit page with selected book IDs
+  editSelectedBooks(): void {
+    const queryParams = this.selectedBookIds.join(',');
+    this.router.navigate([`/books/edit_multiple`], {
+      queryParams: { id: queryParams },
+    });
   }
 }
