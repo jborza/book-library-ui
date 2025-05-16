@@ -138,6 +138,27 @@ export class BookListComponent implements OnInit {
     return this.selectedBookIds.includes(bookId);
   }
 
+  // Handle row click (supports Ctrl+click for multi-selection)
+  onRowClick(bookId: number, event: MouseEvent): void {
+    if (event.ctrlKey) {
+      // Toggle selection for Ctrl+Click
+      this.toggleSelection(bookId);
+    } else {
+      // Clear other selections and select only the clicked row
+      this.selectedBookIds = [bookId];
+    }
+  }
+
+  // Handle right-click (context menu) to select a row
+  onRowRightClick(bookId: number, event: MouseEvent): void {
+    event.preventDefault(); // Prevent the default browser context menu
+
+    if (!this.isSelected(bookId)) {
+      // Add the right-clicked row to the selection
+      this.selectedBookIds.push(bookId);
+    }
+  }
+
   // Toggle selection for a single book
   toggleSelection(bookId: number): void {
     if (this.isSelected(bookId)) {

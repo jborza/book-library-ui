@@ -7,11 +7,7 @@
         <tr>
             <th>
                 <!-- Select All Checkbox -->
-                <input
-                    type="checkbox"
-                    (change)="toggleAllSelections($event)"
-                    [checked]="areAllSelected()"
-                />
+                <input type="checkbox" (change)="toggleAllSelections($event)" [checked]="areAllSelected()" />
             </th>
             <th>Cover</th>
             <th (click)="sortBy('title')">Title <span [class]="getSortIcon('title')"></span></th>
@@ -23,15 +19,12 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let book of books">
+        <tr *ngFor="let book of books" [class.selected]="isSelected(book.id)" (click)="onRowClick(book.id, $event)"
+            (contextmenu)="onRowRightClick(book.id, $event)">
             <!-- Row Checkbox -->
             <td>
-                <input
-                    type="checkbox"
-                    [checked]="isSelected(book.id)"
-                    (change)="toggleSelection(book.id)"
-                />
-          </td>
+                <input type="checkbox" [checked]="isSelected(book.id)" (change)="toggleSelection(book.id)" />
+            </td>
             <td>
                 <img *ngIf="book.cover_image_tiny" src="http://localhost:5000/static/{{book.cover_image_tiny}}"
                     class="book-cover">
@@ -49,12 +42,8 @@
         </tr>
     </tbody>
 </table>
-<button
-    class="btn btn-primary"
-    [disabled]="selectedBookIds.length === 0"
-    (click)="editSelectedBooks()"
-    *ngIf="selectedBookIds.length > 0"
-  >
+<button class="btn btn-primary" [disabled]="selectedBookIds.length === 0" (click)="editSelectedBooks()"
+    *ngIf="selectedBookIds.length > 0">
     Edit Selected Books
 </button>
 <!-- Pagination Controls -->
