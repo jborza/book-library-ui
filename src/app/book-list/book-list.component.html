@@ -35,22 +35,19 @@
 </table>
 <!-- Pagination Controls -->
 <div class="container mt-4">
-  <!-- Book List -->
-  <div class="row">
-    <div class="col-12">
-      <h2>Book List</h2>
-      <ul class="list-group">
-        <li *ngFor="let book of paginatedBooks" class="list-group-item">
-          {{ book.title }}
-        </li>
-      </ul>
+    <!-- Book List -->
+    <div class="row">
+        <div class="col-12">
+            <h2>Book List</h2>
+            <ul class="list-group">
+                <li *ngFor="let book of paginatedBooks" class="list-group-item">
+                    {{ book.title }}
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 
-  <app-books-pagination
-    [totalPages]="totalPages"    
-    [pageSize]="10"
-    (pageChanged)="onPageChanged($event)">
-</app-books-pagination>
+    <app-books-pagination [totalPages]="totalPages" [pageSize]="pageSize"
+        (pageChanged)="onPageChanged($event)"></app-books-pagination>
 </div>
 <p *ngIf="books.length === 0">No books available.</p>

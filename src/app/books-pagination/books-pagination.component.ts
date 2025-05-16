@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-books-pagination',
@@ -8,7 +8,7 @@ import { Component, Input, Output, SimpleChanges } from '@angular/core';
   styleUrl: './books-pagination.component.less'
 })
 export class BooksPaginationComponent {
-  @Output() pageChange: (page: number) => void = () => { };
+  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   currentPage: number = 1;
   @Input() totalPages: number = 0;
   paginationDisplay: (number | string)[] = [];
@@ -72,8 +72,7 @@ export class BooksPaginationComponent {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
 
-    //this.paginatedBooks = this.books.slice(startIndex, endIndex);
-    this.pageChange(this.currentPage); // Emit the page change event
+    this.pageChanged.emit(this.currentPage); // Emit the page change event
   }
 
   setupPagination(): void {

@@ -16,7 +16,7 @@ export class BooksService {
     return this.http.get(this.apiService.getBookApiUrl());
   }
 
-  getBooksFiltered(status?:string, type?:string, count?: number): Observable<any> {
+  getBooksFiltered(status?:string, type?:string, currentPage?: number, pageSize?: number): Observable<any> {
     let params = new HttpParams();
     if (status) {
       params = params.set('status', status);
@@ -24,8 +24,11 @@ export class BooksService {
     if (type) {
       params = params.set('type', type);
     }
-    if(count) {
-      params = params.set('count', count.toString());
+    if(pageSize) {
+      params = params.set('page_size', pageSize.toString());
+    }
+    if(currentPage) {
+      params = params.set('page', currentPage.toString());
     }
 
     return this.http.get(this.apiService.getGetUrl(), { params });

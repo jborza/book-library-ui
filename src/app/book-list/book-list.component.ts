@@ -26,18 +26,16 @@ export class BookListComponent implements OnInit {
   typeFilter: string = '';
   sortColumn: string = ''; // Column to sort by
   sortDirection: boolean = true; // true = ascending, false = descending
-  bookPerPage: number = 1000;
   authors: string[] = [];
   minmax: any;
   genres: string[] = [];
   languages: string[] = [];
   series: string[] = [];
   count: number = 0;
-  currentPage: number = 1;
   totalPages: number = 0;
-  paginationDisplay: (number | string)[] = [];
   readonly pageSize: number = 10; // Number of items per page
   paginatedBooks: Book[] = [];
+  currentPage: number = 1; // Current page number
 
   constructor(private booksService: BooksService,
     private route: ActivatedRoute,
@@ -48,18 +46,18 @@ export class BookListComponent implements OnInit {
       this.authorName = params.get('author') || '';
       this.typeFilter = params.get('type') || '';
       this.statusFilter = params.get('status') || '';
-
       this.fetchBooks();
     });
   }
 
-  onPageChanged($event: Event) {
-    const page = ($event as CustomEvent).detail.page;
-    alert('Page changed to '+ page);
+  onPageChanged(page: number): void {
+    this.currentPage = page;
+    this.fetchBooks();
   }
 
   fetchBooks(): void {
-    this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter, this.bookPerPage)
+    console.log('Fetching books with filters:', this.statusFilter, this.typeFilter, this.currentPage, this.pageSize);
+    this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter, this.currentPage, this.pageSize)
       .subscribe((response) => {
         this.minmax = response.minmax;
         this.authors = response.authors;

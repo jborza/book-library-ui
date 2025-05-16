@@ -83,13 +83,13 @@ export class BookFilterComponent {
     }
     if(changes['series']) {
       this.series = changes['series'].currentValue;
-      console.log('BookFilterComponent series:', this.series);
     }
   }
 
   // Emit the updated filters whenever a filter is changed
   onFilterChange() {
     //this.filtersChanged.emit(this.filters);
+    // TODO emit, so the list can reload the books
   }
 
   filter() {
