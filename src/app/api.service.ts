@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
   private baseUrl = 'http://localhost:5000';
@@ -16,12 +16,14 @@ export class ApiService {
     importCsv: `${this.baseUrl}/import/import_csv_api`,
     importNotes: `${this.baseUrl}/import/import_notes_api`,
     confirmImport: `${this.baseUrl}/import/confirm_import_api`,
-    getBooksByIds: (ids: string[]) => `${this.baseUrl}/books/api/byid?ids=${ids.join(',')}`,
+    getBooksByIds: (ids: string[]) =>
+      `${this.baseUrl}/books/api/byid?ids=${ids.join(',')}`,
     bookById: (bookId: string) => `${this.baseUrl}/book/${bookId}`,
     genres: `${this.baseUrl}/genres/api`,
     series: `${this.baseUrl}/series/api`,
     authors: `${this.baseUrl}/authors/api`,
-    imageUrl: `${this.baseUrl}/static/`
+    authorsSearch: `${this.baseUrl}/books/api/authors`,
+    imageUrl: `${this.baseUrl}/static/`,
   };
 
   getSearchUrl(): string {
@@ -40,15 +42,15 @@ export class ApiService {
     return this.endpoints.saveBook(bookId);
   }
 
-  getGetUrl(): string{
+  getGetUrl(): string {
     return this.endpoints.get;
   }
 
-  getImportCsvUrl() : string {
+  getImportCsvUrl(): string {
     return this.endpoints.importCsv;
   }
 
-  getImportNotesUrl() : string {
+  getImportNotesUrl(): string {
     return this.endpoints.importNotes;
   }
 
@@ -56,7 +58,7 @@ export class ApiService {
     return this.endpoints.getBooksByIds(ids);
   }
 
-  getConfirmImportUrl() : string {
+  getConfirmImportUrl(): string {
     return this.endpoints.confirmImport;
   }
 
@@ -74,6 +76,10 @@ export class ApiService {
 
   getAuthorsUrl(): string {
     return this.endpoints.authors;
+  }
+
+  getAuthorSearchsUrl(): string {
+    return this.endpoints.authorsSearch;
   }
 
   getImageUrl(coverImage: any): string {

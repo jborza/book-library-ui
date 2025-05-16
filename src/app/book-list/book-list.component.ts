@@ -47,6 +47,7 @@ export class BookListComponent implements OnInit {
       this.typeFilter = params.get('type') || '';
       this.statusFilter = params.get('status') || '';
       this.fetchBooks();
+      this.fetchAuthors();
     });
   }
 
@@ -55,12 +56,20 @@ export class BookListComponent implements OnInit {
     this.fetchBooks();
   }
 
+  // need to fetch authors for the filter
+  // doesn't change on paging, only on filter change
+  fetchAuthors(): void {
+    this.booksService.getAuthorsFiltered().subscribe((response) => {
+      this.authors = response.authors;
+    });
+  }
+
   fetchBooks(): void {
     console.log('Fetching books with filters:', this.statusFilter, this.typeFilter, this.currentPage, this.pageSize);
-    this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter, this.currentPage, this.pageSize)
+    this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter, this.search, this.currentPage, this.pageSize)
       .subscribe((response) => {
         this.minmax = response.minmax;
-        this.authors = response.authors;
+        // this.authors = response.authors;
         this.genres = response.genres;
         this.languages = response.languages;
         this.series = response.series;

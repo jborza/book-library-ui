@@ -16,7 +16,13 @@ export class BooksService {
     return this.http.get(this.apiService.getBookApiUrl());
   }
 
-  getBooksFiltered(status?:string, type?:string, currentPage?: number, pageSize?: number): Observable<any> {
+  // TODO definitely move this to an authors service
+  // TODO add filters
+  getAuthorsFiltered(): Observable<any> {
+    return this.http.get(this.apiService.getAuthorSearchsUrl());
+  }
+
+  getBooksFiltered(status?:string, type?:string, search?:string, currentPage?: number, pageSize?: number): Observable<any> {
     let params = new HttpParams();
     if (status) {
       params = params.set('status', status);
@@ -30,7 +36,10 @@ export class BooksService {
     if(currentPage) {
       params = params.set('page', currentPage.toString());
     }
-
+    if(search) {
+      params = params.set('search', search);
+    }
+    console.log('fetching books from ', this.apiService.getGetUrl(), ' with params:', params.toString());
     return this.http.get(this.apiService.getGetUrl(), { params });
   }
 
