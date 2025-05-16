@@ -118,4 +118,14 @@ export class BooksService {
     return this.http.delete(url);
   }
 
+  updateBooks(bookIds: number[], data: any) : Observable<any> {
+    const url = this.apiService.getUpdateBooksUrl();
+    let body = {
+      book_ids: bookIds,
+      data: data //TODO see how it looks like in the backend
+    };
+
+    return this.http.post(url, body);
+  }
+
 }

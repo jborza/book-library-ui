@@ -24,6 +24,7 @@ export class ApiService {
     authors: `${this.baseUrl}/authors/api`,
     authorsSearch: `${this.baseUrl}/books/api/authors`,
     imageUrl: `${this.baseUrl}/static/`,
+    updateBooks: `${this.baseUrl}/books/update_books_api`,
   };
 
   getSearchUrl(): string {
@@ -84,5 +85,9 @@ export class ApiService {
 
   getImageUrl(coverImage: any): string {
     return `${this.endpoints.imageUrl}${coverImage}`;
+  }
+
+  getUpdateBooksUrl(): string {
+    return this.endpoints.updateBooks;
   }
 }
