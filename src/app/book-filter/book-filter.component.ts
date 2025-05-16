@@ -3,6 +3,7 @@ import { Component, Output, EventEmitter, Input, SimpleChanges } from '@angular/
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autocomplete.component';
+import { BookFilter } from '../book-filter';
 
 @Component({
   selector: 'app-book-filter',
@@ -15,20 +16,7 @@ import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autoc
   styleUrl: './book-filter.component.less'
 })
 export class BookFilterComponent {
-  filters = {
-    search: '',
-    genre: '',
-    language: '',
-    yearMin: 1900,
-    yearMax: 2025,
-    pagesMin: 0,
-    pagesMax: 1000,
-    ratingMin: 0.1,
-    ratingMax: 5,
-    bookType: '',
-    author: '',
-    series: ''
-  };
+  filters: BookFilter = new BookFilter();
 
   ratingOptions: Options = {
     floor: 0,

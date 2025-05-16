@@ -5,6 +5,7 @@ import { BooksService } from '../books.service';
 import { Book } from '../book.model';
 import { BookFilterComponent } from '../book-filter/book-filter.component';
 import { BooksPaginationComponent } from '../books-pagination/books-pagination.component';
+import { BookFilter } from '../book-filter';
 
 @Component({
   standalone: true,
@@ -36,6 +37,7 @@ export class BookListComponent implements OnInit {
   readonly pageSize: number = 10; // Number of items per page
   paginatedBooks: Book[] = [];
   currentPage: number = 1; // Current page number
+  filters: any; //TODO type this
 
   constructor(private booksService: BooksService,
     private route: ActivatedRoute,
@@ -60,13 +62,20 @@ export class BookListComponent implements OnInit {
   // doesn't change on paging, only on filter change
   fetchAuthors(): void {
     this.booksService.getAuthorsFiltered().subscribe((response) => {
-      this.authors = response.authors;
+      this.authors = response;
+      console.log('Authors:', this.authors);
     });
   }
 
   fetchBooks(): void {
     console.log('Fetching books with filters:', this.statusFilter, this.typeFilter, this.currentPage, this.pageSize);
-    this.booksService.getBooksFiltered(this.statusFilter, this.typeFilter, this.search, this.currentPage, this.pageSize)
+    this.booksService.getBooksFiltered(this.statusFilter,
+      this.typeFilter,
+      this.filters,
+      this.sortColumn,
+      this.sortDirection,
+      this.currentPage,
+      this.pageSize)
       .subscribe((response) => {
         this.minmax = response.minmax;
         // this.authors = response.authors;
@@ -102,14 +111,7 @@ export class BookListComponent implements OnInit {
       this.sortDirection = true; // Default to ascending
     }
 
-    this.books = [...this.originalBooks]; // Reset to original list before sorting
-    this.books.sort((a: any, b: any) => {
-      const valueA = a[column] === null || a[column] === undefined ? '' : a[column];
-      const valueB = b[column] === null || b[column] === undefined ? '' : b[column];
-
-      const compared = valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
-      return compared * (this.sortDirection ? 1 : -1);
-    });
+    this.fetchBooks(); // Fetch books again after sorting
   }
 
   getSortIcon(column: string): string {
@@ -120,8 +122,10 @@ export class BookListComponent implements OnInit {
   }
 
   // Update the list when filters change
-  onFiltersChanged(filters: any) {
-    //this.fetchBooks(filters);
+  onFiltersChanged(filters: BookFilter): void {
     console.log('Filters changed:', filters);
+    this.filters = filters;
+    this.fetchBooks();
+    // TODO probably also reset the page to 1
   }
 }

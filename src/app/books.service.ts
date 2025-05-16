@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Book } from './book.model';
 import { ApiService } from './api.service';
+import { BookFilter } from './book-filter';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,11 +19,11 @@ export class BooksService {
 
   // TODO definitely move this to an authors service
   // TODO add filters
-  getAuthorsFiltered(): Observable<any> {
+  getAuthorsFiltered(search?: BookFilter): Observable<any> {
     return this.http.get(this.apiService.getAuthorSearchsUrl());
   }
 
-  getBooksFiltered(status?:string, type?:string, search?:string, currentPage?: number, pageSize?: number): Observable<any> {
+  getBooksFiltered(status?:string, type?:string, search?:BookFilter, sortColumn?:string, sortAscending?:boolean, currentPage?: number, pageSize?: number): Observable<any> {
     let params = new HttpParams();
     if (status) {
       params = params.set('status', status);
@@ -36,8 +37,44 @@ export class BooksService {
     if(currentPage) {
       params = params.set('page', currentPage.toString());
     }
-    if(search) {
-      params = params.set('search', search);
+    if(search?.search) {
+      params = params.set('search', search.search);
+    }
+    if(search?.genre) {
+      params = params.set('genre', search.genre);
+    }
+    if(search?.language) {
+      params = params.set('language', search.language);
+    }
+    if(search?.yearMin) {
+      params = params.set('year_min', search.yearMin.toString());
+    }
+    if(search?.yearMax) {
+      params = params.set('year_max', search.yearMax.toString());
+    }
+    if(search?.pagesMin) {
+      params = params.set('pages_min', search.pagesMin.toString());
+    }
+    if(search?.pagesMax) {
+      params = params.set('pages_max', search.pagesMax.toString());
+    }
+    if(search?.ratingMin) {
+      params = params.set('rating_min', search.ratingMin.toString());
+    }
+    if(search?.ratingMax) {
+      params = params.set('rating_max', search.ratingMax.toString());
+    }
+    if(search?.author) {
+      params = params.set('author', search.author);
+    }
+    if(search?.series) {
+      params = params.set('series', search.series);
+    }
+    if(sortColumn) {
+      params = params.set('sort_column', sortColumn);
+    }
+    if(sortAscending) {
+      params = params.set('sort_ascending', sortAscending);
     }
     console.log('fetching books from ', this.apiService.getGetUrl(), ' with params:', params.toString());
     return this.http.get(this.apiService.getGetUrl(), { params });
