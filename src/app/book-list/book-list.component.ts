@@ -48,6 +48,7 @@ export class BookListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.pageSize = this.settingsService.getSetting('pageSize');
     this.route.queryParamMap.subscribe((params) => {
       this.authorName = params.get('author') || '';
       this.typeFilter = params.get('type') || '';
@@ -55,7 +56,6 @@ export class BookListComponent implements OnInit {
       this.fetchBooks();
       this.fetchAuthors();
     });
-    this.pageSize = this.settingsService.getSetting('pageSize') || this.pageSize;
   }
 
   onPageChanged(page: number): void {
@@ -68,7 +68,6 @@ export class BookListComponent implements OnInit {
   fetchAuthors(): void {
     this.booksService.getAuthorsFiltered().subscribe((response) => {
       this.authors = response;
-      console.log('Authors:', this.authors);
     });
   }
 
