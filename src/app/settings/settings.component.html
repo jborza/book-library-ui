@@ -1,0 +1,12 @@
+<div class="settings">
+  <label for="pageSize">Preferred Page Size:</label>
+  <input
+    type="number"
+    id="pageSize"
+    [(ngModel)]="pageSize"
+    class="form-control"
+  />
+  <button (click)="saveSettings()" class="btn btn-primary mt-3">
+    Save Settings
+  </button>
+</div>

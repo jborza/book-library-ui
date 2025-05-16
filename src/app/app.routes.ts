@@ -11,6 +11,7 @@ import { TestComponent } from './test/test.component';
 import { BookMatchResultsComponent } from './book-match-results/book-match-results.component';
 import { ImportResultsComponent } from './import-results/import-results.component';
 import { SeriesComponent } from './series/series.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 export const routes: Routes = [
@@ -28,5 +29,6 @@ export const routes: Routes = [
   { path: 'test', component: TestComponent},
   { path: 'book/:id/match', component: BookMatchResultsComponent },
   { path: 'import_results', component: ImportResultsComponent },
-  { path: 'series', component: SeriesComponent}
+  { path: 'series', component: SeriesComponent},
+  { path: 'settings', component: SettingsComponent}
 ];

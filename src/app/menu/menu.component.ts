@@ -60,6 +60,7 @@ export class MenuComponent {
         title:'',
         items: [
             {name: 'Add Book', url: '/add', icon: '➕'},
+            {name: 'Settings', url: '/settings', icon: '⚙'},
         ]
     }
   ];
