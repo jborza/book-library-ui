@@ -3,22 +3,22 @@
     <ul class="pagination">
         <!-- Previous Button -->
         <li class="page-item" [class.disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
-            <a class="page-link" href="#" aria-label="Previous">
+            <button class="page-link" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
-            </a>
+            </button>
         </li>
 
         <!-- Dynamic Page Numbers and Ellipsis -->
         <li *ngFor="let page of paginationDisplay" class="page-item" [class.disabled]="page === '...'"
             [class.active]="page === currentPage" (click)="changePage(page)">
-            <a class="page-link" href="#">{{ page }}</a>
+            <button class="page-link">{{ page }}</button>
         </li>
 
         <!-- Next Button -->
         <li class="page-item" [class.disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
-            <a class="page-link" href="#" aria-label="Next">
+            <button class="page-link" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
-            </a>
+            </button>
         </li>
     </ul>
 </nav>
