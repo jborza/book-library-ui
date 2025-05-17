@@ -36,7 +36,6 @@ export class BookListComponent implements OnInit {
   count: number = 0;
   totalPages: number = 0;
   pageSize: number = 10; // Number of items per page
-  paginatedBooks: Book[] = [];
   currentPage: number = 1; // Current page number
   filters: BookFilter | undefined;;
   selectedBookIds: number[] = []; // IDs of selected books
@@ -172,7 +171,7 @@ export class BookListComponent implements OnInit {
   toggleAllSelections(event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
     if (checked) {
-      this.selectedBookIds = this.paginatedBooks.map((book) => book.id);
+      this.selectedBookIds = this.books.map((book) => book.id);
     } else {
       this.selectedBookIds = [];
     }
@@ -181,7 +180,7 @@ export class BookListComponent implements OnInit {
 
   // Check if all books are selected
   areAllSelected(): boolean {
-    return this.paginatedBooks.every((book) => this.isSelected(book.id));
+    return this.books.every((book) => this.isSelected(book.id));
   }
 
   // Navigate to the edit page with selected book IDs
