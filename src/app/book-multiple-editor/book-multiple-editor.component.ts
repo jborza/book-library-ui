@@ -40,7 +40,7 @@ export class BookMultipleEditorComponent {
       }
     });
     this.bookForm = this.fb.group({
-      author: [[], Validators.required], // Tag input for authors
+      author: [[]], 
       year: [null, [Validators.min(1000), Validators.max(9999)]],
       series: [''], // Tag input for series
       description: [''],
@@ -190,5 +190,66 @@ export class BookMultipleEditorComponent {
       // Log the form data (for debugging purposes)
       console.log('Form Submitted:', formData);
     }
+    else{
+      // Mark all controls as touched to display validation errors
+      this.bookForm.markAllAsTouched();
+      this.validationErrors = this.getAllValidationErrors();
+      console.log('Form is invalid. Please fix the errors.');
+    }
+  }
+
+  private getAllValidationErrors(): string[] {
+    const errors: string[] = [];
+
+    Object.keys(this.bookForm.controls).forEach((controlName) => {
+      const control = this.bookForm.get(controlName);
+
+      if (control && control.errors) {
+        Object.keys(control.errors).forEach((errorKey) => {
+          const errorMessage = this.getErrorMessage(
+            controlName,
+            errorKey,
+            control.errors![errorKey]
+          );
+          if (errorMessage) {
+            errors.push(errorMessage);
+          }
+        });
+      }
+    });
+
+    return errors;
+  }
+
+  private getErrorMessage(
+    controlName: string,
+    errorKey: string,
+    errorValue: any
+  ): string | null {
+    const controlLabels: Record<string, string> = {
+      authors: 'Author',
+      year: 'Publish Year',
+      isbn: 'ISBN',
+      series: 'Series',
+      description: 'Description',
+      genres: 'Genres',
+      tags: 'Tags',
+      status: 'Status',
+      rating: 'Rating',
+      publisher: 'Publisher',
+    };
+
+    console.log('Control Name:', controlName);
+    console.log('Error Key:', errorKey);
+    const errorMessages: Record<string, string> = {
+      required: `${controlLabels[controlName]} is required.`,
+      maxlength: `${controlLabels[controlName]} must not exceed ${errorValue.requiredLength} characters.`,
+      minlength: `${controlLabels[controlName]} must be at least ${errorValue.requiredLength} characters.`,
+      pattern: `${controlLabels[controlName]} format is invalid.`,
+      min: `${controlLabels[controlName]} must be at least ${errorValue.min}.`,
+      max: `${controlLabels[controlName]} must be at most ${errorValue.max}.`,
+    };
+
+    return errorMessages[errorKey] || null;
   }
 }
