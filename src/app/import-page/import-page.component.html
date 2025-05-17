@@ -7,10 +7,9 @@
       target="_blank"
       >How to export</a
     >
-    The CSV file should contain the following columns:
-      Title,Author,
-    It can also contain:
-      Description,Category,Publisher,Year Published,ISBN,ISBN13,Number of Pages,Bookshelves
+    <p>The CSV file should contain the following columns: Title,Author</p>
+    It can also contain: Description,Category,Publisher,Year
+    Published,ISBN,ISBN13,Number of Pages,Bookshelves
     <div class="mb-3">
       <label for="formFile" class="form-label"
         >Export your books from Goodreads and upload the CSV file here.
@@ -24,9 +23,19 @@
         (change)="onFileChange($event)"
         required
       />
-      <div *ngIf="importCsvForm.get('csvFile')?.invalid && importCsvForm.get('csvFile')?.touched" class="text-danger">
-      <small *ngIf="importCsvForm.get('csvFile')?.errors?.['required']">File is required.</small>
-      <small *ngIf="importCsvForm.get('csvFile')?.errors?.['pattern']">Only .csv files are allowed.</small>
+      <div
+        *ngIf="
+          importCsvForm.get('csvFile')?.invalid &&
+          importCsvForm.get('csvFile')?.touched
+        "
+        class="text-danger"
+      >
+        <small *ngIf="importCsvForm.get('csvFile')?.errors?.['required']"
+          >File is required.</small
+        >
+        <small *ngIf="importCsvForm.get('csvFile')?.errors?.['pattern']"
+          >Only .csv files are allowed.</small
+        >
       </div>
     </div>
     <br />
@@ -51,9 +60,7 @@
         value="titleAuthor"
         formControlName="importFormat"
       />
-      <label class="form-check-label" for="titleAuthor">
-        title - author
-      </label>
+      <label class="form-check-label" for="titleAuthor"> title - author </label>
     </div>
     <div class="form-check">
       <input
@@ -65,9 +72,7 @@
         value="authorTitle"
         checked
       />
-      <label class="form-check-label" for="authorTitle">
-        author - title
-      </label>
+      <label class="form-check-label" for="authorTitle"> author - title </label>
     </div>
     <textarea name="notes" rows="10" cols="80" formControlName="notes" required>
     </textarea>
