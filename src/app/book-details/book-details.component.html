@@ -2,43 +2,86 @@
 <div class="book-detail-container">
   <div class="book-main">
     <!-- todo fill in http://localhost:5000/static/ -->
-    <img src="{{ getCoverImageUrl() }}" alt="{{ book.title }} cover"
-      class="book-cover thumbnail-small" />
+    <img
+      src="{{ getCoverImageUrl() }}"
+      alt="{{ book.title }} cover"
+      class="book-cover thumbnail-small"
+    />
     <div class="book-info">
       <h1 class="book-title">{{ book.title }}</h1>
       <p class="book-authors">
-        <a [routerLink]="['/search']" [queryParams]="{ search_query: book.author_name }" style="text-decoration: none;">
+        <a
+          [routerLink]="['/search']"
+          [queryParams]="{ search_query: book.author_name }"
+          style="text-decoration: none"
+        >
           {{ book.author_name }}
         </a>
       </p>
       <p *ngIf="book.status">Status: {{ book.status }}</p>
       <div *ngIf="book.rating" class="book-rating">
-        <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= (book.rating | toNumber)">★</span>
+        <span
+          *ngFor="let star of [1, 2, 3, 4, 5]"
+          class="star"
+          [class.filled]="star <= (book.rating | toNumber)"
+          >★</span
+        >
         <span class="rating-value">{{ book.rating }}</span>
       </div>
       <span *ngIf="book.review" class="rating-info">{{ book.review }}</span>
       <p class="book-description">{{ book.synopsis }}</p>
-      <button class="btn btn-primary m-1" (click)='edit()'>Edit</button>
-      <button class="btn btn-secondary m-1" (click)='match()'>Match (by search)</button>
+      <button class="btn btn-primary m-1" (click)="edit()">Edit</button>
+      <button class="btn btn-secondary m-1" (click)="match()">
+        Match (by search)
+      </button>
       <br />
-      <button class="btn btn-info m-1" (click)='wantToRead()'>Want to read</button>
-      <button class="btn btn-info m-1" (click)='currentlyReading()'>Set to currently reading</button>
-      <button class="btn btn-info m-1" (click)='read()'>Read</button>
+      <button class="btn btn-info m-1" (click)="wantToRead()">
+        Want to read
+      </button>
+      <button class="btn btn-info m-1" (click)="currentlyReading()">
+        Set to currently reading
+      </button>
+      <button class="btn btn-info m-1" (click)="read()">Read</button>
       <br />
-      <button class="btn btn-secondary m-1" (click)='buy("amazon")'>Buy - Amazon</button>
-      <button class="btn btn-secondary m-1" (click)='buy("martinus")'>Buy - Martinus</button>
-      <button class="btn btn-secondary m-1" (click)='buy("knihobot")'>Buy - Knihobot</button>
+      <button class="btn btn-secondary m-1" (click)="buy('amazon')">
+        Buy - Amazon
+      </button>
+      <button class="btn btn-secondary m-1" (click)="buy('martinus')">
+        Buy - Martinus
+      </button>
+      <button class="btn btn-secondary m-1" (click)="buy('knihobot')">
+        Buy - Knihobot
+      </button>
       <br />
       <button class="btn btn-danger m-1" (click)="delete()">Delete</button>
     </div>
   </div>
   <div class="book-details">
     <p *ngIf="book.series" class="book-meta">Series: {{ book.series }}</p>
-    <p *ngIf="book.genre" class="book-meta">Genre: {{ book.genre }} </p>
+    <p class="book-meta" *ngIf="book.genre">
+      Genres:
+      <span *ngFor="let genre of genres">
+        <a
+          [routerLink]="['/search']"
+          [queryParams]="{ search_query: genre }"
+          style="text-decoration: none"
+        >
+          {{ genre }} </a
+        >,
+      </span>
+    </p>
+    <p class="book-meta" *ngIf="book.tags">
+      Tags:
+      <span *ngFor="let tag of tags">
+        {{ tag }}
+      </span>
+    </p>
     <p *ngIf="book.book_type" class="book-meta">Type: {{ book.book_type }}</p>
     <p *ngIf="book.pages" class="book-meta">{{ book.pages }} pages</p>
     <p *ngIf="book.year" class="book-meta">First published: {{ book.year }}</p>
-    <p *ngIf="book.publisher" class="book-meta">Publisher: {{ book.publisher }}</p>
+    <p *ngIf="book.publisher" class="book-meta">
+      Publisher: {{ book.publisher }}
+    </p>
     <p *ngIf="book.isbn" class="book-meta">ISBN: {{ book.isbn }}</p>
     <p *ngIf="book.language" class="book-meta">Language: {{ book.language }}</p>
     <p *ngIf="book.pages" class="book-meta">Pages: {{ book.pages }}</p>

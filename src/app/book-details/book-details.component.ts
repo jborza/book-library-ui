@@ -15,6 +15,8 @@ import { ToNumberPipe } from '../pipe/to-number.pipe';
 export class BookDetailsComponent implements OnInit {
 
   bookId: string | null = null;
+  genres: string[] = [];
+  tags: string[] = [];
   book!: Book;
 
   constructor(private route: ActivatedRoute,
@@ -37,6 +39,9 @@ export class BookDetailsComponent implements OnInit {
       // ugly hack - page_count
       this.book.pages = this.book.pages ? this.book.pages : data.page_count;
       this.book.year = data.year_published;
+      // split genres and tags
+      this.genres = data.genre ? data.genre.split(',') : [];
+      this.tags = data.tags ? data.tags.split(',') : [];
     });
   }
 
