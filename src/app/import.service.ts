@@ -13,7 +13,6 @@ export class ImportService {
   ) { }
 
   importCsv(formData: FormData): Observable<any> {
-    // Replace with your actual API endpoint
     const apiUrl = this.apiService.getImportCsvUrl();
     return this.http.post(apiUrl, formData);
   }

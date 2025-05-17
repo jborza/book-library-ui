@@ -40,7 +40,7 @@ export class BookMultipleEditorComponent {
       }
     });
     this.bookForm = this.fb.group({
-      author: [[]], 
+      author: [[]],
       year: [null, [Validators.min(1000), Validators.max(9999)]],
       series: [''], // Tag input for series
       description: [''],
