@@ -46,8 +46,8 @@ export class BookFilterComponent {
 
   get ratingOptions() {
     return {
-      floor: this.minmax.rating?.min || 0.1,
-      ceil: this.minmax.rating?.max || 5,
+      floor: this.minmax?.rating?.min || 0.1,
+      ceil: this.minmax?.rating?.max || 5,
       step: 0.1,
       disabled: !this.ratingEnabled,
     };
@@ -55,16 +55,16 @@ export class BookFilterComponent {
 
   get yearOptions() {
     return {
-      floor: this.minmax.year?.min || 1900,
-      ceil: this.minmax.year?.max || new Date().getFullYear(),
+      floor: this.minmax?.year?.min || 1900,
+      ceil: this.minmax?.year?.max || new Date().getFullYear(),
       disabled: !this.yearEnabled,
     };
   }
 
   get pagesOptions() {
     return {
-      floor: this.minmax.page_count?.min || 0,
-      ceil: this.minmax.page_count?.max || 1000,
+      floor: this.minmax?.page_count?.min || 0,
+      ceil: this.minmax?.page_count?.max || 1000,
       disabled: !this.pagesEnabled,
     };
   }
