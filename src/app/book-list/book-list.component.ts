@@ -48,7 +48,7 @@ export class BookListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pageSize = this.settingsService.getSetting('pageSize');
+    this.pageSize = this.settingsService.getSetting('pageSize') || 10; // Default page size
     this.route.queryParamMap.subscribe((params) => {
       this.authorName = params.get('author') || '';
       this.typeFilter = params.get('type') || '';
