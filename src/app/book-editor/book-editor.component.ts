@@ -3,7 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
 import { BookDataService } from '../book-data.service';
 import { Book } from '../book.model';
-import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { BooksService } from '../books.service';
 import { Router } from '@angular/router';
 import { TagInputComponent } from '../tag-input/tag-input.component';
@@ -13,12 +19,9 @@ import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-book-editor',
-  imports: [CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TagInputComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TagInputComponent],
   templateUrl: './book-editor.component.html',
-  styleUrl: './book-editor.component.less'
+  styleUrl: './book-editor.component.less',
 })
 export class BookEditorComponent implements OnInit {
   bookId: string | null = null;
@@ -35,72 +38,70 @@ export class BookEditorComponent implements OnInit {
 
   private statusMapping: Record<string, string> = {
     'to-read': 'To Read',
-    'read': 'Read',
+    read: 'Read',
     'currently-reading': 'Reading',
-    'wishlist': 'Wish List',
-    'abandoned': 'Abandoned'
+    wishlist: 'Wish List',
+    abandoned: 'Abandoned',
   };
 
-  private reverseStatusMapping: Record<string, string> = Object.entries(this.statusMapping).reduce(
-    (acc, [dbValue, displayValue]) => {
-      acc[displayValue] = dbValue;
-      return acc;
-    },
-    {} as Record<string, string>
-  );
+  private reverseStatusMapping: Record<string, string> = Object.entries(
+    this.statusMapping
+  ).reduce((acc, [dbValue, displayValue]) => {
+    acc[displayValue] = dbValue;
+    return acc;
+  }, {} as Record<string, string>);
 
   private typeMapping: Record<string, string> = {
-    'ebook': 'Ebook',
-    'physical': 'Physical Book',
-    'audiobook': 'Audiobook',
+    ebook: 'Ebook',
+    physical: 'Physical Book',
+    audiobook: 'Audiobook',
   };
 
-  private reverseTypeMapping: Record<string, string> = Object.entries(this.typeMapping).reduce(
-    (acc, [dbValue, displayValue]) => {
-      acc[displayValue] = dbValue;
-      return acc;
-    },
-    {} as Record<string, string>
-  );
+  private reverseTypeMapping: Record<string, string> = Object.entries(
+    this.typeMapping
+  ).reduce((acc, [dbValue, displayValue]) => {
+    acc[displayValue] = dbValue;
+    return acc;
+  }, {} as Record<string, string>);
 
   private languageMapping: Record<string, string> = {
-    'en': 'English',
-    'de': 'German',
-    'sk': 'Slovak',
-    'cs': 'Czech',
-    'english': 'English',
-    'german': 'German',
-    'slovak': 'Slovak',
-    'czech': 'Czech',
-    'eng': 'English',
-    'ger': 'German',
-    'skl': 'Slovak',
-    'cze': 'Czech',
+    en: 'English',
+    de: 'German',
+    sk: 'Slovak',
+    cs: 'Czech',
+    english: 'English',
+    german: 'German',
+    slovak: 'Slovak',
+    czech: 'Czech',
+    eng: 'English',
+    ger: 'German',
+    skl: 'Slovak',
+    cze: 'Czech',
   };
 
-  private reverseLanguageMapping: Record<string, string> = Object.entries(this.languageMapping).reduce(
-    (acc, [dbValue, displayValue]) => {
-      acc[displayValue] = dbValue;
-      return acc;
-    },
-    {} as Record<string, string>
-  );
+  private reverseLanguageMapping: Record<string, string> = Object.entries(
+    this.languageMapping
+  ).reduce((acc, [dbValue, displayValue]) => {
+    acc[displayValue] = dbValue;
+    return acc;
+  }, {} as Record<string, string>);
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private bookDataService: BookDataService,
     private booksService: BooksService,
     private apiService: ApiService,
     private router: Router,
     private location: Location,
-    private fb: FormBuilder,
-  ) { }
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.bookForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(255)]],
       author: [[], Validators.required], // Tag input for authors
       year: [null, [Validators.min(1000), Validators.max(9999)]],
-      series: [[]], // Tag input for series
+      series: [''],
       description: [''],
       genres: [[]], // Tag input for genres
       tags: [[]], // Tag input for tags
@@ -111,20 +112,19 @@ export class BookEditorComponent implements OnInit {
       language: ['English'], // Default language
       pages: [null, [Validators.min(1)]],
       type: ['Ebook'], // Book type
-      coverImage: ['']
+      coverImage: [''],
     });
     this.bookId = this.route.snapshot.paramMap.get('id');
     // load book data from the service
     if (this.bookId) {
       this.fetchBookDetails(this.bookId);
-    }
-    else {
+    } else {
       // if we're in add mode, create a new book object
       this.book = new Book({});
       this.originalBook = new Book({});
     }
     // if we come in from book match results, pre-fill the form with the selected book
-    this.bookDataService.selectedBook$.subscribe(searchBook => {
+    this.bookDataService.selectedBook$.subscribe((searchBook) => {
       if (searchBook) {
         // Use the selected book data to populate your form
         this.searchBook = searchBook;
@@ -136,7 +136,7 @@ export class BookEditorComponent implements OnInit {
           console.error('Book is undefined');
           return;
         }
-        console.log('setting title to:', searchBook.title + " on " + this.book);
+        console.log('setting title to:', searchBook.title + ' on ' + this.book);
         this.updateBookFromSearch();
         this.bookDataService.clearSelectedBook();
       }
@@ -148,37 +148,29 @@ export class BookEditorComponent implements OnInit {
       return;
     }
     const searchBook = this.searchBook;
-    if (searchBook.title)
-      this.book.title = searchBook.title;
-    if (searchBook.author_name)
-      this.book.author_name = searchBook.author_name;
-    if (searchBook.isbn)
-      this.book.isbn = searchBook.isbn;
-    if (searchBook.publisher)
-      this.book.publisher = searchBook.publisher;
-    if (searchBook.year_published)
-      this.book.year = searchBook.year_published;
-    if (searchBook.language)
-      this.book.language = searchBook.language;
-    if (searchBook.page_count)
-      this.book.pages = searchBook.page_count;
-    if (searchBook.synopsis)
-      this.book.synopsis = searchBook.synopsis;
-    if (searchBook.genre)
-      this.book.genre = searchBook.genre;
+    if (searchBook.title) this.book.title = searchBook.title;
+    if (searchBook.author_name) this.book.author_name = searchBook.author_name;
+    if (searchBook.isbn) this.book.isbn = searchBook.isbn;
+    if (searchBook.publisher) this.book.publisher = searchBook.publisher;
+    if (searchBook.year_published) this.book.year = searchBook.year_published;
+    if (searchBook.language) this.book.language = searchBook.language;
+    if (searchBook.page_count) this.book.pages = searchBook.page_count;
+    if (searchBook.synopsis) this.book.synopsis = searchBook.synopsis;
+    if (searchBook.genre) this.book.genre = searchBook.genre;
     // genre can be a list of genres
     if (Array.isArray(searchBook.genre)) {
       this.book.genre = searchBook.genre.join(', ');
     }
-    if (searchBook.cover_image)
-      this.book.cover_image = searchBook.cover_image;
-    
+    if (searchBook.cover_image) this.book.cover_image = searchBook.cover_image;
+
     this.updateBookForm(this.book);
   }
 
   updateBookForm(book: Book) {
-    const displayStatus = this.statusMapping[book.status ?? 'to-read'] || 'To Read';
-    const displayLanguage = this.languageMapping[book.language ?? 'en'] || 'English';
+    const displayStatus =
+      this.statusMapping[book.status ?? 'to-read'] || 'To Read';
+    const displayLanguage =
+      this.languageMapping[book.language ?? 'en'] || 'English';
     const displayType = this.typeMapping[book.book_type ?? 'ebook'] || 'Ebook';
     // genres can be a list of genres
     const genres = [book.genre?.split(', ') ?? []].flat();
@@ -201,7 +193,6 @@ export class BookEditorComponent implements OnInit {
       type: displayType,
       coverImage: book.cover_image,
     });
-    console.log('Updating year:', this.book);
   }
 
   fetchBookDetails(bookId: string) {
@@ -211,6 +202,7 @@ export class BookEditorComponent implements OnInit {
       data.year = data.year_published;
       data.pages = data.page_count;
       this.book = data;
+      console.log('Book:', this.book);
       this.originalBook = { ...data }; // Create a copy of the original book data
       // now apply search match book fields to the book object
       this.updateBookFromSearch();
@@ -234,42 +226,40 @@ export class BookEditorComponent implements OnInit {
     this.book[field] = value; // Dynamically update the field
   }
 
-  createBook(): void {
+  createBook(book: Book): void {
     // POST request to create a new book
     // book/create_api, POST the data
-    this.booksService.createBook(this.book)
-      .subscribe({
-        next: response => {
-          console.log('Book created successfully:', response);
-          //TODO save the book ID to the book object
-          this.book.id = response.id; // Assuming the API returns the created book with its ID
-        },
-        error: error => {
-          console.error('Error occurred:', error);
-        },
-        complete: () => {
-          // navigate back to where the user came from
-          this.location.back();
-        }
-      });
+    this.booksService.createBook(book).subscribe({
+      next: (response) => {
+        console.log('Book created successfully:', response);
+        //TODO save the book ID to the book object
+        this.book.id = response.id; // Assuming the API returns the created book with its ID
+      },
+      error: (error) => {
+        console.error('Error occurred:', error);
+      },
+      complete: () => {
+        // navigate back to where the user came from
+        this.location.back();
+      },
+    });
   }
 
   saveBook(book: Book): void {
     // POST request to save the book
     // book/BOOK_ID/edit_api, POST the data
-    this.booksService.saveBook(book)
-      .subscribe({
-        next: response => {
-          console.log('Book saved successfully:', response);
-        },
-        error: error => {
-          console.error('Error occurred:', error);
-        },
-        complete: () => {
-          // navigate back to where the user came from
-          this.location.back();
-        }
-      });
+    this.booksService.saveBook(book).subscribe({
+      next: (response) => {
+        console.log('Book saved successfully:', response);
+      },
+      error: (error) => {
+        console.error('Error occurred:', error);
+      },
+      complete: () => {
+        // navigate back to where the user came from
+        this.location.back();
+      },
+    });
   }
 
   onSubmit(action: 'save' | 'saveAndClose'): void {
@@ -285,11 +275,14 @@ export class BookEditorComponent implements OnInit {
       const dbStatus = this.reverseStatusMapping[formData.status];
       const dbType = this.reverseTypeMapping[formData.type];
       const dbLanguage = this.reverseLanguageMapping[formData.language];
-      const dbGenres = formData.genres.map((genre: string) => genre.trim()).join(', '); // Join genres with commas
+      const dbGenres = formData.genres
+        .map((genre: string) => genre.trim())
+        .join(', '); // Join genres with commas
       // tags can be a list of tags
-      const dbTags = Array.isArray(formData.tags) ?
-      formData.tags.map((tag: string) => tag.trim()).join(', ') : formData.tags;
-      const saveData ={
+      const dbTags = Array.isArray(formData.tags)
+        ? formData.tags.map((tag: string) => tag.trim()).join(', ')
+        : formData.tags;
+      const saveData = {
         ...formData,
         id: this.book.id,
         status: dbStatus,
@@ -303,9 +296,14 @@ export class BookEditorComponent implements OnInit {
         cover_image: formData.coverImage,
         page_count: formData.pages,
       };
-      
+
       // Call the backend API to save the data
-      this.saveBook(saveData);
+      // if new book, create it
+      if (!this.editMode) {
+        this.createBook(saveData);
+      } else {
+        this.saveBook(saveData);
+      }
     } else {
       // Mark all controls as touched to display validation errors
       this.bookForm.markAllAsTouched();
@@ -314,52 +312,57 @@ export class BookEditorComponent implements OnInit {
     }
   }
 
-
   private getAllValidationErrors(): string[] {
-  const errors: string[] = [];
+    const errors: string[] = [];
 
-  Object.keys(this.bookForm.controls).forEach((controlName) => {
-    const control = this.bookForm.get(controlName);
+    Object.keys(this.bookForm.controls).forEach((controlName) => {
+      const control = this.bookForm.get(controlName);
 
-    if (control && control.errors) {
-      Object.keys(control.errors).forEach((errorKey) => {
-        const errorMessage = this.getErrorMessage(controlName, errorKey, control.errors![errorKey]);
-        if (errorMessage) {
-          errors.push(errorMessage);
-        }
-      });
-    }
-  });
+      if (control && control.errors) {
+        Object.keys(control.errors).forEach((errorKey) => {
+          const errorMessage = this.getErrorMessage(
+            controlName,
+            errorKey,
+            control.errors![errorKey]
+          );
+          if (errorMessage) {
+            errors.push(errorMessage);
+          }
+        });
+      }
+    });
 
-  return errors;
-}
+    return errors;
+  }
 
-private getErrorMessage(controlName: string, errorKey: string, errorValue: any): string | null {
-  const controlLabels: Record<string, string> = {
-    title: 'Title',
-    subtitle: 'Subtitle',
-    authors: 'Authors',
-    year: 'Publish Year',
-    isbn: 'ISBN',
-    series: 'Series',
-    description: 'Description',
-    genres: 'Genres',
-    tags: 'Tags',
-    status: 'Status',
-    rating: 'Rating',
-    publisher: 'Publisher',    
-  };
+  private getErrorMessage(
+    controlName: string,
+    errorKey: string,
+    errorValue: any
+  ): string | null {
+    const controlLabels: Record<string, string> = {
+      title: 'Title',
+      authors: 'Author',
+      year: 'Publish Year',
+      isbn: 'ISBN',
+      series: 'Series',
+      description: 'Description',
+      genres: 'Genres',
+      tags: 'Tags',
+      status: 'Status',
+      rating: 'Rating',
+      publisher: 'Publisher',
+    };
 
-  const errorMessages: Record<string, string> = {
-    required: `${controlLabels[controlName]} is required.`,
-    maxlength: `${controlLabels[controlName]} must not exceed ${errorValue.requiredLength} characters.`,
-    minlength: `${controlLabels[controlName]} must be at least ${errorValue.requiredLength} characters.`,
-    pattern: `${controlLabels[controlName]} format is invalid.`,
-    min: `${controlLabels[controlName]} must be at least ${errorValue.min}.`,
-    max: `${controlLabels[controlName]} must be at most ${errorValue.max}.`,
-  };
+    const errorMessages: Record<string, string> = {
+      required: `${controlLabels[controlName]} is required.`,
+      maxlength: `${controlLabels[controlName]} must not exceed ${errorValue.requiredLength} characters.`,
+      minlength: `${controlLabels[controlName]} must be at least ${errorValue.requiredLength} characters.`,
+      pattern: `${controlLabels[controlName]} format is invalid.`,
+      min: `${controlLabels[controlName]} must be at least ${errorValue.min}.`,
+      max: `${controlLabels[controlName]} must be at most ${errorValue.max}.`,
+    };
 
-  return errorMessages[errorKey] || null;
-}
-
+    return errorMessages[errorKey] || null;
+  }
 }
