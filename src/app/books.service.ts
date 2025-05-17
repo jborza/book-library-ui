@@ -5,13 +5,10 @@ import { Book } from './book.model';
 import { ApiService } from './api.service';
 import { BookFilter } from './book-filter';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BooksService {
-
-  constructor(private http: HttpClient,
-    private apiService: ApiService
-  ) {}
+  constructor(private http: HttpClient, private apiService: ApiService) {}
 
   getBooks(): Observable<any> {
     return this.http.get(this.apiService.getBookApiUrl());
@@ -23,7 +20,15 @@ export class BooksService {
     return this.http.get(this.apiService.getAuthorSearchsUrl());
   }
 
-  getBooksFiltered(status?:string, type?:string, search?:BookFilter, sortColumn?:string, sortAscending?:boolean, currentPage?: number, pageSize?: number): Observable<any> {
+  getBooksFiltered(
+    status?: string,
+    type?: string,
+    search?: BookFilter,
+    sortColumn?: string,
+    sortAscending?: boolean,
+    currentPage?: number,
+    pageSize?: number
+  ): Observable<any> {
     let params = new HttpParams();
     if (status) {
       params = params.set('status', status);
@@ -31,52 +36,63 @@ export class BooksService {
     if (type) {
       params = params.set('type', type);
     }
-    if(pageSize) {
+    if (pageSize) {
       params = params.set('page_size', pageSize.toString());
     }
-    if(currentPage) {
+    if (currentPage) {
       params = params.set('page', currentPage.toString());
     }
-    if(search?.search) {
+    if (search?.search) {
       params = params.set('search', search.search);
     }
-    if(search?.genre) {
+    if (search?.genre) {
       params = params.set('genre', search.genre);
     }
-    if(search?.language) {
+    if (search?.language) {
       params = params.set('language', search.language);
     }
-    if(search?.yearMin) {
-      params = params.set('year_min', search.yearMin.toString());
+    if (search?.yearEnabled) {
+      if (search?.yearMin) {
+        params = params.set('year_min', search.yearMin.toString());
+      }
+      if (search?.yearMax) {
+        params = params.set('year_max', search.yearMax.toString());
+      }
     }
-    if(search?.yearMax) {
-      params = params.set('year_max', search.yearMax.toString());
+    if (search?.pagesEnabled) {
+      if (search?.pagesMin) {
+        params = params.set('pages_min', search.pagesMin.toString());
+      }
+      if (search?.pagesMax) {
+        params = params.set('pages_max', search.pagesMax.toString());
+      }
     }
-    if(search?.pagesMin) {
-      params = params.set('pages_min', search.pagesMin.toString());
+    if (search?.ratingEnabled) {
+      if (search?.ratingMin) {
+        params = params.set('rating_min', search.ratingMin.toString());
+      }
+      if (search?.ratingMax) {
+        params = params.set('rating_max', search.ratingMax.toString());
+      }
     }
-    if(search?.pagesMax) {
-      params = params.set('pages_max', search.pagesMax.toString());
-    }
-    if(search?.ratingMin) {
-      params = params.set('rating_min', search.ratingMin.toString());
-    }
-    if(search?.ratingMax) {
-      params = params.set('rating_max', search.ratingMax.toString());
-    }
-    if(search?.author) {
+    if (search?.author) {
       params = params.set('author', search.author);
     }
-    if(search?.series) {
+    if (search?.series) {
       params = params.set('series', search.series);
     }
-    if(sortColumn) {
+    if (sortColumn) {
       params = params.set('sort_column', sortColumn);
     }
-    if(sortAscending) {
+    if (sortAscending) {
       params = params.set('sort_ascending', sortAscending);
     }
-    console.log('fetching books from ', this.apiService.getGetUrl(), ' with params:', params.toString());
+    console.log(
+      'fetching books from ',
+      this.apiService.getGetUrl(),
+      ' with params:',
+      params.toString()
+    );
     return this.http.get(this.apiService.getGetUrl(), { params });
   }
 
@@ -91,41 +107,46 @@ export class BooksService {
 
   // Method to fetch books
   searchBooks(query: string): Observable<any> {
-    return this.http.get<any>(`${this.apiService.getSearchUrl()}?search_query=${encodeURIComponent(query)}`);
+    return this.http.get<any>(
+      `${this.apiService.getSearchUrl()}?search_query=${encodeURIComponent(
+        query
+      )}`
+    );
   }
 
   searchBooksBySeries(series: string): Observable<any> {
-    return this.http.get<any>(`${this.apiService.getSearchUrl()}?series=${encodeURIComponent(series)}`);
+    return this.http.get<any>(
+      `${this.apiService.getSearchUrl()}?series=${encodeURIComponent(series)}`
+    );
   }
 
-  toggleBookInCollection(book: Book) : Observable<any> {
+  toggleBookInCollection(book: Book): Observable<any> {
     // it's not really a toggle - we can't remove a book from the collection yet
     return this.http.post(this.apiService.getCreateBookUrl(), book);
   }
 
-  createBook(book: Book) : Observable<any> {
+  createBook(book: Book): Observable<any> {
     const url = this.apiService.getCreateBookUrl();
     return this.http.post(url, book);
   }
 
-  saveBook(book: Book) : Observable<any> {
+  saveBook(book: Book): Observable<any> {
     const url = this.apiService.getSaveBookUrl(book.id.toString());
     return this.http.post(url, book);
   }
 
-  deleteBook(id: number) : Observable<any> {
+  deleteBook(id: number): Observable<any> {
     const url = this.apiService.getBookByIdUrl(id.toString());
     return this.http.delete(url);
   }
 
-  updateBooks(bookIds: number[], data: any) : Observable<any> {
+  updateBooks(bookIds: number[], data: any): Observable<any> {
     const url = this.apiService.getUpdateBooksUrl();
     let body = {
       book_ids: bookIds,
-      data: data //TODO see how it looks like in the backend
+      data: data, //TODO see how it looks like in the backend
     };
 
     return this.http.post(url, body);
   }
-
 }

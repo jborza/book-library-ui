@@ -38,7 +38,7 @@ export class BookListComponent implements OnInit {
   pageSize: number = 10; // Number of items per page
   paginatedBooks: Book[] = [];
   currentPage: number = 1; // Current page number
-  filters: any; //TODO type this - BookFilter
+  filters: BookFilter | undefined;;
   selectedBookIds: number[] = []; // IDs of selected books
 
   constructor(private booksService: BooksService,
@@ -129,6 +129,7 @@ export class BookListComponent implements OnInit {
   onFiltersChanged(filters: BookFilter): void {
     console.log('Filters changed:', filters);
     this.filters = filters;
+    // TODO get from-to values
     this.fetchBooks();
     // TODO probably also reset the page to 1
   }

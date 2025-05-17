@@ -52,6 +52,7 @@
 
     <!-- Filter by Page Count Range -->
     <div class="filter-item">
+        <input type="checkbox" [(ngModel)]="pagesEnabled" class="me-2">
         <label for="page-range">Page Count</label>
         <ngx-slider
             [(value)]="filters.pagesMin"
@@ -62,6 +63,7 @@
 
     <!-- Filter by Publication Year Range -->
     <div class="filter-item">
+        <input type="checkbox" [(ngModel)]="yearEnabled" class="me-2">
         <label for="year-range">Publication Year</label>
         <ngx-slider
             [(value)]="filters.yearMin"
@@ -72,6 +74,7 @@
 
     <!-- Filter by Rating  Range -->
     <div class="filter-item">
+        <input type="checkbox" [(ngModel)]="ratingEnabled" class="me-2">
         <label for="rating-range">Rating</label>
         <ngx-slider
             [(value)]="filters.ratingMin"
