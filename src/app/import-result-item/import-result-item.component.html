@@ -21,7 +21,7 @@
         <p *ngIf="book.language" class="book-meta">Language: {{ book.language }}</p>
       </div>
       <div *ngIf="book.cover_image" class="book-cover-container ">
-        <img src="http://localhost:5000/static/{{book.cover_image}}" alt="{{ book.title }} cover"
+        <img src="{{ getCoverImageUrl(book) }}" alt="{{ book.title }} cover"
           class="book-cover thumbnail-small" />
       </div>
     </div>

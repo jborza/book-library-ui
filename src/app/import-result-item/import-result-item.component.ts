@@ -2,14 +2,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToNumberPipe } from '../pipe/to-number.pipe';
 import { TruncatePipe } from '../pipe/truncate.pipe'; // Import the TruncatePipe
+import { Book } from '../book.model';
 
 @Component({
   selector: 'app-import-result-item',
-  imports: [CommonModule,
-    ToNumberPipe,
-    TruncatePipe],
+  imports: [CommonModule, ToNumberPipe, TruncatePipe],
   templateUrl: './import-result-item.component.html',
-  styleUrl: './import-result-item.component.less'
+  styleUrl: './import-result-item.component.less',
 })
 export class ImportResultItemComponent {
   @Input() book: any; // Input to receive the result data
@@ -17,7 +16,17 @@ export class ImportResultItemComponent {
 
   selectedAction: string = 'merge'; // Default action
 
-
+  getCoverImageUrl(book: Book): string {
+    if (book?.cover_image) {
+      if (book.cover_image.startsWith('http')) {
+        return book.cover_image;
+      } else {
+        return 'http://localhost:5000/static/' + book.cover_image;
+      }
+    } else {
+      return 'http://localhost:5000/static/placeholder_book.svg';
+    }
+  }
 
   // Emit the selected action whenever it changes
   onActionChange(action: string): void {
