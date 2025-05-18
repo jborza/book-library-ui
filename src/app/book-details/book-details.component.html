@@ -90,7 +90,9 @@
   <div class="card" *ngIf="authorOtherBooks.length > 1">
     <div class="card-header">
       {{ book.author_name }}'s other books
-      <span class="badge text-bg-secondary">{{ authorOtherBooks.length - 1}}</span>
+      <span class="badge text-bg-secondary">{{
+        authorOtherBooks.length - 1
+      }}</span>
     </div>
     <div class="card-body">
       <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -103,7 +105,13 @@
               />
             </div>
             <div class="card-body">
-              <h6 class="card-title">{{ otherBook.title }}</h6>
+              <a
+                [routerLink]="['/books', otherBook.id]"
+                style="text-decoration: none"
+                class="stretched-link"
+              >
+                {{ otherBook.title }}
+              </a>
             </div>
             <div class="card-footer">
               <small class="text-body-secondary">
