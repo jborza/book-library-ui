@@ -20,6 +20,13 @@ export class BooksService {
     return this.http.get(this.apiService.getAuthorSearchsUrl());
   }
 
+  getBooksByAuthor(author: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.set('author', author);
+
+    return this.http.get(this.apiService.getGetUrl(), { params });
+  }
+
   getBooksFiltered(
     status?: string,
     type?: string,
@@ -87,12 +94,6 @@ export class BooksService {
     if (sortAscending) {
       params = params.set('sort_ascending', sortAscending);
     }
-    console.log(
-      'fetching books from ',
-      this.apiService.getGetUrl(),
-      ' with params:',
-      params.toString()
-    );
     return this.http.get(this.apiService.getGetUrl(), { params });
   }
 

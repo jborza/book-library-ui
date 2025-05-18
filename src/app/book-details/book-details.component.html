@@ -3,8 +3,7 @@
   <div class="book-main">
     <!-- todo fill in http://localhost:5000/static/ -->
     <img
-      src="{{ getCoverImageUrl() }}"
-      alt="{{ book.title }} cover"
+      src="{{ getCoverImageUrl(book) }}"
       class="book-cover thumbnail-small"
     />
     <div class="book-info">
@@ -87,4 +86,43 @@
     <p *ngIf="book.pages" class="book-meta">Pages: {{ book.pages }}</p>
   </div>
   <!-- TODO show dialog for book deletion -->
+  <!-- http://localhost:5000/books/api?author=J.%20K.%20Rowling -->
+  <div class="card" *ngIf="authorOtherBooks.length > 1">
+    <div class="card-header">
+      {{ book.author_name }}'s other books
+      <span class="badge text-bg-secondary">{{ authorOtherBooks.length - 1}}</span>
+    </div>
+    <div class="card-body">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="col" *ngFor="let otherBook of authorOtherBooks">
+          <div class="card h-100 book-card" *ngIf="otherBook.id !== book.id">
+            <div>
+              <img
+                src="{{ getCoverImageUrl(otherBook) }}"
+                class="book-cover thumbnail-small"
+              />
+            </div>
+            <div class="card-body">
+              <h6 class="card-title">{{ otherBook.title }}</h6>
+            </div>
+            <div class="card-footer">
+              <small class="text-body-secondary">
+                <div *ngIf="otherBook.rating" class="book-rating">
+                  <span
+                    *ngFor="let star of [1, 2, 3, 4, 5]"
+                    class="star"
+                    [class.filled]="star <= (otherBook.rating | toNumber)"
+                    >★</span
+                  >
+                  <span class="rating-value"
+                    ><small>{{ otherBook.rating }}</small></span
+                  >
+                </div>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
