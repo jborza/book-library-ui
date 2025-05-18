@@ -143,6 +143,17 @@ export class BookDetailsComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  googleBook(): void {
+    // https://www.google.com/search?client=firefox-b-d&q=Sophia+Amoruso+girlboss
+    const query = this.book.title + ' ' + this.book.author_name;
+    // replace hashes with spaces
+    const queryFixed = query.replace(/#/g, ' ');
+    const search = encodeURI(queryFixed);
+    const url = 'https://www.google.com/search?q=' + search;
+    console.log('Google Book URL:', url);
+    window.open(url, '_blank');
+  }
+
   delete(): void {
     if (confirm('Are you sure you want to delete this book?')) {
       // book/:id/delete
