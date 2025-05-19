@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BookFilter } from './book-filter';
+import { Library } from './library';
 
 @Injectable({
   providedIn: 'root',
@@ -31,9 +32,18 @@ export class SettingsService {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.settings));
   }
 
-  getLibraries(): string[] {
+  getLibraries(): Library[] {
     const libraries = JSON.parse(localStorage.getItem('libraries') || '[]');
-    return Object.keys(libraries);
+    if (!libraries) {
+      return [];
+    }
+    const keys = Object.keys(libraries);
+    const values = Object.values(libraries);
+    const result: Library[] = keys.map((key, index) => ({
+      name: key,
+      filter: String(values[index]),
+    }));
+    return result;
   }
 
   saveLibrary(name: string, filter: BookFilter) {

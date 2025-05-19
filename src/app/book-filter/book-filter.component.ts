@@ -99,6 +99,8 @@ export class BookFilterComponent {
 
   saveSearch() {
     this.saveRequested.emit([this.filters, this.saveName]);
+    // TODO close the popup
+    this.saveName = '';
   }
 
 }

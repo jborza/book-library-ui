@@ -17,6 +17,7 @@ export class BookFilter {
   author: string = '';
   series: string = '';
 
+  // TODO moved to url-parameters.ts
   generateUrlParams(): string {
     const params = new URLSearchParams();
     for (const [key, value] of Object.entries(this)) {
@@ -25,6 +26,7 @@ export class BookFilter {
     return params.toString();
   }
 
+  // TODO moved to url-parameters.ts
   loadFromUrlParams(urlParams: ParamMap): void {
     const filter = this;
     Object.keys(this).forEach(key => {
