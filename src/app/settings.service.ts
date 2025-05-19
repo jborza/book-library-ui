@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { BookFilter } from './book-filter';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SettingsService {
-
   private readonly STORAGE_KEY = 'userSettings';
 
   private settings: { [key: string]: any } = {};
@@ -29,5 +29,21 @@ export class SettingsService {
 
   private saveSettings(): void {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.settings));
+  }
+
+  getLibraries(): string[] {
+    const libraries = JSON.parse(localStorage.getItem('libraries') || '[]');
+    return Object.keys(libraries);
+  }
+
+  saveLibrary(name: string, filter: BookFilter) {
+    const libraries = JSON.parse(localStorage.getItem('libraries') || '{}');
+    libraries[name] = filter;
+    localStorage.setItem('libraries', JSON.stringify(libraries));
+  }
+
+  loadLibrary(name: string): BookFilter | undefined {
+    const libraries = JSON.parse(localStorage.getItem('libraries') || '{}');
+    return libraries[name];
   }
 }

@@ -52,6 +52,8 @@ export class BookListComponent implements OnInit {
       this.authorName = params.get('author') || '';
       this.typeFilter = params.get('type') || '';
       this.statusFilter = params.get('status') || '';
+      this.filters = new BookFilter();
+      this.filters.loadFromUrlParams(params);
       this.fetchBooks();
       this.fetchAuthors();
     });
