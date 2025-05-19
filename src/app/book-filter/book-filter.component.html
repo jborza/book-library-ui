@@ -1,101 +1,191 @@
-<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#searchBox"
-    aria-expanded="false" aria-controls="searchBox">
-    Search
+<button
+  class="btn btn-primary"
+  type="button"
+  data-bs-toggle="collapse"
+  data-bs-target="#searchBox"
+  aria-expanded="false"
+  aria-controls="searchBox"
+>
+  Search
 </button>
 <div class="collapse" id="searchBox">
-
-<div class="filter-bar card card-body">
+  <div class="filter-bar card card-body">
     <!-- Search by Title -->
     <div class="filter-item">
-        <label for="search-title">Search</label>
-        <input id="search-title" type="text" class="form-control" placeholder="Search by title, author, or keyword"
-            [(ngModel)]="filters.search" (ngModelChange)="onFilterChange()" />
+      <label for="search-title">Search</label>
+      <input
+        id="search-title"
+        type="text"
+        class="form-control"
+        placeholder="Search by title, author, or keyword"
+        [(ngModel)]="filters.search"
+        (ngModelChange)="onFilterChange()"
+      />
     </div>
 
     <!-- Filter by Author -->
     <div class="filter-item">
-        <app-author-autocomplete
-            [authors]="authors"
-            [(ngModel)]="filters.author"
-            (ngModelChange)="onFilterChange()"
-            placeholder="Search for an author"
-        ></app-author-autocomplete>
+      <app-author-autocomplete
+        [authors]="authors"
+        [(ngModel)]="filters.author"
+        (ngModelChange)="onFilterChange()"
+        placeholder="Search for an author"
+      ></app-author-autocomplete>
     </div>
 
     <!-- Filter by Genre -->
     <div class="filter-item">
-        <label for="genre-select">Genre</label>
-        <select id="genre-select" class="form-select" [(ngModel)]="filters.genre" (ngModelChange)="onFilterChange()">
-            <option value="">All Genres</option>
-            <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
-        </select>
+      <label for="genre-select">Genre</label>
+      <select
+        id="genre-select"
+        class="form-select"
+        [(ngModel)]="filters.genre"
+        (ngModelChange)="onFilterChange()"
+      >
+        <option value="">All Genres</option>
+        <option *ngFor="let genre of genres" [value]="genre">
+          {{ genre }}
+        </option>
+      </select>
     </div>
 
     <!-- Filter by Series -->
     <div class="filter-item">
-        <label for="series-select">Series</label>
-        <select id="series-select" class="form-select" [(ngModel)]="filters.series" (ngModelChange)="onFilterChange()">
-            <option value="">All Series</option>
-            <option *ngFor="let s of series" [value]="s">{{ s }}</option>
-        </select>
+      <label for="series-select">Series</label>
+      <select
+        id="series-select"
+        class="form-select"
+        [(ngModel)]="filters.series"
+        (ngModelChange)="onFilterChange()"
+      >
+        <option value="">All Series</option>
+        <option *ngFor="let s of series" [value]="s">{{ s }}</option>
+      </select>
     </div>
 
     <!-- Filter by Language -->
     <div class="filter-item">
-        <label for="language-select">Language</label>
-        <select id="language-select" class="form-select" [(ngModel)]="filters.language"
-            (ngModelChange)="onFilterChange()">
-            <option value="">All Languages</option>
-            <option *ngFor="let language of languages" [value]="language">{{ language }}</option>
-        </select>
+      <label for="language-select">Language</label>
+      <select
+        id="language-select"
+        class="form-select"
+        [(ngModel)]="filters.language"
+        (ngModelChange)="onFilterChange()"
+      >
+        <option value="">All Languages</option>
+        <option *ngFor="let language of languages" [value]="language">
+          {{ language }}
+        </option>
+      </select>
     </div>
 
     <!-- Filter by Page Count Range -->
     <div class="filter-item">
-        <input type="checkbox" [(ngModel)]="pagesEnabled" class="me-2">
-        <label for="page-range">Page Count</label>
-        <ngx-slider
-            [(value)]="filters.pagesMin"
-            [(highValue)]="filters.pagesMax"
-            [options]="pagesOptions"
-        ></ngx-slider>
+      <input type="checkbox" [(ngModel)]="pagesEnabled" class="me-2" />
+      <label for="page-range">Page Count</label>
+      <ngx-slider
+        [(value)]="filters.pagesMin"
+        [(highValue)]="filters.pagesMax"
+        [options]="pagesOptions"
+      ></ngx-slider>
     </div>
 
     <!-- Filter by Publication Year Range -->
     <div class="filter-item">
-        <input type="checkbox" [(ngModel)]="yearEnabled" class="me-2">
-        <label for="year-range">Publication Year</label>
-        <ngx-slider
-            [(value)]="filters.yearMin"
-            [(highValue)]="filters.yearMax"
-            [options]="yearOptions"
-        ></ngx-slider>
+      <input type="checkbox" [(ngModel)]="yearEnabled" class="me-2" />
+      <label for="year-range">Publication Year</label>
+      <ngx-slider
+        [(value)]="filters.yearMin"
+        [(highValue)]="filters.yearMax"
+        [options]="yearOptions"
+      ></ngx-slider>
     </div>
 
     <!-- Filter by Rating  Range -->
     <div class="filter-item">
-        <input type="checkbox" [(ngModel)]="ratingEnabled" class="me-2">
-        <label for="rating-range">Rating</label>
-        <ngx-slider
-            [(value)]="filters.ratingMin"
-            [(highValue)]="filters.ratingMax"
-            [options]="ratingOptions"
-        ></ngx-slider>
+      <input type="checkbox" [(ngModel)]="ratingEnabled" class="me-2" />
+      <label for="rating-range">Rating</label>
+      <ngx-slider
+        [(value)]="filters.ratingMin"
+        [(highValue)]="filters.ratingMax"
+        [options]="ratingOptions"
+      ></ngx-slider>
     </div>
 
     <!-- Filter by Book Type -->
     <div class="filter-item">
-        <label for="book-type">Book Type</label>
-        <select id="book-type" class="form-select" [(ngModel)]="filters.bookType" (ngModelChange)="onFilterChange()">
-            <option value="">All Types</option>
-            <option value="ebook">Ebook</option>
-            <option value="audiobook">Audiobook</option>
-            <option value="physical">Physical Book</option>
-        </select>
+      <label for="book-type">Book Type</label>
+      <select
+        id="book-type"
+        class="form-select"
+        [(ngModel)]="filters.bookType"
+        (ngModelChange)="onFilterChange()"
+      >
+        <option value="">All Types</option>
+        <option value="ebook">Ebook</option>
+        <option value="audiobook">Audiobook</option>
+        <option value="physical">Physical Book</option>
+      </select>
     </div>
 
     <!-- todo add series, tags, isbn -->
-    <button type="button" class="btn btn-primary me-2" (click)="filter()">Filter</button>
+    <button type="button" class="btn btn-primary me-2" (click)="filter()">
+      Filter
+    </button>
+    <!-- Button to trigger modal -->
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-bs-toggle="modal"
+      data-bs-target="#savePromptModal"
+    >
+      Save Library
+    </button>
+  </div>
 
-</div>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="savePromptModal"
+    tabindex="-1"
+    aria-labelledby="savePromptLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <form class="modal-content" id="savePromptForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="savePromptLabel">Save Library</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <label for="libraryName" class="form-label">Library Name</label>
+          <input
+            type="text"
+            [(ngModel)]="saveName"
+            class="form-control"
+            id="libraryName"
+            name="libraryName"
+            required
+          />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" (click)="saveSearch()">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

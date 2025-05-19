@@ -1,5 +1,6 @@
 <h4>Books</h4>
 <app-book-filter [authors]="authors" [minmax]="minmax" [genres]="genres" [series]="series" [languages]="languages"
+    (saveRequested)="onSaveRequested($event)"
     (filtersChanged)="onFiltersChanged($event)"></app-book-filter>
 <p>{{ count }} books found</p>
 <table class="table table-striped">

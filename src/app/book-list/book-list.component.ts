@@ -17,10 +17,10 @@ import { SettingsService } from '../settings.service';
     CommonModule,
     RouterModule,
     BookFilterComponent,
-    BooksPaginationComponent],
+    BooksPaginationComponent,
+  ],
 })
 export class BookListComponent implements OnInit {
-
   books: Book[] = [];
   originalBooks: Book[] = [];
   authorName: string = '';
@@ -37,14 +37,15 @@ export class BookListComponent implements OnInit {
   totalPages: number = 0;
   pageSize: number = 10; // Number of items per page
   currentPage: number = 1; // Current page number
-  filters: BookFilter | undefined;;
+  filters: BookFilter | undefined;
   selectedBookIds: number[] = []; // IDs of selected books
 
-  constructor(private booksService: BooksService,
+  constructor(
+    private booksService: BooksService,
     private route: ActivatedRoute,
     private settingsService: SettingsService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.pageSize = this.settingsService.getSetting('pageSize') || 20; // Default page size
@@ -73,14 +74,23 @@ export class BookListComponent implements OnInit {
   }
 
   fetchBooks(): void {
-    console.log('Fetching books with filters:', this.statusFilter, this.typeFilter, this.currentPage, this.pageSize);
-    this.booksService.getBooksFiltered(this.statusFilter,
+    console.log(
+      'Fetching books with filters:',
+      this.statusFilter,
       this.typeFilter,
-      this.filters,
-      this.sortColumn,
-      this.sortDirection,
       this.currentPage,
-      this.pageSize)
+      this.pageSize
+    );
+    this.booksService
+      .getBooksFiltered(
+        this.statusFilter,
+        this.typeFilter,
+        this.filters,
+        this.sortColumn,
+        this.sortDirection,
+        this.currentPage,
+        this.pageSize
+      )
       .subscribe((response) => {
         this.minmax = response.minmax;
         // this.authors = response.authors;
@@ -90,7 +100,7 @@ export class BookListComponent implements OnInit {
         this.count = response.count;
         const books = response.books;
         if (Array.isArray(books)) {
-          this.books = books.map(bookData => new Book(bookData));
+          this.books = books.map((bookData) => new Book(bookData));
           // generate surnames for each book
           for (const book of this.books) {
             const authorName = book.author_name;
@@ -133,6 +143,14 @@ export class BookListComponent implements OnInit {
     // TODO get from-to values
     this.fetchBooks();
     // TODO probably also reset the page to 1
+  }
+
+  onSaveRequested(parameters: any[]): void {
+    const filters: BookFilter = parameters[0];
+    const saveName: string = parameters[1];
+    console.log('Save requested:', ' name:', saveName, 'filters:', filters);
+    this.filters = filters;
+    this.settingsService.saveLibrary(saveName, filters);
   }
 
   isSelected(bookId: number): boolean {
@@ -178,7 +196,6 @@ export class BookListComponent implements OnInit {
       this.selectedBookIds = [];
     }
   }
-
 
   // Check if all books are selected
   areAllSelected(): boolean {

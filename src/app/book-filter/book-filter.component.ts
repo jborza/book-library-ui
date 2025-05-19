@@ -31,6 +31,9 @@ export class BookFilterComponent {
   // Emit the filter changes to the parent component
   @Output() filtersChanged = new EventEmitter<any>();
 
+  @Output() saveRequested = new EventEmitter<any[]>();
+
+
   // Example: Genres and languages (replace with data from your backend)
   // TODO move these to a service
   // TODO fetch these from the backend
@@ -40,6 +43,7 @@ export class BookFilterComponent {
   ratingEnabled: boolean = false;
   yearEnabled: boolean = false;
   pagesEnabled: boolean = false;
+  saveName: string = '';
 
   statuses = ['Read', 'Reading', 'To Read', 'Abandoned', 'Wish List'];
   bookTypes = ['Ebook', 'Audiobook', 'Physical Book'];
@@ -92,4 +96,9 @@ export class BookFilterComponent {
     this.filters.pagesEnabled = this.pagesEnabled;
     this.filtersChanged.emit(this.filters);
   }
+
+  saveSearch() {
+    this.saveRequested.emit([this.filters, this.saveName]);
+  }
+
 }
