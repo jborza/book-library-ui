@@ -17,6 +17,7 @@ export class BookDetailsComponent implements OnInit {
   tags: string[] = [];
   book!: Book;
   authorOtherBooks: Book[] = [];
+  recommendations: any; // TODO type
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class BookDetailsComponent implements OnInit {
     // Fetch book details using the bookId
     if (this.bookId) {
       this.fetchBookDetails(this.bookId);
+      this.fetchRecommendations(this.bookId);
     }
   }
 
@@ -51,13 +53,20 @@ export class BookDetailsComponent implements OnInit {
     });
   }
 
-  // getCoverImageUrl(): string {
-  //   if (this.book?.cover_image) {
-  //     return 'http://localhost:5000/static/' + this.book.cover_image;
-  //   } else {
-  //     return 'http://localhost:5000/static/placeholder_book.svg';
-  //   }
-  // }
+  fetchRecommendations(bookId: string) {
+      this.booksService.getRecommendations(bookId).subscribe({
+        next: (response) => {
+          console.log('Import step 1 successful:', response);
+          this.recommendations = response;
+        },
+        error: (error) => {
+          console.error('Error occurred:', error);
+        },
+        complete: () => {
+         },
+      });
+    }
+
 
   getCoverImageUrl(book: Book, tiny: boolean = false): string {
     console.log('getCoverImageUrl', book, tiny);

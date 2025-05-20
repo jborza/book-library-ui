@@ -106,6 +106,10 @@ export class BooksService {
     return this.http.get(this.apiService.getBooksByIdsUrl(ids));
   }
 
+  getRecommendations(id: string): Observable<any> {
+    return this.http.get(this.apiService.getRecommendationsUrl(id));
+  }
+
   // Method to fetch books
   searchBooks(query: string): Observable<any> {
     return this.http.get<any>(

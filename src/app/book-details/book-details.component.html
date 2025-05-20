@@ -2,29 +2,18 @@
 <div class="book-detail-container">
   <div class="book-main">
     <!-- todo fill in http://localhost:5000/static/ -->
-    <img
-      src="{{ getCoverImageUrl(book) }}"
-      class="book-cover thumbnail-small"
-    />
+    <img src="{{ getCoverImageUrl(book) }}" class="book-cover thumbnail-small" />
     <div class="book-info">
       <h1 class="book-title">{{ book.title }}</h1>
       <p class="book-authors">
-        <a
-          [routerLink]="['/search']"
-          [queryParams]="{ search_query: book.author_name }"
-          style="text-decoration: none"
-        >
+        <a [routerLink]="['/search']" [queryParams]="{ search_query: book.author_name }" style="text-decoration: none">
           {{ book.author_name }}
         </a>
       </p>
       <p *ngIf="book.status">Status: {{ book.status }}</p>
       <div *ngIf="book.rating" class="book-rating">
-        <span
-          *ngFor="let star of [1, 2, 3, 4, 5]"
-          class="star"
-          [class.filled]="star <= (book.rating | toNumber)"
-          >★</span
-        >
+        <span *ngFor="let star of [1, 2, 3, 4, 5]" class="star"
+          [class.filled]="star <= (book.rating | toNumber)">★</span>
         <span class="rating-value">{{ book.rating }}</span>
       </div>
       <span *ngIf="book.review" class="rating-info">{{ book.review }}</span>
@@ -64,13 +53,8 @@
     <p class="book-meta" *ngIf="book.genre">
       Genres:
       <span *ngFor="let genre of genres">
-        <a
-          [routerLink]="['/search']"
-          [queryParams]="{ search_query: genre }"
-          style="text-decoration: none"
-        >
-          {{ genre }} </a
-        >,
+        <a [routerLink]="['/search']" [queryParams]="{ search_query: genre }" style="text-decoration: none">
+          {{ genre }} </a>,
       </span>
     </p>
     <p class="book-meta" *ngIf="book.tags">
@@ -96,39 +80,26 @@
       {{ book.author_name }}'s other books
       <span class="badge text-bg-secondary">{{
         authorOtherBooks.length - 1
-      }}</span>
+        }}</span>
     </div>
     <div class="card-body">
       <div class="row row-cols-1 row-cols-md-4 g-4">
         <div class="col" *ngFor="let otherBook of authorOtherBooks">
           <div class="card h-100 book-card" *ngIf="otherBook.id !== book.id">
             <div>
-              <img
-                src="{{ getCoverImageUrl(otherBook) }}"
-                class="book-cover thumbnail-small"
-              />
+              <img src="{{ getCoverImageUrl(otherBook) }}" class="book-cover thumbnail-small" />
             </div>
             <div class="card-body">
-              <a
-                [routerLink]="['/books', otherBook.id]"
-                style="text-decoration: none"
-                class="stretched-link"
-              >
+              <a [routerLink]="['/books', otherBook.id]" style="text-decoration: none" class="stretched-link">
                 {{ otherBook.title }}
               </a>
             </div>
             <div class="card-footer">
               <small class="text-body-secondary">
                 <div *ngIf="otherBook.rating" class="book-rating">
-                  <span
-                    *ngFor="let star of [1, 2, 3, 4, 5]"
-                    class="star"
-                    [class.filled]="star <= (otherBook.rating | toNumber)"
-                    >★</span
-                  >
-                  <span class="rating-value"
-                    ><small>{{ otherBook.rating }}</small></span
-                  >
+                  <span *ngFor="let star of [1, 2, 3, 4, 5]" class="star"
+                    [class.filled]="star <= (otherBook.rating | toNumber)">★</span>
+                  <span class="rating-value"><small>{{ otherBook.rating }}</small></span>
                 </div>
               </small>
             </div>
@@ -137,4 +108,22 @@
       </div>
     </div>
   </div>
-</div>
+  <!-- recommendations -->
+  <div class="card mt-3 mb-3" *ngIf="recommendations.length > 1">
+    <div class="card-header">
+      Recommended books:
+      <span class="badge text-bg-secondary">{{
+        recommendations.length
+        }}</span>
+    </div>
+    <div class="card-body">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="col" *ngFor="let recommendation of recommendations">
+          <div class="card h-100 book-card">
+            <h5 class="card-title">{{ recommendation.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary"> {{ recommendation.author }}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
