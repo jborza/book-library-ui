@@ -11,6 +11,7 @@ import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autocomplete.component';
 import { BookFilter } from '../book-filter';
 
+declare var bootstrap: any;
 @Component({
   selector: 'app-book-filter',
   imports: [
@@ -100,7 +101,9 @@ export class BookFilterComponent {
   saveSearch() {
     this.saveRequested.emit([this.filters, this.saveName]);
     // TODO close the popup
-    this.saveName = '';
+    const modalElement = document.getElementById('savePromptModal');
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    modalInstance.hide();
   }
 
 }
