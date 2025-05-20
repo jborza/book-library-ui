@@ -28,20 +28,15 @@ export class MenuComponent {
       items: [{ name: 'Books', url: '/', icon: '📚' }],
     },
     {
-      title: 'Library',
-      items: [
-        { name: 'Authors', url: '/authors', icon: '👤' },
-        { name: 'Genres', url: '/genres', icon: '🎭' },
-        { name: 'Series', url: '/series', icon: '📦' },
-      ],
-    },
-    {
       title: 'Libraries',
       items: [],
     },
     {
       title: 'Collections',
       items: [
+         { name: 'Authors', url: '/authors', icon: '👤' },
+        { name: 'Genres', url: '/genres', icon: '🎭' },
+        { name: 'Series', url: '/series', icon: '📦' },
         {
           name: 'Ebooks',
           url: '/books',
@@ -121,14 +116,12 @@ export class MenuComponent {
     // load user libraries
     this.libraries = this.settingsService.getLibraries() || [];
 
-    // hack them into the menu
-    this.libraries.forEach((library) => {
-    // obtain a link for each library
-      const urlParams = generateUrlParams(library.filter);
-      this.menuSections[2].items.push({
+    // fill them into the menu
+    this.libraries.forEach((library) => {    
+      this.menuSections[1].items.push({
         name: library.name,
         url: '/books',
-        queryParams: { urlParams },
+        queryParams: library.filter,
         icon: '🏛️',
       });
     });

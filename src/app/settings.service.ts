@@ -33,17 +33,11 @@ export class SettingsService {
   }
 
   getLibraries(): Library[] {
-    const libraries = JSON.parse(localStorage.getItem('libraries') || '[]');
+    const libraries = JSON.parse(localStorage.getItem('libraries') || '[]') as Record<string, BookFilter>;
     if (!libraries) {
       return [];
     }
-    const keys = Object.keys(libraries);
-    const values = Object.values(libraries);
-    const result: Library[] = keys.map((key, index) => ({
-      name: key,
-      filter: String(values[index]),
-    }));
-    return result;
+    return Object.entries(libraries).map(([name, filter]) => ({ name, filter }));;
   }
 
   saveLibrary(name: string, filter: BookFilter) {

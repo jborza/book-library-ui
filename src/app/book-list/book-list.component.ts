@@ -151,6 +151,7 @@ export class BookListComponent implements OnInit {
     console.log('Save requested:', ' name:', saveName, 'filters:', filters);
     this.filters = filters;
     this.settingsService.saveLibrary(saveName, filters);
+    // TODO refresh menu
   }
 
   isSelected(bookId: number): boolean {
