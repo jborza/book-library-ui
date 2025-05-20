@@ -7,6 +7,7 @@ import { BookFilterComponent } from '../book-filter/book-filter.component';
 import { BooksPaginationComponent } from '../books-pagination/books-pagination.component';
 import { BookFilter } from '../book-filter';
 import { SettingsService } from '../settings.service';
+import { LibraryEventsService } from '../library-events.service';
 
 @Component({
   standalone: true,
@@ -44,7 +45,8 @@ export class BookListComponent implements OnInit {
     private booksService: BooksService,
     private route: ActivatedRoute,
     private settingsService: SettingsService,
-    private router: Router
+    private router: Router,
+    private libraryEvents: LibraryEventsService
   ) {}
 
   ngOnInit(): void {
@@ -151,7 +153,7 @@ export class BookListComponent implements OnInit {
     console.log('Save requested:', ' name:', saveName, 'filters:', filters);
     this.filters = filters;
     this.settingsService.saveLibrary(saveName, filters);
-    // TODO refresh menu
+    this.libraryEvents.notifyLibrarySaved();
   }
 
   isSelected(bookId: number): boolean {

@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from '../search.service';
 import { SettingsService } from '../settings.service';
-import { generateUrlParams } from '../url-parameters';
 import { Library } from '../library';
+import { LibraryEventsService } from '../library-events.service';
 
 @Component({
   selector: 'app-menu',
@@ -110,14 +110,21 @@ export class MenuComponent {
 
   constructor(private router: Router,
     private settingsService: SettingsService,
+    private libraryEvents: LibraryEventsService
   ) {}
 
   ngOnInit(): void {
-    // load user libraries
-    this.libraries = this.settingsService.getLibraries() || [];
+    this.libraryEvents.librarySaved$.subscribe(() => {
+      this.loadLibraries(); 
+    });
+    this.loadLibraries(); 
+  }
 
-    // fill them into the menu
-    this.libraries.forEach((library) => {    
+  loadLibraries() {
+    this.libraries = this.settingsService.getLibraries() || [];
+    this.menuSections[1].items.length = 0; 
+
+    this.libraries.forEach((library) => {   
       this.menuSections[1].items.push({
         name: library.name,
         url: '/books',
