@@ -8,9 +8,9 @@ export function generateUrlParams(item: any): string {
   return params.toString();
 }
 
-export function loadFromUrlParams(this: any, urlParams: ParamMap): void {
-  const filter = this;
-  Object.keys(this).forEach((key) => {
+export function loadFromUrlParams(item: any, urlParams: ParamMap): void {
+  const filter = item;
+  Object.keys(item).forEach((key) => {
     const value = urlParams.get(key);
 
     if (value !== null) {
