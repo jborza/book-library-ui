@@ -14,6 +14,7 @@ export class ApiService {
     book: `${this.baseUrl}/book/api`,
     saveBook: (bookId: string) => `${this.baseUrl}/book/${bookId}/edit_api`, // Dynamic URL
     importCsv: `${this.baseUrl}/import/import_csv_api`,
+    importCsvAll: `${this.baseUrl}/import/import_csv_all_api`,
     importNotes: `${this.baseUrl}/import/import_notes_api`,
     confirmImport: `${this.baseUrl}/import/confirm_import_api`,
     getBooksByIds: (ids: string[]) =>
@@ -25,6 +26,8 @@ export class ApiService {
     authorsSearch: `${this.baseUrl}/books/api/authors`,
     imageUrl: `${this.baseUrl}/static/`,
     updateBooks: `${this.baseUrl}/books/update_books_api`,
+    recommendations: (bookId: string) =>
+      `${this.baseUrl}/recommendations/${bookId}`,
   };
 
   getSearchUrl(): string {
@@ -49,6 +52,10 @@ export class ApiService {
 
   getImportCsvUrl(): string {
     return this.endpoints.importCsv;
+  }
+
+  getImportCsvAllUrl(): string {
+    return this.endpoints.importCsvAll;
   }
 
   getImportNotesUrl(): string {
@@ -89,5 +96,9 @@ export class ApiService {
 
   getUpdateBooksUrl(): string {
     return this.endpoints.updateBooks;
+  }
+
+  getRecommendationsUrl(bookId: string): string {
+    return this.endpoints.recommendations(bookId);
   }
 }

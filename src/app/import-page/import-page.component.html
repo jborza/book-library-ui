@@ -43,6 +43,43 @@
   </div>
 </form>
 <hr />
+<form [formGroup]="importCsvAllForm" (ngSubmit)="onSubmitCsvAll()">
+  <div class="p-3">
+    <label for="file">Import your all books: </label>
+    
+    <div class="mb-3">
+      <label for="formFile" class="form-label"
+        >Upload the CSV file here.
+      </label>
+      <input
+        class="form-control"
+        name="csvFile"
+        type="file"
+        accept=".csv"
+        id="csvFile"
+        (change)="onAllFileChange($event)"
+        required
+      />
+      <div
+        *ngIf="
+          importCsvAllForm.get('csvFile')?.invalid &&
+          importCsvAllForm.get('csvFile')?.touched
+        "
+        class="text-danger"
+      >
+        <small *ngIf="importCsvAllForm.get('csvFile')?.errors?.['required']"
+          >File is required.</small
+        >
+        <small *ngIf="importCsvAllForm.get('csvFile')?.errors?.['pattern']"
+          >Only .csv files are allowed.</small
+        >
+      </div>
+    </div>
+    <br />
+    <button type="submit" [disabled]="!importCsvAllForm.valid">Submit</button>
+  </div>
+</form>
+<hr />
 <form [formGroup]="importNotesForm" (ngSubmit)="onSubmitNotes()">
   <div class="p-3">
     Import your books from notes:

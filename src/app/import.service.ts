@@ -17,6 +17,11 @@ export class ImportService {
     return this.http.post(apiUrl, formData);
   }
 
+  importCsvAll(formData: FormData): Observable<any> {
+    const apiUrl = this.apiService.getImportCsvAllUrl();
+    return this.http.post(apiUrl, formData);
+  }
+
   importNotes(formData: FormData): Observable<any> {
     const apiUrl = this.apiService.getImportNotesUrl();
     return this.http.post(apiUrl, formData);

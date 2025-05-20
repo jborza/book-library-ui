@@ -23,6 +23,13 @@ export class ImportPageComponent {
     ]),
   });
 
+  importCsvAllForm = new FormGroup({
+    csvFile: new FormControl<string | null>(null, [
+      Validators.required,
+      Validators.pattern(/\.csv$/),
+    ]),
+  });
+
   importNotesForm = new FormGroup({
     importFormat: new FormControl(''),
     notes: new FormControl(null, [Validators.required]),
@@ -53,6 +60,41 @@ export class ImportPageComponent {
     }
   }
 
+  onAllFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      // Update form control value with file name for validation
+      this.importCsvAllForm.patchValue({
+        csvFile: this.selectedFile.name,
+      });
+    }
+  }
+
+  onSubmitCsvAll() {
+    if (this.importCsvAllForm.valid && this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+
+      this.importService.importCsvAll(formData).subscribe({
+        next: (response) => {
+          console.log('Import all books successful:', response);
+          this.response = response;
+        },
+        error: (error) => {
+          console.error('Error occurred:', error);
+        },
+        complete: () => {
+          // navigate back to the book details page
+          // response is { ... import_books: [ ... ] }
+          //const importBooks = this.response.import_books;
+          console.log('Import books:', this.response);
+          this.router.navigate(['/books']);
+        },
+      });
+    }
+  }
+
   onSubmitCsv() {
     if (this.importCsvForm.valid && this.selectedFile) {
       const formData = new FormData();
@@ -76,6 +118,7 @@ export class ImportPageComponent {
       });
     }
   }
+
   onSubmitNotes() {
     if (this.importNotesForm.valid) {
       const formData = new FormData();
