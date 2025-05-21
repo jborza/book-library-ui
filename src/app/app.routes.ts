@@ -5,7 +5,6 @@ import { BookEditorComponent } from './book-editor/book-editor.component';
 import { ImportPageComponent } from './import-page/import-page.component';
 import { AuthorsComponent } from './authors/authors.component';
 import { GenresComponent } from './genres/genres.component';
-import { SearchComponent } from './search/search.component';
 import { SearchExternalComponent } from './search-external/search-external.component';
 import { TestComponent } from './test/test.component';
 import { BookMatchResultsComponent } from './book-match-results/book-match-results.component';
@@ -26,7 +25,6 @@ export const routes: Routes = [
   { path: 'authors', component: AuthorsComponent },
   { path: 'genres', component: GenresComponent },
   { path: 'import', component: ImportPageComponent },
-  { path: 'search', component: SearchComponent, pathMatch: 'full' },
   { path: 'search_external', component: SearchExternalComponent, pathMatch: 'full' },
   { path: 'test', component: TestComponent},
   { path: 'book/:id/match', component: BookMatchResultsComponent },

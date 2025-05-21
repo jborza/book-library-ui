@@ -6,7 +6,7 @@
     <div class="book-info">
       <h1 class="book-title">{{ book.title }}</h1>
       <p class="book-authors">
-        <a [routerLink]="['/search']" [queryParams]="{ search_query: book.author_name }" style="text-decoration: none">
+        <a [routerLink]="['/books']" [queryParams]="{ author: book.author_name }" style="text-decoration: none">
           {{ book.author_name }}
         </a>
       </p>
@@ -53,7 +53,7 @@
     <p class="book-meta" *ngIf="book.genre">
       Genres:
       <span *ngFor="let genre of genres">
-        <a [routerLink]="['/search']" [queryParams]="{ search_query: genre }" style="text-decoration: none">
+        <a [routerLink]="['/books']" [queryParams]="{ genre: genre }" style="text-decoration: none">
           {{ genre }} </a>,
       </span>
     </p>
