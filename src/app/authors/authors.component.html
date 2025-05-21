@@ -17,7 +17,7 @@
             <h2>{{ group.key }}</h2>
             <ul>
                 <li *ngFor="let author of group.value">
-                    <a [routerLink]="['/search']" [queryParams]="{ search_query: author }"
+                    <a [routerLink]="['/books']" [queryParams]="{ author: author }"
                         style="text-decoration: none;">
                         {{ author }}
                     </a>

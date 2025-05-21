@@ -40,6 +40,7 @@ export class AuthorsComponent {
   // Group authors by the first letter of their surname
   groupAuthorsByFirstLetter(authors: { name: string; surname: string }[]): { [key: string]: string[] } {
     return authors.reduce((groups, author) => {
+      if (!author.surname) return groups; // Skip if surname is not available
       const firstLetter = author.surname[0].toUpperCase(); // Get the first letter of the surname
       if (!groups[firstLetter]) {
         groups[firstLetter] = []; // Create a new group if it doesn't exist
