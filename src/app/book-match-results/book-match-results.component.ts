@@ -69,9 +69,21 @@ export class BookMatchResultsComponent {
     return this.searchForm.get('searchTitle')?.value;
   }
 
+  searchProvider(): string {
+    const provider = this.searchForm.get('provider')?.value;
+    if (provider === 'Google Books') {
+      return SearchService.GOOGLEBOOKS;
+    } else if (provider === 'Open Library') {
+      return SearchService.OPENLIBRARY;
+    }
+    else {
+      throw new Error('Invalid search provider');
+    }
+  }
+
   performSearch(): void {
-    // Replace with your API call
-    this.searchService.searchBooks(SearchService.GOOGLEBOOKS, this.searchTitle()).subscribe(
+    // SearchService.GOOGLEBOOKS
+    this.searchService.searchBooks(this.searchProvider(), this.searchTitle()).subscribe(
       {
         next: (response: any) => {
           console.log('Search results:', response);

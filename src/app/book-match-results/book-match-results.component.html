@@ -1,13 +1,13 @@
 <div class="container mt-4">
   <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
     <div class="row align-items-center">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <label for="provider" class="form-label">Provider</label>
         <select id="provider" class="form-select" formControlName="provider">
           <option *ngFor="let provider of providers" [value]="provider">{{ provider }}</option>
         </select>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-6">
         <label for="searchTitle" class="form-label">Search Title</label>
         <input type="text" class="form-control" id="searchTitle" formControlName="searchTitle"
         placeholder="Enter title"  >
