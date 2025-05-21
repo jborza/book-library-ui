@@ -8,7 +8,6 @@ import { BooksPaginationComponent } from '../books-pagination/books-pagination.c
 import { BookFilter } from '../book-filter';
 import { SettingsService } from '../settings.service';
 import { LibraryEventsService } from '../library-events.service';
-import { loadFromUrlParams } from '../url-parameters';
 
 @Component({
   standalone: true,
@@ -56,8 +55,6 @@ export class BookListComponent implements OnInit {
       this.authorName = params.get('author') || '';
       this.typeFilter = params.get('type') || '';
       this.statusFilter = params.get('status') || '';
-      this.filters = new BookFilter();
-      loadFromUrlParams(this.filters, params);
       this.fetchBooks();
       this.fetchAuthors();
     });
