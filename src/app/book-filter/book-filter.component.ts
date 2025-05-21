@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autocomplete.component';
 import { BookFilter } from '../book-filter';
+import { loadFromUrlParams } from '../url-parameters';
+import { ActivatedRoute } from '@angular/router';
 
 declare var bootstrap: any;
 @Component({
@@ -73,6 +75,18 @@ export class BookFilterComponent {
       disabled: !this.pagesEnabled,
     };
   }
+
+  constructor(private route: ActivatedRoute) {
+  }
+
+  ngOnInit() {
+    this.route.queryParamMap.subscribe((params) => {
+      this.filters = new BookFilter();
+      loadFromUrlParams(this.filters, params);
+      this.filtersChanged.emit(this.filters);
+    });
+  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['minmax'] && this.minmax) {
