@@ -136,8 +136,8 @@ export class MenuComponent {
 
   onSearch(): void {
     // Navigate to the search route with the query parameter
-    this.router.navigate(['/search'], {
-      queryParams: { search_query: this.searchQuery },
+    this.router.navigate(['/books'], {
+      queryParams: { search: this.searchQuery },
     });
   }
 
