@@ -40,6 +40,7 @@ export class BookListComponent implements OnInit {
   currentPage: number = 1; // Current page number
   filters: BookFilter | undefined;
   selectedBookIds: number[] = []; // IDs of selected books
+  currentUrl: string;
 
   constructor(
     private booksService: BooksService,
@@ -47,7 +48,9 @@ export class BookListComponent implements OnInit {
     private settingsService: SettingsService,
     private router: Router,
     private libraryEvents: LibraryEventsService
-  ) { }
+  ) {
+    this.currentUrl = router.url;
+  }
 
   ngOnInit(): void {
     this.pageSize = this.settingsService.getSetting('pageSize') || 20; // Default page size

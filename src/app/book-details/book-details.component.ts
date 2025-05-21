@@ -96,7 +96,7 @@ export class BookDetailsComponent implements OnInit {
 
   edit(): void {
     // book/:id/edit
-    this.router.navigate(['/books', this.book.id, 'edit']);
+    this.router.navigate(['/books', this.book.id, 'edit'],  { queryParams: { returnUrl: this.router.url } });
   }
 
   updateBookStatus(status: string): void {

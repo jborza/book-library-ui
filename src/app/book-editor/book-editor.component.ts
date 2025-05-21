@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { BookDataService } from '../book-data.service';
 import { Book } from '../book.model';
 import {
@@ -32,6 +32,7 @@ export class BookEditorComponent implements OnInit {
   editMode: boolean = false;
   bookForm!: FormGroup;
   validationErrors: string[] = [];
+  returnUrl: string;
 
   languages = ['English', 'German', 'Slovak', 'Czech']; // TODO add country icons
   statuses = ['Read', 'Reading', 'To Read', 'Abandoned', 'Wish List'];
@@ -93,10 +94,11 @@ export class BookEditorComponent implements OnInit {
     private booksService: BooksService,
     private apiService: ApiService,
     private router: Router,
-    private location: Location,
     private fb: FormBuilder,
     private thumbnailService: ThumbnailsService
-  ) {}
+  ) {
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/books';
+  }
 
   ngOnInit(): void {
     this.bookForm = this.fb.group({
@@ -242,7 +244,7 @@ export class BookEditorComponent implements OnInit {
       },
       complete: () => {
         // navigate back to where the user came from
-        this.location.back();
+        this.router.navigateByUrl(this.returnUrl);
       },
     });
   }
@@ -259,7 +261,7 @@ export class BookEditorComponent implements OnInit {
       },
       complete: () => {
         // navigate back to where the user came from
-        this.location.back();
+        this.router.navigateByUrl(this.returnUrl);
       },
     });
   }
