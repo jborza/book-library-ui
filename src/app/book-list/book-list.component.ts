@@ -175,11 +175,7 @@ export class BookListComponent implements OnInit {
   // Handle right-click (context menu) to select a row
   onRowRightClick(bookId: number, event: MouseEvent): void {
     event.preventDefault(); // Prevent the default browser context menu
-
-    if (!this.isSelected(bookId)) {
-      // Add the right-clicked row to the selection
-      this.selectedBookIds.push(bookId);
-    }
+    this.toggleSelection(bookId);
   }
 
   // Toggle selection for a single book
