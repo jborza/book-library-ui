@@ -107,7 +107,8 @@
           </div>
         </div>
         <div class="col-md-6">
-          <!-- <img *ngIf="cover_image" [src]="getCoverImageUrl()" alt="Cover Preview" class="img-thumbnail mt-2" /> -->
+          Upload
+          <input type="file" (change)="onFileChange($event)" class="form-control" />
         </div>
         <!-- Cover Image URL Input -->
         <div class="col-md-6">

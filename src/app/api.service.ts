@@ -28,6 +28,7 @@ export class ApiService {
     updateBooks: `${this.baseUrl}/books/update_books_api`,
     recommendations: (bookId: string) =>
       `${this.baseUrl}/recommendations/${bookId}`,
+    thumbnailUpload: `${this.baseUrl}/thumbnails/upload`,
   };
 
   getSearchUrl(): string {
@@ -100,5 +101,9 @@ export class ApiService {
 
   getRecommendationsUrl(bookId: string): string {
     return this.endpoints.recommendations(bookId);
+  }
+
+  getThumbnailUploadUrl(): string {
+    return this.endpoints.thumbnailUpload;
   }
 }

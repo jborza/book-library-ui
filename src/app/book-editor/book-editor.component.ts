@@ -14,6 +14,7 @@ import { BooksService } from '../books.service';
 import { Router } from '@angular/router';
 import { TagInputComponent } from '../tag-input/tag-input.component';
 import { ApiService } from '../api.service';
+import { ThumbnailsService } from '../thumbnails.service';
 
 // TODO convert rating entered like 4,6 to 4.6
 
@@ -93,7 +94,8 @@ export class BookEditorComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private location: Location,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private thumbnailService: ThumbnailsService
   ) {}
 
   ngOnInit(): void {
@@ -296,6 +298,13 @@ export class BookEditorComponent implements OnInit {
         cover_image: formData.coverImage,
         page_count: formData.pages,
       };
+      // this feels like a hack, find a better way to store cover image urls
+      if (this.book.cover_image) {
+        saveData.cover_image = this.book.cover_image;
+      }
+      if (this.book.cover_image_tiny) {
+        saveData.cover_image_tiny = this.book.cover_image_tiny;
+      }
 
       // Call the backend API to save the data
       // if new book, create it
@@ -364,5 +373,28 @@ export class BookEditorComponent implements OnInit {
     };
 
     return errorMessages[errorKey] || null;
+  }
+
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      // upload the image
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      this.thumbnailService.uploadImage(formData).subscribe({
+        next: (response) => {
+          console.log('Image uploaded successfully:', response);
+          // Update the cover image URL in the form
+          const largeImageUrl = response.file_path;
+          const tinyImageUrl = response.file_path_tiny;
+          this.book.cover_image = largeImageUrl;
+          this.book.cover_image_tiny = tinyImageUrl;
+        },
+        error: (error) => {
+          console.error('Error occurred while uploading image:', error);
+        },
+      });
+    }
   }
 }
