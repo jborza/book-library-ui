@@ -24,7 +24,6 @@ import { LibraryEventsService } from '../library-events.service';
 export class BookListComponent implements OnInit {
   books: Book[] = [];
   originalBooks: Book[] = [];
-  authorName: string = '';
   statusFilter: string = '';
   typeFilter: string = '';
   sortColumn: string = ''; // Column to sort by
@@ -55,7 +54,6 @@ export class BookListComponent implements OnInit {
   ngOnInit(): void {
     this.pageSize = this.settingsService.getSetting('pageSize') || 20; // Default page size
     this.route.queryParamMap.subscribe((params) => {
-      this.authorName = params.get('author') || '';
       this.typeFilter = params.get('type') || '';
       this.statusFilter = params.get('status') || '';
       this.fetchBooks();
@@ -82,7 +80,8 @@ export class BookListComponent implements OnInit {
       this.statusFilter,
       this.typeFilter,
       this.currentPage,
-      this.pageSize
+      this.pageSize,
+      this.filters
     );
     this.booksService
       .getBooksFiltered(
