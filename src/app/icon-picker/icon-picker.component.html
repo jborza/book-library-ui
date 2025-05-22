@@ -1,0 +1,12 @@
+<div class="border box p-3 m-3">
+    <h5>Select an icon:</h5>
+    <div class="icons grid text-center">
+        <span *ngFor="let icon of icons" class="icon" (click)="selectIcon(icon)">
+            <span class="fs-3">{{ icon }}</span>
+        </span>
+    </div>
+    <div class="float-end m-3">
+        <button type="button" class="btn btn-primary me-2" (click)="onCancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">Select</button>
+    </div>
+</div>
