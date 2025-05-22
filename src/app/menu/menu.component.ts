@@ -40,19 +40,19 @@ export class MenuComponent {
         {
           name: 'Ebooks',
           url: '/books',
-          queryParams: { type: 'ebook' },
+          queryParams: { bookType: 'ebook' },
           icon: '📲',
         },
         {
           name: 'Physical',
           url: '/books',
-          queryParams: { type: 'physical' },
+          queryParams: { bookType: 'physical' },
           icon: '📙',
         },
         {
           name: 'Audiobooks',
           url: '/books',
-          queryParams: { type: 'audiobook' },
+          queryParams: { bookType: 'audiobook' },
           icon: '🔊',
         },
       ],
