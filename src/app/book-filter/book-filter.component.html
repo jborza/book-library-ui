@@ -132,6 +132,7 @@
           <label for="libraryName" class="form-label">Library Name</label>
           <input type="text" [(ngModel)]="saveName" class="form-control" id="libraryName" name="libraryName" required />
         </div>
+        <app-icon-picker [(ngModel)]="selectedIcon" (iconSelected)="iconSelected($event)"></app-icon-picker>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Cancel

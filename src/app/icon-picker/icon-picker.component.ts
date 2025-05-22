@@ -17,21 +17,12 @@ export class IconPickerComponent {
   @Output() iconSelected = new EventEmitter<any>();
 
   constructor() {
-
   }
 
   selectedIcon: string = '';
 
   selectIcon(icon: string): void {
     this.selectedIcon = icon;
-    this.iconSelected.emit(this.selectedIcon);
-  }
-
-  onCancel():void{
-    
-  }
-
-  onSubmit(): void{
     this.iconSelected.emit(this.selectedIcon);
   }
 }

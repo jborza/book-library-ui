@@ -15,6 +15,8 @@ export class BookFilter {
   author: string = '';
   series: string = '';
   status: string = '';
+  // this is stupid, should have been outside of the class
+  icon: string = '';
 
   summarize(): string {
     let things = [];

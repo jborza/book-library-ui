@@ -147,8 +147,10 @@ export class BookListComponent implements OnInit {
   onSaveRequested(parameters: any[]): void {
     const filters: BookFilter = parameters[0];
     const saveName: string = parameters[1];
-    console.log('Save requested:', ' name:', saveName, 'filters:', filters);
+    const icon: string = parameters[2];
+    console.log('Save requested:', ' name:', saveName, 'filters:', filters, 'icon:', icon);
     this.filters = filters;
+    this.filters.icon = icon;
     this.settingsService.saveLibrary(saveName, filters);
     this.libraryEvents.notifyLibrarySaved();
   }

@@ -14,6 +14,7 @@ import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autoc
 import { BookFilter } from '../book-filter';
 import { loadFromUrlParams } from '../url-parameters';
 import { ActivatedRoute } from '@angular/router';
+import { IconPickerComponent } from "../icon-picker/icon-picker.component";
 
 declare var bootstrap: any;
 @Component({
@@ -23,7 +24,8 @@ declare var bootstrap: any;
     FormsModule,
     NgxSliderModule,
     AuthorAutocompleteComponent,
-  ],
+    IconPickerComponent
+],
   templateUrl: './book-filter.component.html',
   styleUrl: './book-filter.component.less',
 })
@@ -45,6 +47,7 @@ export class BookFilterComponent {
   yearEnabled: boolean = false;
   pagesEnabled: boolean = false;
   saveName: string = '';
+  selectedIcon: string = '';
   @ViewChild('filterPanelRef') filterPanelRef!: ElementRef<HTMLDivElement>;
   isCollapsed = true; // collapsed by default
 
@@ -124,10 +127,13 @@ export class BookFilterComponent {
   }
 
   saveSearch() {
-    this.saveRequested.emit([this.filters, this.saveName]);
+    this.saveRequested.emit([this.filters, this.saveName, this.selectedIcon]);
     const modalElement = document.getElementById('savePromptModal');
     const modalInstance = bootstrap.Modal.getInstance(modalElement);
     modalInstance.hide();
   }
 
+   iconSelected($event: any) {
+    this.selectedIcon = $event;
+  }
 }
