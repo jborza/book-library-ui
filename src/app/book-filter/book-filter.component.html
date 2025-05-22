@@ -8,7 +8,8 @@
 >
   Search
 </button>
-<div class="collapse" id="searchBox">
+<span *ngIf="isCollapsed" style="margin-left:1em;"><i>{{ summaryText }}</i></span>
+<div class="collapse" id="searchBox" #filterPanelRef>
   <div class="filter-bar card card-body">
     <!-- Search by Title -->
     <div class="filter-item">

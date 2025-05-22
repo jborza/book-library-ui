@@ -5,6 +5,8 @@ import {
   EventEmitter,
   Input,
   SimpleChanges,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
@@ -36,10 +38,6 @@ export class BookFilterComponent {
 
   @Output() saveRequested = new EventEmitter<any[]>();
 
-
-  // Example: Genres and languages (replace with data from your backend)
-  // TODO move these to a service
-  // TODO fetch these from the backend
   @Input() genres: string[] = [];
   @Input() series: string[] = [];
   @Input() languages: string[] = [];
@@ -47,6 +45,8 @@ export class BookFilterComponent {
   yearEnabled: boolean = false;
   pagesEnabled: boolean = false;
   saveName: string = '';
+  @ViewChild('filterPanelRef') filterPanelRef!: ElementRef<HTMLDivElement>;
+  isCollapsed = true; // collapsed by default
 
   statuses = ['Read', 'Reading', 'To Read', 'Abandoned', 'Wish List'];
   bookTypes = ['Ebook', 'Audiobook', 'Physical Book'];
@@ -76,6 +76,10 @@ export class BookFilterComponent {
     };
   }
 
+  get summaryText() {
+    return this.filters.summarize();
+  }
+
   constructor(private route: ActivatedRoute) {
   }
 
@@ -97,6 +101,13 @@ export class BookFilterComponent {
     if (changes['series']) {
       this.series = changes['series'].currentValue;
     }
+  }
+
+  ngAfterViewInit() {
+    // Listen for Bootstrap collapse events
+    const el = this.filterPanelRef.nativeElement;
+    el.addEventListener('shown.bs.collapse', () => this.isCollapsed = false);
+    el.addEventListener('hidden.bs.collapse', () => this.isCollapsed = true);
   }
 
   onFilterChange() {
