@@ -91,7 +91,6 @@ export class BookFilterComponent {
     });
   }
 
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['minmax'] && this.minmax) {
     }
@@ -121,11 +120,11 @@ export class BookFilterComponent {
     this.filters.yearEnabled = this.yearEnabled;
     this.filters.pagesEnabled = this.pagesEnabled;
     this.filtersChanged.emit(this.filters);
+    console.log('Filters changed: status:', this.filters.status);
   }
 
   saveSearch() {
     this.saveRequested.emit([this.filters, this.saveName]);
-    // TODO close the popup
     const modalElement = document.getElementById('savePromptModal');
     const modalInstance = bootstrap.Modal.getInstance(modalElement);
     modalInstance.hide();

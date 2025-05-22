@@ -40,8 +40,8 @@ export class BooksService {
     if (search?.status) {
       params = params.set('status', search.status);
     }
-    if (type) {
-      params = params.set('type', type);
+    if (search?.bookType) {
+      params = params.set('type', search.bookType);
     }
     if (pageSize) {
       params = params.set('page_size', pageSize.toString());

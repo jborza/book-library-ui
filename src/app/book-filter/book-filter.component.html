@@ -80,6 +80,39 @@
       </select>
     </div>
 
+    <!-- Filter by Book Type -->
+    <div class="filter-item">
+      <label for="book-type">Book Type</label>
+      <select
+        id="book-type"
+        class="form-select"
+        [(ngModel)]="filters.bookType"
+        (ngModelChange)="onFilterChange()"
+      >
+        <option value="">All Types</option>
+        <option value="ebook">Ebook</option>
+        <option value="audiobook">Audiobook</option>
+        <option value="physical">Physical Book</option>
+      </select>
+    </div>
+
+    <!-- Filter by Status -->
+    <div class="filter-item">
+      <label for="status">Status</label>
+      <select
+        id="status"
+        class="form-select"
+        [(ngModel)]="filters.status"
+        (ngModelChange)="onFilterChange()"
+      >
+        <option value="">All</option>
+        <option value="to-read">To Read</option>
+        <option value="currently-reading">Currently Reading</option>
+        <option value="read">Read</option>
+        <option value="wishlist">Wishlist</option>
+      </select>
+    </div>
+
     <!-- Filter by Page Count Range -->
     <div class="filter-item">
       <input type="checkbox" [(ngModel)]="pagesEnabled" class="me-2" />
@@ -113,21 +146,6 @@
       ></ngx-slider>
     </div>
 
-    <!-- Filter by Book Type -->
-    <div class="filter-item">
-      <label for="book-type">Book Type</label>
-      <select
-        id="book-type"
-        class="form-select"
-        [(ngModel)]="filters.bookType"
-        (ngModelChange)="onFilterChange()"
-      >
-        <option value="">All Types</option>
-        <option value="ebook">Ebook</option>
-        <option value="audiobook">Audiobook</option>
-        <option value="physical">Physical Book</option>
-      </select>
-    </div>
 
     <!-- todo add series, tags, isbn -->
     <button type="button" class="btn btn-primary me-2" (click)="filter()">

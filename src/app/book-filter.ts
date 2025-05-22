@@ -15,7 +15,6 @@ export class BookFilter {
   author: string = '';
   series: string = '';
   status: string = '';
-  type: string = '';
 
   summarize(): string {
     let things = [];
@@ -23,8 +22,8 @@ export class BookFilter {
       things.push('Search: ' + this.search)
     if (this.status)
       things.push(this.status)
-    if (this.type)
-      things.push(this.type)
+    if (this.bookType)
+      things.push(this.bookType)
     if (this.genre)
       things.push('Genre: ' + this.genre)
     if (this.language)
