@@ -7,15 +7,12 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class PingService {
-  // TODO figure out a way to notify the GUI when the backend is down
-  // make a singleton service?
   private subscription: Subscription;
   @Output() pingCalled = new EventEmitter<any>();
   private lastStatus: boolean = false;
 
-
   constructor(private http: HttpClient, private apiService: ApiService) {
-    this.subscription = interval(5000) // 30 seconds
+    this.subscription = interval(30000) // 30 seconds
       .subscribe(() => {
         this.pollBackend();
       });
