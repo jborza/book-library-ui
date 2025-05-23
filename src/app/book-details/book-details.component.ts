@@ -69,7 +69,6 @@ export class BookDetailsComponent implements OnInit {
 
 
   getCoverImageUrl(book: Book, tiny: boolean = false): string {
-    console.log('getCoverImageUrl', book, tiny);
     if (tiny) {
       if (book?.cover_image_tiny) {
         return 'http://localhost:5000/static/' + book.cover_image_tiny;

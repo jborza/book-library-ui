@@ -29,11 +29,12 @@ export class Book {
   tags?: string;
   publisher?: string;
   author_surname?: string; // Added surname property
+  notes?: string; // Added notes property
 
   constructor(data: any) {
     this.id = data.id;
     this.title = data.title;
-    this.author_name = data.author_name; // Map API response to camelCase
+    this.author_name = data.author_name;
     this.year = data.year_published;
     this.isbn = data.isbn;
     this.rating = data.rating;
@@ -49,5 +50,6 @@ export class Book {
     this.series = data.series;
     this.tags = data.tags;
     this.publisher = data.publisher;
+    this.notes = data.notes;
   }
 }

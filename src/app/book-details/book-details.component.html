@@ -18,6 +18,8 @@
       </div>
       <span *ngIf="book.review" class="rating-info">{{ book.review }}</span>
       <p class="book-description">{{ book.synopsis }}</p>
+      <p class="book-meta">Notes: {{ book.notes }}</p>
+
       <button class="btn btn-primary m-1" (click)="edit()">Edit</button>
       <button class="btn btn-secondary m-1" (click)="match()">
         Match (by search)
