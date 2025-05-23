@@ -5,6 +5,8 @@ import {
   EventEmitter,
   Input,
   SimpleChanges,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
@@ -12,6 +14,7 @@ import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autoc
 import { BookFilter } from '../book-filter';
 import { loadFromUrlParams } from '../url-parameters';
 import { ActivatedRoute } from '@angular/router';
+import { IconPickerComponent } from "../icon-picker/icon-picker.component";
 
 declare var bootstrap: any;
 @Component({
@@ -21,7 +24,8 @@ declare var bootstrap: any;
     FormsModule,
     NgxSliderModule,
     AuthorAutocompleteComponent,
-  ],
+    IconPickerComponent
+],
   templateUrl: './book-filter.component.html',
   styleUrl: './book-filter.component.less',
 })
@@ -36,10 +40,6 @@ export class BookFilterComponent {
 
   @Output() saveRequested = new EventEmitter<any[]>();
 
-
-  // Example: Genres and languages (replace with data from your backend)
-  // TODO move these to a service
-  // TODO fetch these from the backend
   @Input() genres: string[] = [];
   @Input() series: string[] = [];
   @Input() languages: string[] = [];
@@ -47,6 +47,9 @@ export class BookFilterComponent {
   yearEnabled: boolean = false;
   pagesEnabled: boolean = false;
   saveName: string = '';
+  selectedIcon: string = '';
+  @ViewChild('filterPanelRef') filterPanelRef!: ElementRef<HTMLDivElement>;
+  isCollapsed = true; // collapsed by default
 
   statuses = ['Read', 'Reading', 'To Read', 'Abandoned', 'Wish List'];
   bookTypes = ['Ebook', 'Audiobook', 'Physical Book'];
@@ -76,6 +79,10 @@ export class BookFilterComponent {
     };
   }
 
+  get summaryText() {
+    return this.filters.summarize();
+  }
+
   constructor(private route: ActivatedRoute) {
   }
 
@@ -87,7 +94,6 @@ export class BookFilterComponent {
     });
   }
 
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['minmax'] && this.minmax) {
     }
@@ -97,6 +103,13 @@ export class BookFilterComponent {
     if (changes['series']) {
       this.series = changes['series'].currentValue;
     }
+  }
+
+  ngAfterViewInit() {
+    // Listen for Bootstrap collapse events
+    const el = this.filterPanelRef.nativeElement;
+    el.addEventListener('shown.bs.collapse', () => this.isCollapsed = false);
+    el.addEventListener('hidden.bs.collapse', () => this.isCollapsed = true);
   }
 
   onFilterChange() {
@@ -110,14 +123,17 @@ export class BookFilterComponent {
     this.filters.yearEnabled = this.yearEnabled;
     this.filters.pagesEnabled = this.pagesEnabled;
     this.filtersChanged.emit(this.filters);
+    console.log('Filters changed: status:', this.filters.status);
   }
 
   saveSearch() {
-    this.saveRequested.emit([this.filters, this.saveName]);
-    // TODO close the popup
+    this.saveRequested.emit([this.filters, this.saveName, this.selectedIcon]);
     const modalElement = document.getElementById('savePromptModal');
     const modalInstance = bootstrap.Modal.getInstance(modalElement);
     modalInstance.hide();
   }
 
+   iconSelected($event: any) {
+    this.selectedIcon = $event;
+  }
 }

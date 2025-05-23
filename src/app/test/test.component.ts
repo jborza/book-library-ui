@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { BookItemComponent } from '../book-item/book-item.component';
+import { IconPickerComponent } from '../icon-picker/icon-picker.component';
 
 @Component({
   selector: 'app-test',
-  imports: [BookItemComponent],
+  imports: [
+    IconPickerComponent],
   templateUrl: './test.component.html',
   styleUrl: './test.component.less'
 })
 export class TestComponent {
+  iconSelected($event: any) {
+    alert('picked:'+$event)
+  }
 
 }

@@ -37,11 +37,11 @@ export class BooksService {
     pageSize?: number
   ): Observable<any> {
     let params = new HttpParams();
-    if (status) {
-      params = params.set('status', status);
+    if (search?.status) {
+      params = params.set('status', search.status);
     }
-    if (type) {
-      params = params.set('type', type);
+    if (search?.bookType) {
+      params = params.set('type', search.bookType);
     }
     if (pageSize) {
       params = params.set('page_size', pageSize.toString());

@@ -1,5 +1,6 @@
-<div class="form-group position-relative">
-  <label for="author-input" class="form-label">Author</label>
+<div class="form-group position-relative row">
+  <label for="author-input" class="form-label" class="col-sm-2 col-form-label">Author</label>
+      <div class="col-sm-10">
   <input
     id="author-input"
     type="text"
@@ -8,6 +9,7 @@
     (input)="onInputChange()"
     placeholder="Search for an author"
   />
+  </div>
   <!-- Autocomplete Dropdown -->
   <ul
     class="dropdown-menu show w-100"

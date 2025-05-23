@@ -129,7 +129,7 @@ export class MenuComponent {
         name: library.name,
         url: '/books',
         queryParams: library.filter,
-        icon: '🏛️',
+        icon: library.filter.icon || '📖',
       });
     });
   }

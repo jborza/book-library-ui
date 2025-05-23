@@ -40,7 +40,7 @@ export class SettingsService {
     return Object.entries(libraries).map(([name, filter]) => ({ name, filter }));;
   }
 
-  saveLibrary(name: string, filter: BookFilter) {
+  saveLibrary(name: string, filter: BookFilter): void {
     const libraries = JSON.parse(localStorage.getItem('libraries') || '{}');
     libraries[name] = filter;
     localStorage.setItem('libraries', JSON.stringify(libraries));

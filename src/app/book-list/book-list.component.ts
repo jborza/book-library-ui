@@ -95,7 +95,6 @@ export class BookListComponent implements OnInit {
       )
       .subscribe((response) => {
         this.minmax = response.minmax;
-        // this.authors = response.authors;
         this.genres = response.genres;
         this.languages = response.languages;
         this.series = response.series;
@@ -140,9 +139,7 @@ export class BookListComponent implements OnInit {
 
   // Update the list when filters change
   onFiltersChanged(filters: BookFilter): void {
-    console.log('Filters changed:', filters);
     this.filters = filters;
-    // TODO get from-to values
     this.fetchBooks();
     // TODO probably also reset the page to 1
   }
@@ -150,8 +147,10 @@ export class BookListComponent implements OnInit {
   onSaveRequested(parameters: any[]): void {
     const filters: BookFilter = parameters[0];
     const saveName: string = parameters[1];
-    console.log('Save requested:', ' name:', saveName, 'filters:', filters);
+    const icon: string = parameters[2];
+    console.log('Save requested:', ' name:', saveName, 'filters:', filters, 'icon:', icon);
     this.filters = filters;
+    this.filters.icon = icon;
     this.settingsService.saveLibrary(saveName, filters);
     this.libraryEvents.notifyLibrarySaved();
   }

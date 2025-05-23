@@ -1,0 +1,9 @@
+<div class="border box p-3 m-3">
+    <h5>Select an icon:</h5>
+    <div class="icons grid text-center">
+        <span *ngFor="let icon of icons" class="icon" (click)="selectIcon(icon)"
+            [class.selected]="icon === selectedIcon">
+            <span class="fs-3">{{ icon }}</span>
+        </span>
+    </div>
+</div>
