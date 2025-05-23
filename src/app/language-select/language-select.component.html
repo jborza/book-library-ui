@@ -1,0 +1,18 @@
+<ng-select
+  [items]="languages"
+  bindLabel="label"
+  bindValue="value"
+  [(ngModel)]="selectedLanguage"
+  placeholder="Select language"
+  [clearable]="false"
+  class="w-100"
+>
+  <ng-template ng-option-tmp let-item="item">
+    <img [src]="item.flag" width="20" style="vertical-align: middle; margin-right: 4px;" />
+    {{ item.label }}
+  </ng-template>
+  <ng-template ng-label-tmp let-item="item">
+    <img [src]="item.flag" width="20" style="vertical-align: middle; margin-right: 4px;" />
+    {{ item.label }}
+  </ng-template>
+</ng-select>

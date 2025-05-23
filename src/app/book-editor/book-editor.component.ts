@@ -15,12 +15,19 @@ import { Router } from '@angular/router';
 import { TagInputComponent } from '../tag-input/tag-input.component';
 import { ApiService } from '../api.service';
 import { ThumbnailsService } from '../thumbnails.service';
+import { LanguageSelectComponent } from '../language-select/language-select.component';
 
 // TODO convert rating entered like 4,6 to 4.6
 
 @Component({
   selector: 'app-book-editor',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TagInputComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TagInputComponent,
+    LanguageSelectComponent,
+  ],
   templateUrl: './book-editor.component.html',
   styleUrl: './book-editor.component.less',
 })
@@ -34,7 +41,12 @@ export class BookEditorComponent implements OnInit {
   validationErrors: string[] = [];
   returnUrl: string;
 
-  languages = ['English', 'German', 'Slovak', 'Czech']; // TODO add country icons
+  languages = [
+    { value: 'en', label: '🇬🇧 English' },
+    { value: 'de', label: '🇩🇪 German' },
+    { value: 'sk', label: '🇸🇰 Slovak' },
+    { value: 'cz', label: '🇨🇿 Czech' },
+  ];
   statuses = ['Read', 'Reading', 'To Read', 'Abandoned', 'Wish List'];
   bookTypes = ['Ebook', 'Audiobook', 'Physical Book'];
 
@@ -97,7 +109,8 @@ export class BookEditorComponent implements OnInit {
     private fb: FormBuilder,
     private thumbnailService: ThumbnailsService
   ) {
-    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/books';
+    this.returnUrl =
+      this.route.snapshot.queryParamMap.get('returnUrl') || '/books';
   }
 
   ngOnInit(): void {

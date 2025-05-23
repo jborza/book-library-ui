@@ -71,9 +71,7 @@
         </div>
         <div class="col-md-6">
           <label for="language" class="form-label">Language</label>
-          <select id="language" class="form-select" formControlName="language">
-            <option *ngFor="let lang of languages" [value]="lang">{{ lang }}</option>
-          </select>
+          <app-language-select id="language" formControlName="language"></app-language-select>
         </div>
       </div>
 
