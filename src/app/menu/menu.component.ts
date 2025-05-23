@@ -74,7 +74,7 @@ export class MenuComponent {
             icon: '🔜',
           },
           {
-            name: 'Currently Reading',
+            name: 'Reading',
             url: '/books',
             queryParams: { status: 'currently-reading' },
             icon: '⌛',
