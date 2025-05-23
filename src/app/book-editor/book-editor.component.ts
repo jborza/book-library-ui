@@ -191,7 +191,6 @@ export class BookEditorComponent implements OnInit {
     const displayType = this.typeMapping[book.book_type ?? 'ebook'] || 'Ebook';
     // genres can be a list of genres
     const genres = [book.genre?.split(', ') ?? []].flat();
-    //const year = book.year ?? book.year_published;
 
     this.bookForm.patchValue({
       title: book.title,
@@ -209,6 +208,7 @@ export class BookEditorComponent implements OnInit {
       rating: book.rating,
       type: displayType,
       coverImage: book.cover_image,
+      notes: book.notes,
     });
   }
 
@@ -312,6 +312,7 @@ export class BookEditorComponent implements OnInit {
         synopsis: formData.description,
         cover_image: formData.coverImage,
         page_count: formData.pages,
+        notes: formData.notes,
       };
       // this feels like a hack, find a better way to store cover image urls
       if (this.book.cover_image) {

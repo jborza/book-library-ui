@@ -4,11 +4,23 @@
     <div class="row mb-3">
       <div class="col-md-6">
         <label for="title" class="form-label">Title</label>
-        <input id="title" type="text" class="form-control" formControlName="title" placeholder="Enter book title" />
+        <input
+          id="title"
+          type="text"
+          class="form-control"
+          formControlName="title"
+          placeholder="Enter book title"
+        />
       </div>
       <div class="col-md-6">
         <label for="author" class="form-label">Author</label>
-        <input id="author" type="text" class="form-control" formControlName="author" placeholder="Book author" />
+        <input
+          id="author"
+          type="text"
+          class="form-control"
+          formControlName="author"
+          placeholder="Book author"
+        />
       </div>
     </div>
 
@@ -16,11 +28,23 @@
     <div class="row mb-3">
       <div class="col-md-8">
         <label for="series" class="form-label">Series</label>
-        <input id="series" type="text" class="form-control" formControlName="series" placeholder="Series" />
+        <input
+          id="series"
+          type="text"
+          class="form-control"
+          formControlName="series"
+          placeholder="Series"
+        />
       </div>
       <div class="col-md-4">
         <label for="year" class="form-label">Publish Year</label>
-        <input id="year" type="number" class="form-control" formControlName="year" placeholder="Year" />
+        <input
+          id="year"
+          type="number"
+          class="form-control"
+          formControlName="year"
+          placeholder="Year"
+        />
       </div>
     </div>
 
@@ -28,8 +52,25 @@
     <div class="row mb-3">
       <div class="col-md-12">
         <label for="description" class="form-label">Description</label>
-        <textarea id="description" class="form-control rich-text-editor" formControlName="description"
-          rows="5"></textarea>
+        <textarea
+          id="description"
+          class="form-control rich-text-editor"
+          formControlName="description"
+          rows="5"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <label for="notes" class="form-label">Notes</label>
+        <textarea
+          id="notes"
+          class="form-control rich-text-editor"
+          formControlName="notes"
+          rows="2"
+        ></textarea>
       </div>
     </div>
 
@@ -37,11 +78,19 @@
     <div class="row mb-3">
       <div class="col-md-6">
         <label for="genres" class="form-label">Genres</label>
-        <app-tag-input id="genres" formControlName="genres" [placeholder]="'Add genre'"></app-tag-input>
+        <app-tag-input
+          id="genres"
+          formControlName="genres"
+          [placeholder]="'Add genre'"
+        ></app-tag-input>
       </div>
       <div class="col-md-6">
         <label for="tags" class="form-label">Tags</label>
-        <app-tag-input id="tags" formControlName="tags" [placeholder]="'Add tag'"></app-tag-input>
+        <app-tag-input
+          id="tags"
+          formControlName="tags"
+          [placeholder]="'Add tag'"
+        ></app-tag-input>
       </div>
     </div>
 
@@ -50,28 +99,50 @@
       <div class="col-md-4">
         <label for="type" class="form-label">Book type</label>
         <select id="type" class="form-select" formControlName="type">
-          <option *ngFor="let type of bookTypes" [value]="type">{{ type }}</option>
+          <option *ngFor="let type of bookTypes" [value]="type">
+            {{ type }}
+          </option>
         </select>
       </div>
       <div class="col-md-4">
         <label for="isbn" class="form-label">ISBN</label>
-        <input id="isbn" type="text" class="form-control" formControlName="isbn" placeholder="Enter ISBN" />
+        <input
+          id="isbn"
+          type="text"
+          class="form-control"
+          formControlName="isbn"
+          placeholder="Enter ISBN"
+        />
       </div>
       <div class="col-md-4">
         <label for="asin" class="form-label">Page Count</label>
-        <input id="pages" type="text" class="form-control" formControlName="pages" placeholder="Enter Page Count" />
+        <input
+          id="pages"
+          type="text"
+          class="form-control"
+          formControlName="pages"
+          placeholder="Enter Page Count"
+        />
       </div>
 
       <!-- Publisher and Language -->
       <div class="row mb-3">
         <div class="col-md-6">
           <label for="publisher" class="form-label">Publisher</label>
-          <input id="publisher" type="text" class="form-control" formControlName="publisher"
-            placeholder="Enter publisher" />
+          <input
+            id="publisher"
+            type="text"
+            class="form-control"
+            formControlName="publisher"
+            placeholder="Enter publisher"
+          />
         </div>
         <div class="col-md-6">
           <label for="language" class="form-label">Language</label>
-          <app-language-select id="language" formControlName="language"></app-language-select>
+          <app-language-select
+            id="language"
+            formControlName="language"
+          ></app-language-select>
         </div>
       </div>
 
@@ -79,12 +150,20 @@
       <div class="row mb-3">
         <div class="col-md-6">
           <label for="rating" class="form-label">Rating</label>
-          <input id="rating" type="number" class="form-control" formControlName="rating" placeholder="Enter rating" />
+          <input
+            id="rating"
+            type="number"
+            class="form-control"
+            formControlName="rating"
+            placeholder="Enter rating"
+          />
         </div>
         <div class="col-md-6">
           <label for="status" class="form-label">Status</label>
           <select id="status" class="form-select" formControlName="status">
-            <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+            <option *ngFor="let status of statuses" [value]="status">
+              {{ status }}
+            </option>
           </select>
         </div>
       </div>
@@ -95,10 +174,13 @@
         <div class="col-md-6">
           <label class="form-label">Cover Image</label>
           <div class="cover-preview">
-            <img *ngIf="bookForm.get('coverImage')?.value" 
-            [src]="coverImageUrl"
-            alt="Cover Image"
-              class="img-thumbnail thumbnail-small" style="max-width: 100%; max-height: 300px;" />
+            <img
+              *ngIf="bookForm.get('coverImage')?.value"
+              [src]="coverImageUrl"
+              alt="Cover Image"
+              class="img-thumbnail thumbnail-small"
+              style="max-width: 100%; max-height: 300px"
+            />
             <p *ngIf="!bookForm.get('coverImage')?.value" class="text-muted">
               No cover image provided.
             </p>
@@ -106,15 +188,23 @@
         </div>
         <div class="col-md-6">
           Upload
-          <input type="file" (change)="onFileChange($event)" class="form-control" />
+          <input
+            type="file"
+            (change)="onFileChange($event)"
+            class="form-control"
+          />
         </div>
         <!-- Cover Image URL Input -->
         <div class="col-md-6">
           <label for="coverImage" class="form-label">URL</label>
-          <input id="coverImage" type="text" class="form-control" formControlName="coverImage"
-            placeholder="Enter cover image URL" />
+          <input
+            id="coverImage"
+            type="text"
+            class="form-control"
+            formControlName="coverImage"
+            placeholder="Enter cover image URL"
+          />
         </div>
-
       </div>
 
       <!-- Validation Errors -->
@@ -128,8 +218,20 @@
       <!-- Action Buttons -->
       <div class="row mt-4">
         <div class="col-md-12 text-end">
-          <button type="button" class="btn btn-primary me-2" (click)="onSubmit('save')">Save</button>
-          <button type="button" class="btn btn-primary" (click)="onSubmit('saveAndClose')">Save & Close</button>
+          <button
+            type="button"
+            class="btn btn-primary me-2"
+            (click)="onSubmit('save')"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="onSubmit('saveAndClose')"
+          >
+            Save & Close
+          </button>
         </div>
       </div>
     </div>
