@@ -1,69 +1,50 @@
-    <h3>Book Library</h3>
-<div class="sidebar-sticky">        
+<nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar" [ngClass]="{ 'menu-hidden': !isMenuVisible, 'menu-visible': isMenuVisible }">
+  <h3>Book Library</h3>
+  <div class="sidebar-sticky">
 
     <ul class="nav flex-column">
-    <li class="nav-item" *ngFor="let section of menuSections">
-      <h6 class="sidebar-heading">{{ section.title }}</h6>
-      <ul class="nav flex-column">
-        <li class="nav-item" *ngFor="let item of section.items">
-          <a class="nav-link pt-0 pb-0"
-            [routerLink]="item.url"
-            [queryParams]="item.queryParams || null">
-            {{item.icon}} {{ item.name }}
-          </a>
-        </li>
-      </ul>
-    </li>
-  </ul>
+      <li class="nav-item" *ngFor="let section of menuSections">
+        <h6 class="sidebar-heading">{{ section.title }}</h6>
+        <ul class="nav flex-column">
+          <li class="nav-item" *ngFor="let item of section.items">
+            <a class="nav-link pt-0 pb-0" [routerLink]="item.url" [queryParams]="item.queryParams || null">
+              {{item.icon}} {{ item.name }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
 
-  <h6 class="sidebar-heading">Search</h6>
+    <h6 class="sidebar-heading">Search</h6>
 
-<form class="px-3" (ngSubmit)="onSearchOpenLibrary()">
-  <div class="form-group">
-    <input
-      type="text"
-      class="form-control form-control-sm"
-      name="search_query"
-      id="search_query"
-      placeholder="Search books..."
-      [(ngModel)]="searchQueryOpenLibrary"
-    />
+    <form class="px-3" (ngSubmit)="onSearchOpenLibrary()">
+      <div class="form-group">
+        <input type="text" class="form-control form-control-sm" name="search_query" id="search_query"
+          placeholder="Search books..." [(ngModel)]="searchQueryOpenLibrary" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block btn-sm">
+        Search OpenLibrary
+      </button>
+    </form>
+
+    <form class="px-3" (ngSubmit)="onSearchGoogleBooks()">
+      <div class="form-group">
+        <input type="text" class="form-control form-control-sm" name="search_query" id="search_query"
+          placeholder="Search books..." [(ngModel)]="searchQueryGoogleBooks" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block btn-sm">
+        Search Google Books
+      </button>
+    </form>
+
+    <form class="px-3" (ngSubmit)="onSearch()">
+      <div class="form-group">
+        <input type="text" class="form-control form-control-sm" name="search_query" id="search_query"
+          placeholder="Search books..." [(ngModel)]="searchQuery" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block btn-sm">
+        Search Books
+      </button>
+    </form>
   </div>
-  <button type="submit" class="btn btn-primary btn-block btn-sm">
-    Search OpenLibrary
-  </button>
-</form>
-
-<form class="px-3" (ngSubmit)="onSearchGoogleBooks()">
-  <div class="form-group">
-    <input
-      type="text"
-      class="form-control form-control-sm"
-      name="search_query"
-      id="search_query"
-      placeholder="Search books..."
-      [(ngModel)]="searchQueryGoogleBooks"
-    />
-  </div>
-  <button type="submit" class="btn btn-primary btn-block btn-sm">
-    Search Google Books
-  </button>
-</form>
-
-<form class="px-3" (ngSubmit)="onSearch()">
-  <div class="form-group">
-    <input
-      type="text"
-      class="form-control form-control-sm"
-      name="search_query"
-      id="search_query"
-      placeholder="Search books..."
-      [(ngModel)]="searchQuery"
-    />
-  </div>
-  <button type="submit" class="btn btn-primary btn-block btn-sm">
-    Search Books
-  </button>
-</form>
-</div>
-
+</nav>

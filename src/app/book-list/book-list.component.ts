@@ -8,6 +8,7 @@ import { BooksPaginationComponent } from '../books-pagination/books-pagination.c
 import { BookFilter } from '../book-filter';
 import { SettingsService } from '../settings.service';
 import { LibraryEventsService } from '../library-events.service';
+import { TopBarComponent } from '../top-bar/top-bar.component';
 
 @Component({
   standalone: true,
@@ -19,6 +20,7 @@ import { LibraryEventsService } from '../library-events.service';
     RouterModule,
     BookFilterComponent,
     BooksPaginationComponent,
+    TopBarComponent
   ],
 })
 export class BookListComponent implements OnInit {
@@ -40,6 +42,7 @@ export class BookListComponent implements OnInit {
   filters: BookFilter | undefined;
   selectedBookIds: number[] = []; // IDs of selected books
   currentUrl: string;
+  searchText: string = ''; // Search text for filtering books
 
   constructor(
     private booksService: BooksService,
@@ -206,5 +209,16 @@ export class BookListComponent implements OnInit {
     this.router.navigate([`/books/edit_multiple`], {
       queryParams: { id: queryParams },
     });
+  }
+
+  searchCalled($event: any): void{
+    console.log('Search called from top bar');
+    this.fetchBooks();
+  }
+
+  searchTextChange($event: any):void{
+    console.log('Search text changed from top bar');
+    console.log('Search text:', $event);
+    //this.fetchBooks();
   }
 }

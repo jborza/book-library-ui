@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PingService } from '../ping.service';
+import { MenuService } from '../menu.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -15,7 +16,8 @@ export class TopBarComponent {
   @Output() searchCalled = new EventEmitter<void>();
   pingStatus: boolean = false;
 
-  constructor(private pingService: PingService) {
+  constructor(private pingService: PingService,
+    private menuService: MenuService) {
     pingService.pingCalled.subscribe((response) => {
       this.pingStatus = response;
     });
@@ -27,6 +29,7 @@ export class TopBarComponent {
   }
 
   showHideMenu(): void {
+    this.menuService.toggleMenu();
   }
 
   onInputChange(value: any /* string*/) {
@@ -38,7 +41,7 @@ export class TopBarComponent {
     return this.pingStatus ? "✅" : "❌";
   }
 
-  get pingTooltipText(){
+  get pingTooltipText() {
     return this.pingStatus ? "Backend is up" : "Backend is down";
   }
 }

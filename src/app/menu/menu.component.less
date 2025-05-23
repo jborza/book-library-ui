@@ -1,0 +1,25 @@
+.menu-hidden {
+    transform: translateX(-100%);
+    left: 0;
+}
+
+.menu-visible {
+    transform: translateX(0);
+    left: 0;
+}
+
+nav {
+  width: 200px; /* Default width */
+  height: 100vh;
+  background-color: #333;
+  color: white;
+  overflow: hidden;
+}
+
+nav.menu-hidden {
+  width: 0; /* Shrink to 0 width */
+}
+
+nav.menu-visible {
+  width: 200px; /* Expand to full width */
+}
