@@ -29,6 +29,7 @@ export class ApiService {
     recommendations: (bookId: string) =>
       `${this.baseUrl}/recommendations/${bookId}`,
     thumbnailUpload: `${this.baseUrl}/thumbnails/upload`,
+    ping: `${this.baseUrl}/ping`,
   };
 
   getSearchUrl(): string {
@@ -105,5 +106,9 @@ export class ApiService {
 
   getThumbnailUploadUrl(): string {
     return this.endpoints.thumbnailUpload;
+  }
+
+  getPingUrl(): string {
+    return this.endpoints.ping;
   }
 }
