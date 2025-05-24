@@ -10,6 +10,10 @@ export class MenuService {
   private isMenuVisible = new BehaviorSubject<boolean>(true);
   menuVisibility$ = this.isMenuVisible.asObservable();
 
+  get isMenuOpen(): boolean {
+    return this.isMenuVisible.value;
+  }
+
   toggleMenu() {
     this.isMenuVisible.next(!this.isMenuVisible.value);
   }

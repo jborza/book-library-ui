@@ -17,6 +17,11 @@ export class AppComponent {
 
   constructor(private menuService: MenuService) {}
 
+  get menuClass(){
+    return this.menuService.isMenuOpen ? 'col-md-3' : 'col-auto';
+  }
 
-
+  get mainClass() {
+    return this.menuService.isMenuOpen ? 'col-md-9 ml-sm-auto col-lg-9' : 'col';
+  }
 }
