@@ -28,8 +28,6 @@ export class BooksService {
   }
 
   getBooksFiltered(
-    status?: string,
-    type?: string,
     search?: BookFilter,
     sortColumn?: string,
     sortAscending?: boolean,

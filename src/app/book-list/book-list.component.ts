@@ -80,16 +80,15 @@ export class BookListComponent implements OnInit {
   fetchBooks(): void {
     console.log(
       'Fetching books with filters:',
-      this.statusFilter,
-      this.typeFilter,
       this.currentPage,
       this.pageSize,
       this.filters
     );
+    if(!this.filters) {
+      return;
+    }
     this.booksService
       .getBooksFiltered(
-        this.statusFilter,
-        this.typeFilter,
         this.filters,
         this.sortColumn,
         this.sortDirection,
