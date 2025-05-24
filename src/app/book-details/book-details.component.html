@@ -3,7 +3,7 @@
   <div class="book-main">
     <!-- todo fill in http://localhost:5000/static/ -->
     <img src="{{ getCoverImageUrl(book) }}" class="book-cover thumbnail-small" />
-    <div class="book-info">
+    <div class="book-info" *ngIf="book">
       <h1 class="book-title">{{ book.title }}</h1>
       <p class="book-authors">
         <a [routerLink]="['/books']" [queryParams]="{ author: book.author_name }" style="text-decoration: none">
@@ -50,7 +50,7 @@
       <button class="btn btn-danger m-1" (click)="delete()">Delete</button>
     </div>
   </div>
-  <div class="book-details">
+  <div class="book-details" *ngIf="book">
     <p *ngIf="book.series" class="book-meta">Series: {{ book.series }}</p>
     <p class="book-meta" *ngIf="book.genre">
       Genres:
@@ -109,7 +109,7 @@
     </div>
   </div>
   <!-- recommendations -->
-  <div class="card mt-3 mb-3" *ngIf="recommendations.length > 1">
+  <div class="card mt-3 mb-3" *ngIf="recommendations && recommendations.length > 1">
     <div class="card-header">
       Recommended books:
       <span class="badge text-bg-secondary">{{
