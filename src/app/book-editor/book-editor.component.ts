@@ -120,6 +120,7 @@ export class BookEditorComponent implements OnInit {
       year: [null, [Validators.min(1000), Validators.max(9999)]],
       series: [''],
       description: [''],
+      notes: [''], 
       genres: [[]], // Tag input for genres
       tags: [[]], // Tag input for tags
       isbn: ['', [Validators.pattern(/^\d{10}(\d{3})?$/)]], // ISBN-10 or ISBN-13
