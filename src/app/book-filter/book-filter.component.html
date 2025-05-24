@@ -9,14 +9,14 @@
     <div class="filter-item row">
       <label for="search-title" class="col-sm-2 col-form-label">Search</label>
       <div class="col-sm-10">
-        <input id="search-title" type="text" class="form-control" placeholder="Search by title, author, or keyword"
+        <input id="search-title" type="text" class="form-control" placeholder="Search by title, author, or keyword" name="search"
           [(ngModel)]="filters.search" (ngModelChange)="onFilterChange()" />
       </div>
     </div>
 
     <!-- Filter by Author -->
     <div class="filter-item">
-      <app-author-autocomplete [authors]="authors" [(ngModel)]="filters.author" (ngModelChange)="onFilterChange()"
+      <app-author-autocomplete [authors]="authors" [(ngModel)]="filters.author" (ngModelChange)="onFilterChange()" name="author"
         placeholder="Search for an author"></app-author-autocomplete>
     </div>
 
@@ -24,7 +24,7 @@
     <div class="filter-item row">
       <label for="genre-select" class="col-sm-2 col-form-label">Genre</label>
       <div class="col-sm-10">
-        <select id="genre-select" class="form-select" [(ngModel)]="filters.genre" (ngModelChange)="onFilterChange()">
+        <select id="genre-select" class="form-select" [(ngModel)]="filters.genre" (ngModelChange)="onFilterChange()" name="genre">
           <option value="">All Genres</option>
           <option *ngFor="let genre of genres" [value]="genre">
             {{ genre }}
@@ -37,7 +37,7 @@
     <div class="filter-item row">
       <label for="series-select" class="col-sm-2 col-form-label">Series</label>
       <div class="col-sm-10">
-        <select id="series-select" class="form-select" [(ngModel)]="filters.series" (ngModelChange)="onFilterChange()">
+        <select id="series-select" class="form-select" [(ngModel)]="filters.series" (ngModelChange)="onFilterChange()" name="series">
           <option value="">All Series</option>
           <option *ngFor="let s of series" [value]="s">{{ s }}</option>
         </select>
@@ -48,7 +48,7 @@
     <div class="filter-item row">
       <label for="language-select" class="col-sm-2 col-form-label">Language</label>
       <div class="col-sm-10">
-        <select id="language-select" class="form-select" [(ngModel)]="filters.language"
+        <select id="language-select" class="form-select" [(ngModel)]="filters.language" name="language"
           (ngModelChange)="onFilterChange()">
           <option value="">All Languages</option>
           <option *ngFor="let language of languages" [value]="language">
@@ -62,7 +62,7 @@
     <div class="filter-item row">
       <label for="book-type" class="col-sm-2 col-form-label">Type</label>
       <div class="col-sm-10">
-        <select id="book-type" class="form-select" [(ngModel)]="filters.bookType" (ngModelChange)="onFilterChange()">
+        <select id="book-type" class="form-select" [(ngModel)]="filters.bookType" (ngModelChange)="onFilterChange()" name="bookType">
           <option value="">All Types</option>
           <option value="ebook">Ebook</option>
           <option value="audiobook">Audiobook</option>
@@ -75,7 +75,7 @@
     <div class="filter-item row">
       <label for="status" class="col-sm-2 col-form-label">Status</label>
       <div class="col-sm-10">
-        <select id="status" class="form-select" [(ngModel)]="filters.status" (ngModelChange)="onFilterChange()">
+        <select id="status" class="form-select" [(ngModel)]="filters.status" (ngModelChange)="onFilterChange()" name="status">
           <option value="">All</option>
           <option value="to-read">To Read</option>
           <option value="currently-reading">Currently Reading</option>
@@ -87,7 +87,7 @@
 
     <!-- Filter by Page Count Range -->
     <div class="filter-item">
-      <input type="checkbox" id="pagesCheckbox" [(ngModel)]="pagesEnabled" class="me-2" />
+      <input type="checkbox" id="pagesCheckbox" [(ngModel)]="pagesEnabled" class="me-2" name="pagesEnabled" />
       <label for="pagesCheckbox">Page Count</label>
       <ngx-slider *ngIf="pagesEnabled" [(value)]="filters.pagesMin" [(highValue)]="filters.pagesMax"
         [options]="pagesOptions"></ngx-slider>
@@ -95,7 +95,7 @@
 
     <!-- Filter by Publication Year Range -->
     <div class="filter-item">
-      <input type="checkbox" id="yearCheckbox" [(ngModel)]="yearEnabled" class="me-2" />
+      <input type="checkbox" id="yearCheckbox" [(ngModel)]="yearEnabled" class="me-2" name="yearEnabled" />
       <label for="yearCheckbox">Publication Year</label>
       <ngx-slider *ngIf="yearEnabled" [(value)]="filters.yearMin" [(highValue)]="filters.yearMax"
         [options]="yearOptions"></ngx-slider>
@@ -103,7 +103,7 @@
 
     <!-- Filter by Rating  Range -->
     <div class="filter-item">
-      <input type="checkbox" id="ratingCheckbox" [(ngModel)]="ratingEnabled" class="me-2" />
+      <input type="checkbox" id="ratingCheckbox" [(ngModel)]="ratingEnabled" class="me-2" name="ratingEnabled" />
       <label for="ratingCheckbox">Rating</label>
       <ngx-slider *ngIf="ratingEnabled" [(value)]="filters.ratingMin" [(highValue)]="filters.ratingMax"
         [options]="ratingOptions"></ngx-slider>
@@ -132,7 +132,7 @@
           <label for="libraryName" class="form-label">Library Name</label>
           <input type="text" [(ngModel)]="saveName" class="form-control" id="libraryName" name="libraryName" required />
         </div>
-        <app-icon-picker [(ngModel)]="selectedIcon" (iconSelected)="iconSelected($event)"></app-icon-picker>
+        <app-icon-picker [(ngModel)]="selectedIcon" (iconSelected)="iconSelected($event)" name="selectedIcon"></app-icon-picker>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Cancel
