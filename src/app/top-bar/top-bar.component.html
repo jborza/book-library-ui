@@ -3,7 +3,7 @@
         <!-- Search Textbox -->
         <form class="d-flex" (submit)="onSearch()">
             <input type="text" class="form-control searchInput" placeholder="Search.." aria-label="Search"
-                (input)="onInputChange($event)" name="searchText" [(ngModel)]="searchText" />
+                (input)="onSearchChange($event)" name="searchText" [(ngModel)]="searchText" />
             <!-- Buttons -->
             <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"

@@ -15,6 +15,7 @@ import { BookFilter } from '../book-filter';
 import { loadFromUrlParams } from '../url-parameters';
 import { ActivatedRoute } from '@angular/router';
 import { IconPickerComponent } from "../icon-picker/icon-picker.component";
+import { BookSearchService } from '../book-search.service';
 
 declare var bootstrap: any;
 @Component({
@@ -25,7 +26,7 @@ declare var bootstrap: any;
     NgxSliderModule,
     AuthorAutocompleteComponent,
     IconPickerComponent
-],
+  ],
   templateUrl: './book-filter.component.html',
   styleUrl: './book-filter.component.less',
 })
@@ -83,7 +84,12 @@ export class BookFilterComponent {
     return this.filters.summarize();
   }
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+    private bookSearchService: BookSearchService
+  ) {
+    bookSearchService.searchValue$.subscribe((value) => {
+      this.filters.search = value; // Update searchText when the service emits a new value
+    });
   }
 
   ngOnInit() {
@@ -133,7 +139,13 @@ export class BookFilterComponent {
     modalInstance.hide();
   }
 
-   iconSelected($event: any) {
+  iconSelected($event: any) {
     this.selectedIcon = $event;
+  }
+
+  // Method to update the search value in the service
+  onSearchChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement; // Cast the target to HTMLInputElement
+    this.bookSearchService.setSearchValue(inputElement.value);
   }
 }

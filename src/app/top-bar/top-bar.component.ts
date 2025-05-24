@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PingService } from '../ping.service';
 import { MenuService } from '../menu.service';
+import { BookSearchService } from '../book-search.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -17,9 +18,13 @@ export class TopBarComponent {
   pingStatus: boolean = false;
 
   constructor(private pingService: PingService,
-    private menuService: MenuService) {
+    private menuService: MenuService,
+    private bookSearchService: BookSearchService) {
     pingService.pingCalled.subscribe((response) => {
       this.pingStatus = response;
+    });
+    bookSearchService.searchValue$.subscribe((value) => {
+      this.searchText = value; // Update searchText when the service emits a new value
     });
   }
 
@@ -32,9 +37,13 @@ export class TopBarComponent {
     this.menuService.toggleMenu();
   }
 
-  onInputChange(value: any /* string*/) {
-    this.searchText = value.data;
-    this.searchTextChange.emit(this.searchText); // Emit text on every change
+  // onInputChange(value: any) {
+  //   this.bookSearchService.setSearchValue(value);
+  // }
+
+  onSearchChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement; // Cast the target to HTMLInputElement
+    this.bookSearchService.setSearchValue(inputElement.value);
   }
 
   pingResponse() {
