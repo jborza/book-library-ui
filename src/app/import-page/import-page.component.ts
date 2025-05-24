@@ -36,7 +36,10 @@ export class ImportPageComponent {
   });
 
   private selectedFile: File | null = null;
+  private selectedFileAll: File | null = null;
   private response: any;
+  importAllError: string | null = null;
+  importError: string | null = null;
 
   constructor(
     private importService: ImportService,
@@ -63,18 +66,18 @@ export class ImportPageComponent {
   onAllFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+      this.selectedFileAll = input.files[0];
       // Update form control value with file name for validation
       this.importCsvAllForm.patchValue({
-        csvFile: this.selectedFile.name,
+        csvFile: this.selectedFileAll.name,
       });
     }
   }
 
   onSubmitCsvAll() {
-    if (this.importCsvAllForm.valid && this.selectedFile) {
+    if (this.importCsvAllForm.valid && this.selectedFileAll) {
       const formData = new FormData();
-      formData.append('file', this.selectedFile);
+      formData.append('file', this.selectedFileAll);
 
       this.importService.importCsvAll(formData).subscribe({
         next: (response) => {
@@ -83,6 +86,7 @@ export class ImportPageComponent {
         },
         error: (error) => {
           console.error('Error occurred:', error);
+          this.importAllError = 'An error occurred while importing all books. Please try again.';
         },
         complete: () => {
           // navigate back to the book details page
@@ -107,6 +111,7 @@ export class ImportPageComponent {
         },
         error: (error) => {
           console.error('Error occurred:', error);
+          this.importError = 'An error occurred while importing all books. Please try again.';
         },
         complete: () => {
           // navigate back to the book details page

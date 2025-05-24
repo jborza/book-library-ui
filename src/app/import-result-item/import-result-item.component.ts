@@ -33,4 +33,59 @@ export class ImportResultItemComponent {
     this.selectedAction = action;
     this.actionChange.emit(action);
   }
+
+  showBookType(): boolean {
+    return (this.book?.book_type !== this.book?.existing_book_data?.existingBook?.book_type);
+  }
+
+  showIsbn(): boolean {
+    return (this.book?.isbn !== this.book?.existing_book_data?.existingBook?.isbn);
+  }
+
+  showRating(): boolean {
+    return (this.book?.rating !== this.book?.existing_book_data?.existingBook?.rating);
+  }
+
+  showPages(): boolean {
+    return (this.book?.page_count !== this.book?.existing_book_data?.existingBook?.pages);
+  }
+
+  showYear(): boolean {
+    return (this.book?.year_published !== this.book?.existing_book_data?.existingBook?.year);
+  }
+
+  showPublisher(): boolean {
+    return (this.book?.publisher != this.book?.existing_book_data?.existingBook?.publisher);
+  }
+
+  showLanguage(): boolean {
+    return (this.book?.language !== this.book?.existing_book_data?.existingBook?.language);
+  }
+
+  showTitle(): boolean {
+    return (this.book?.title !== this.book?.existing_book_data?.existingBook?.title);
+  }
+
+  showGenre(): boolean {
+    return (this.book?.genre !== this.book?.existing_book_data?.existingBook?.genre);
+  }
+
+  showSynopsis(): boolean {
+    return (this.book?.synopsis !== this.book?.existing_book_data?.existingBook?.synopsis);
+  }
+
+  showSeries(): boolean {
+    return (this.book?.series !== this.book?.existing_book_data?.existingBook?.series);
+  }
+
+  showAuthor(): boolean {
+    return (this.book?.author_name !== this.book?.existing_book_data?.existingBook?.author_name);
+  }
+
+  showBadges(): boolean {
+    return this.showBookType() || this.showIsbn() || this.showRating() || this.showPages() ||
+      this.showYear() || this.showPublisher() || this.showLanguage() || this.showTitle() ||
+      this.showGenre() || this.showSynopsis() || this.showSeries() || this.showAuthor();
+  }
+
 }
