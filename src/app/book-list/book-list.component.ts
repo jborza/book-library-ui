@@ -9,6 +9,7 @@ import { BookFilter } from '../book-filter';
 import { SettingsService } from '../settings.service';
 import { LibraryEventsService } from '../library-events.service';
 import { TopBarComponent } from '../top-bar/top-bar.component';
+import { ContextMenuComponent } from '../context-menu/context-menu.component';
 
 @Component({
   standalone: true,
@@ -20,7 +21,8 @@ import { TopBarComponent } from '../top-bar/top-bar.component';
     RouterModule,
     BookFilterComponent,
     BooksPaginationComponent,
-    TopBarComponent
+    TopBarComponent,
+    ContextMenuComponent
   ],
 })
 export class BookListComponent implements OnInit {
@@ -43,6 +45,8 @@ export class BookListComponent implements OnInit {
   selectedBookIds: number[] = []; // IDs of selected books
   currentUrl: string;
   searchText: string = ''; // Search text for filtering books
+  isContextMenuVisible = false;
+  contextMenuPosition = { x: 0, y: 0 };
 
   constructor(
     private booksService: BooksService,
@@ -175,7 +179,14 @@ export class BookListComponent implements OnInit {
   // Handle right-click (context menu) to select a row
   onRowRightClick(bookId: number, event: MouseEvent): void {
     event.preventDefault(); // Prevent the default browser context menu
-    this.toggleSelection(bookId);
+    // Select the book (single book or multiple books can be selected)
+    if(!this.selectedBookIds.includes(bookId)) {
+      this.selectedBookIds = [bookId];
+    }
+
+    // Show the context menu
+    this.isContextMenuVisible = true;
+    this.contextMenuPosition = { x: event.clientX, y: event.clientY };
   }
 
   // Toggle selection for a single book
@@ -219,5 +230,14 @@ export class BookListComponent implements OnInit {
     console.log('Search text changed from top bar');
     console.log('Search text:', $event);
     //this.fetchBooks();
+  }
+
+  onContextMenuAction(action: string): void {
+    console.log('Context menu action:', action);
+    // Handle context menu actions like 'markAsFinished'
+    // if (action === 'markAsFinished') {
+    //   this.markSelectedBooksAsFinished();
+    // }
+    this.isContextMenuVisible = false; // Hide the context menu after action
   }
 }

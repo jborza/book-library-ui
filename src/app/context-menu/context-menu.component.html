@@ -1,0 +1,15 @@
+<div
+  class="dropdown-menu show position-fixed"
+  [style.left.px]="x"
+  [style.top.px]="y"
+  style="z-index: 1050;"
+>
+  <button class="dropdown-item" (click)="onAction('markAsFinished')">Mark as Finished</button>
+  <button class="dropdown-item" (click)="onAction('markAsWantingToRead')">Mark as To Read</button>
+  <button class="dropdown-item" (click)="onAction('markAsReading')">Mark as Reading</button>
+  <button class="dropdown-item" (click)="onAction('markAsWishlist')">Mark as Wishist</button>
+  <button class="dropdown-item" (click)="onAction('addToCollection')">Add to Collection</button>
+  <button class="dropdown-item" (click)="onAction('edit')">Edit</button>
+  <button class="dropdown-item" (click)="onAction('remove')">Remove</button>
+  <button class="dropdown-item" (click)="onAction('match')">Match</button>
+</div>
