@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { SettingsService } from '../settings.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CustomSearchesComponent } from '../custom-searches/custom-searches.component';
 
 @Component({
   selector: 'app-settings',
   imports: [CommonModule,
-    FormsModule
+    FormsModule,
+    CustomSearchesComponent
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.less'

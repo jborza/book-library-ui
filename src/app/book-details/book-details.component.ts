@@ -4,6 +4,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BooksService } from '../books.service';
 import { Book } from '../book.model';
 import { ToNumberPipe } from '../pipe/to-number.pipe';
+import { CustomSearch } from '../custom-search.model';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-book-details',
@@ -18,13 +20,17 @@ export class BookDetailsComponent implements OnInit {
   book!: Book;
   authorOtherBooks: Book[] = [];
   recommendations: any; // TODO type
+  customSearches: CustomSearch[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private booksService: BooksService,
     private router: Router,
-    private location: Location
-  ) {}
+    private location: Location,
+    private settingsService: SettingsService
+  ) {
+    this.customSearches = this.settingsService.getCustomSearches();
+  }
 
   ngOnInit(): void {
     this.bookId = this.route.snapshot.paramMap.get('id');
@@ -171,5 +177,12 @@ export class BookDetailsComponent implements OnInit {
         this.location.back();
       });
     }
+  }
+
+  // Format the URL with the search query
+  // TODO this should probably live with the CustomSearch model
+  formatSearchUrl(url: string): string {
+    const searchQuery = `${this.book.title} ${this.book.author_name}`.trim();
+    return url.replace('{search}', encodeURIComponent(searchQuery));
   }
 }
