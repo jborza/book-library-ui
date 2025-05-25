@@ -63,6 +63,7 @@ export class BookListComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       this.typeFilter = params.get('type') || '';
       this.statusFilter = params.get('status') || '';
+      this.currentPage = Number(params.get('page')) || 1;
       this.fetchBooks();
       this.fetchAuthors();
     });
@@ -70,7 +71,13 @@ export class BookListComponent implements OnInit {
 
   onPageChanged(page: number): void {
     this.currentPage = page;
-    this.fetchBooks();
+    // this.fetchBooks();
+    this.currentUrl = this.router.url;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page: this.currentPage }, // Add or update the `page` query parameter
+      queryParamsHandling: 'merge', // Preserve other query parameters
+    });
   }
 
   // need to fetch authors for the filter
@@ -83,9 +90,11 @@ export class BookListComponent implements OnInit {
 
   fetchBooks(): void {
     console.log(
-      'Fetching books with filters:',
+      'Fetching books with filters: currentPage',
       this.currentPage,
+      'pageSize:',
       this.pageSize,
+      'filters:',
       this.filters
     );
     if(!this.filters) {

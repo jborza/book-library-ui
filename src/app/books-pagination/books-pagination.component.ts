@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/
 })
 export class BooksPaginationComponent {
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
-  currentPage: number = 1;
+  @Input() currentPage: number = 1;
   @Input() totalPages: number = 0;
   paginationDisplay: (number | string)[] = [];
   @Input() pageSize: number = 10; // Number of items per page
