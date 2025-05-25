@@ -29,11 +29,15 @@ export class MenuComponent {
         items: [{ name: 'Books', url: '/', icon: '📚' }],
       },
       {
-        title: 'Libraries',
+        title: 'Saved searches',
         items: [],
       },
       {
         title: 'Collections',
+        items: [],
+      },
+      {
+        title: 'Library',
         items: [
           { name: 'Authors', url: '/authors', icon: '👤' },
           { name: 'Genres', url: '/genres', icon: '🎭' },
@@ -110,6 +114,9 @@ export class MenuComponent {
   libraries: Library[] = [];
   isMenuVisible = true;
 
+  static readonly SAVED_SEARCHES = 1;
+  static readonly COLLECTIONS = 2;
+
   constructor(private router: Router,
     private settingsService: SettingsService,
     private libraryEvents: LibraryEventsService,
@@ -128,10 +135,10 @@ export class MenuComponent {
 
   loadLibraries() {
     this.libraries = this.settingsService.getLibraries() || [];
-    this.menuSections[1].items.length = 0;
+    this.menuSections[MenuComponent.SAVED_SEARCHES].items.length = 0;
 
     this.libraries.forEach((library) => {
-      this.menuSections[1].items.push({
+      this.menuSections[MenuComponent.SAVED_SEARCHES].items.push({
         name: library.name,
         url: '/books',
         queryParams: library.filter,
