@@ -1,0 +1,44 @@
+<div class="collection-modal">
+  <h2>
+    Add {{ selectedBooksCount }} Book{{ selectedBooksCount > 1 ? "s" : "" }} to
+    Collection
+  </h2>
+
+  <div class="collection-list">
+    <div
+      *ngFor="let collection of collections"
+      class="collection-row"
+      (click)="onSelectCollection(collection.id)"
+    >
+      <div class="collection-images">
+        <img
+          *ngFor="let img of selectedBookImages.slice(0, 2)"
+          [src]="img"
+          class="book-thumb"
+        />
+      </div>
+      <div class="collection-name">{{ collection.name }}</div>
+    </div>
+  </div>
+
+  <form
+    class="add-collection-form"
+    (submit)="onCreateCollection(); $event.preventDefault()"
+  >
+    <input
+      type="text"
+      [(ngModel)]="newCollectionName"
+      placeholder="New collection name"
+      name="collectionName"
+      class="collection-input"
+      autocomplete="off"
+    />
+    <button
+      type="submit"
+      class="create-btn"
+      [disabled]="!newCollectionName.trim()"
+    >
+      Create
+    </button>
+  </form>
+</div>

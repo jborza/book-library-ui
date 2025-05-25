@@ -10,6 +10,7 @@ import { SettingsService } from '../settings.service';
 import { LibraryEventsService } from '../library-events.service';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { ContextMenuComponent } from '../context-menu/context-menu.component';
+import { AddToCollectionComponent, Collection } from '../add-to-collection/add-to-collection.component';
 
 @Component({
   standalone: true,
@@ -22,7 +23,8 @@ import { ContextMenuComponent } from '../context-menu/context-menu.component';
     BookFilterComponent,
     BooksPaginationComponent,
     TopBarComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    AddToCollectionComponent,
   ],
 })
 export class BookListComponent implements OnInit {
@@ -47,6 +49,8 @@ export class BookListComponent implements OnInit {
   searchText: string = ''; // Search text for filtering books
   isContextMenuVisible = false;
   contextMenuPosition = { x: 0, y: 0 };
+  showAddToCollection = false;
+  collections: Collection[] = [];
 
   constructor(
     private booksService: BooksService,
@@ -163,7 +167,15 @@ export class BookListComponent implements OnInit {
     const filters: BookFilter = parameters[0];
     const saveName: string = parameters[1];
     const icon: string = parameters[2];
-    console.log('Save requested:', ' name:', saveName, 'filters:', filters, 'icon:', icon);
+    console.log(
+      'Save requested:',
+      ' name:',
+      saveName,
+      'filters:',
+      filters,
+      'icon:',
+      icon
+    );
     this.filters = filters;
     this.filters.icon = icon;
     this.settingsService.saveLibrary(saveName, filters);
@@ -255,7 +267,7 @@ export class BookListComponent implements OnInit {
 
   addSelectedBooksToCollection() {
     // see issue https://github.com/jborza/book-library-ui/issues/16
-    throw new Error('Method not implemented.');
+    this.showAddToCollection = true;
   }
   matchSelectedBooks() {
     // see issue https://github.com/jborza/book-library-ui/issues/23
@@ -270,11 +282,11 @@ export class BookListComponent implements OnInit {
         console.log('Books deleted successfully:', response);
         this.fetchBooks();
         this.selectedBookIds = [];
-      }
-      , error: (error) => {
+      },
+      error: (error) => {
         console.error('Error deleting books:', error);
         // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
-      }
+      },
     });
   }
 
@@ -287,11 +299,26 @@ export class BookListComponent implements OnInit {
         console.log('Books updated successfully:', response);
         this.fetchBooks();
         this.selectedBookIds = [];
-      }
-      , error: (error) => {
+      },
+      error: (error) => {
         console.error('Error updating books:', error);
         // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
-      }
+      },
     });
+  }
+
+  closeAddToCollection() {
+    this.showAddToCollection = false;
+    this.selectedBookIds = []; // Clear selected books after adding to collection
+    this.fetchBooks(); // Refresh the book list after adding to collection
+  }
+
+  handleCreateCollection(name: string) {
+    // Create collection logic, then refresh collections
+  }
+
+  handleAddToCollection(collectionId: number) {
+    // Add books to collection logic
+    this.closeAddToCollection();
   }
 }

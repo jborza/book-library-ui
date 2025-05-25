@@ -71,3 +71,18 @@
 <!-- Context Menu -->
 <app-context-menu *ngIf="isContextMenuVisible" [x]="contextMenuPosition.x" [y]="contextMenuPosition.y"
   [selectedBooks]="selectedBookIds" (action)="onContextMenuAction($event)"></app-context-menu>
+<!-- Add to Collection Modal -->
+
+<!-- Modal or conditional form -->
+<div class="modal-backdrop" *ngIf="showAddToCollection">
+  <div class="modal-content">
+    <app-add-to-collection
+      [collections]="collections"
+
+      [selectedBooksCount]="selectedBookIds.length"
+      (createCollection)="handleCreateCollection($event)"
+      (addToCollection)="handleAddToCollection($event)"
+    ></app-add-to-collection>
+    <button class="close-btn" (click)="closeAddToCollection()">×</button>
+  </div>
+</div>
