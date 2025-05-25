@@ -226,18 +226,48 @@ export class BookListComponent implements OnInit {
     this.fetchBooks();
   }
 
-  searchTextChange($event: any):void{
-    console.log('Search text changed from top bar');
-    console.log('Search text:', $event);
-    //this.fetchBooks();
-  }
-
   onContextMenuAction(action: string): void {
     console.log('Context menu action:', action);
-    // Handle context menu actions like 'markAsFinished'
-    // if (action === 'markAsFinished') {
-    //   this.markSelectedBooksAsFinished();
-    // }
+    const actionHandlers: { [key: string]: () => void } = {
+      edit: () => this.editSelectedBooks(),
+      delete: () => this.deleteSelectedBooks(),
+      read: () => this.markSelectedBooks(Book.READ),
+      toRead: () => this.markSelectedBooks(Book.TO_READ),
+      reading: () => this.markSelectedBooks(Book.CURRENTLY_READING),
+      wishlist: () => this.markSelectedBooks(Book.WISHLIST),
+      collection: () => this.addSelectedBooksToCollection(),
+      match: () => this.matchSelectedBooks(),
+    };
+    if (action in actionHandlers) {
+      actionHandlers[action]();
+    }
     this.isContextMenuVisible = false; // Hide the context menu after action
+  }
+  addSelectedBooksToCollection() {
+    // see issue https://github.com/jborza/book-library-ui/issues/16
+    throw new Error('Method not implemented.');
+  }
+  matchSelectedBooks() {
+    // see issue https://github.com/jborza/book-library-ui/issues/23
+    throw new Error('Method not implemented.');
+  }
+  deleteSelectedBooks() {
+    throw new Error('Method not implemented.');
+  }
+  
+  markSelectedBooks(status: string) {
+    // action can be 'read', 'to-read', 'currently-reading', 'wishlist'
+    console.log('Marking selected books as:', status);
+    const bookIds = this.selectedBookIds;
+    this.booksService.updateBooks(bookIds, { status: status }).subscribe({
+      next: (response) => {
+        console.log('Books updated successfully:', response);
+        this.fetchBooks();
+        this.selectedBookIds = [];
+      }
+      , error: (error) => {
+        console.error('Error updating books:', error);
+        // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
+      }});
   }
 }
