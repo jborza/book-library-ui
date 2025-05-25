@@ -12,6 +12,7 @@ import { ImportResultsComponent } from './import-results/import-results.componen
 import { SeriesComponent } from './series/series.component';
 import { SettingsComponent } from './settings/settings.component';
 import { BookMultipleEditorComponent } from './book-multiple-editor/book-multiple-editor.component';
+import { CollectionsComponent } from './collections/collections.component';
 
 
 export const routes: Routes = [
@@ -30,5 +31,6 @@ export const routes: Routes = [
   { path: 'book/:id/match', component: BookMatchResultsComponent },
   { path: 'import_results', component: ImportResultsComponent },
   { path: 'series', component: SeriesComponent},
-  { path: 'settings', component: SettingsComponent}
+  { path: 'settings', component: SettingsComponent},
+  { path: 'collections', component: CollectionsComponent, pathMatch: 'full' },
 ];

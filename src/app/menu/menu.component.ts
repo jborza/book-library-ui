@@ -160,7 +160,8 @@ export class MenuComponent {
       collections.forEach((collection: any) => {
         this.menuSections[MenuComponent.COLLECTIONS].items.push({
           name: collection.name,
-          url: '/collections/' + collection.id,
+          url: '/collections',
+          queryParams: { id: collection.id },
           icon: '📚', // TODO allow picking icons - IconPicker
         });
       });

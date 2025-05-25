@@ -23,6 +23,12 @@ export class CollectionsService {
     return this.http.get(url);
   }
 
+  getCollectionsWithCovers(): Observable<any> {
+    // This method should return the list of collections.
+    const url = this.apiService.getCollectionsWithCoversApiUrl();
+    return this.http.get(url);
+  }
+
   createCollection(name: string): Observable<any> {
     // This method should create a new collection and return it.
     const url = this.apiService.getCollectionCreateApiUrl();

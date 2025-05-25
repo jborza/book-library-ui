@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row row-cols-2">
+        <div class="card mb-2" *ngFor="let collection of collections">
+            <div class="card-body">
+                <!-- Container for the images -->
+                <div class="image-container" style="background-color: grey">
+                    <div *ngFor="let url of collection.cover_images; let i = index" [style.left]="
+              getImagePosition(i, collection.cover_images.length, collection.name)
+            " class="image-wrapper">
+                        <img [src]="'http://localhost:5000/static/' + url" class="cover-image" alt="Book cover" />
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <!-- TODO make collection details page -->
+                    <a [routerLink]="['/collections']" [queryParams]="{ collection: collection.id }" style="text-decoration: none;"
+                        class="stretched-link">
+                        {{ collection.name }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

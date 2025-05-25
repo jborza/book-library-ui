@@ -32,6 +32,7 @@ export class ApiService {
     ping: `${this.baseUrl}/ping`,
     deleteBooks: `${this.baseUrl}/books/delete_books_api`,
     collections: `${this.baseUrl}/collections`,
+    collectionsWithCovers: `${this.baseUrl}/collections/with_covers`,
     collectionsCreate: `${this.baseUrl}/collections/create_api`,
     collectionsAddBooks: (collectionId: string) =>
       `${this.baseUrl}/collections/${collectionId}/add_books_api`,
@@ -126,6 +127,10 @@ export class ApiService {
 
   getCollectionApiUrl(): string{
     return this.endpoints.collections;
+  }
+
+  getCollectionsWithCoversApiUrl(): string{
+    return this.endpoints.collectionsWithCovers;
   }
 
   getCollectionCreateApiUrl(): string{
