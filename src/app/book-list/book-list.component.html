@@ -1,15 +1,28 @@
-<app-top-bar (searchCalled)="searchCalled($event)"
-  [(searchText)]="searchText"></app-top-bar>
+<app-top-bar
+  (searchCalled)="searchCalled($event)"
+  [(searchText)]="searchText"
+></app-top-bar>
 <h4 class="mt-3">Books</h4>
-<app-book-filter [authors]="authors" [minmax]="minmax" [genres]="genres" [series]="series" [languages]="languages"
-  (saveRequested)="onSaveRequested($event)" (filtersChanged)="onFiltersChanged($event)"></app-book-filter>
+<app-book-filter
+  [authors]="authors"
+  [minmax]="minmax"
+  [genres]="genres"
+  [series]="series"
+  [languages]="languages"
+  (saveRequested)="onSaveRequested($event)"
+  (filtersChanged)="onFiltersChanged($event)"
+></app-book-filter>
 <p>{{ count }} books found</p>
 <table class="table table-striped">
   <thead>
     <tr>
       <th>
         <!-- Select All Checkbox -->
-        <input type="checkbox" (change)="toggleAllSelections($event)" [checked]="areAllSelected()" />
+        <input
+          type="checkbox"
+          (change)="toggleAllSelections($event)"
+          [checked]="areAllSelected()"
+        />
       </th>
       <th>Cover</th>
       <th (click)="sortBy('title')">
@@ -31,58 +44,91 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let book of books" [class.selected]="isSelected(book.id)" (click)="onRowClick(book.id, $event)"
-      (contextmenu)="onRowRightClick(book.id, $event)">
+    <tr
+      *ngFor="let book of books"
+      [class.selected]="isSelected(book.id)"
+      (click)="onRowClick(book.id, $event)"
+      (contextmenu)="onRowRightClick(book.id, $event)"
+    >
       <!-- Row Checkbox -->
       <td>
-        <input type="checkbox" [checked]="isSelected(book.id)" (change)="toggleSelection(book.id)" />
+        <input
+          type="checkbox"
+          [checked]="isSelected(book.id)"
+          (change)="toggleSelection(book.id)"
+        />
       </td>
       <td>
-        <img *ngIf="book.cover_image_tiny" src="http://localhost:5000/static/{{ book.cover_image_tiny }}"
-          class="book-cover" />
+        <img
+          *ngIf="book.cover_image_tiny"
+          src="http://localhost:5000/static/{{ book.cover_image_tiny }}"
+          class="book-cover"
+        />
       </td>
       <td>
         <a [routerLink]="['/books', book.id]">{{ book.title }}</a>
       </td>
       <td>
-        <a [routerLink]="['/books']" [queryParams]="{ author: book.author_name }">
-          {{ book.author_name }}</a>
+        <a
+          [routerLink]="['/books']"
+          [queryParams]="{ author: book.author_name }"
+        >
+          {{ book.author_name }}</a
+        >
       </td>
       <td>{{ book.rating }}</td>
       <td>{{ book.status }}</td>
       <td>{{ book.book_type }}</td>
       <td>
-        <a [routerLink]="['/books', book.id, 'edit']" [queryParams]="{ returnUrl: currentUrl }">Edit</a>
+        <a
+          [routerLink]="['/books', book.id, 'edit']"
+          [queryParams]="{ returnUrl: currentUrl }"
+          >Edit</a
+        >
         <!-- Add more actions as needed -->
       </td>
     </tr>
   </tbody>
 </table>
-<button class="btn btn-primary" [disabled]="selectedBookIds.length === 0" (click)="editSelectedBooks()"
-  *ngIf="selectedBookIds.length > 0">
+<button
+  class="btn btn-primary"
+  [disabled]="selectedBookIds.length === 0"
+  (click)="editSelectedBooks()"
+  *ngIf="selectedBookIds.length > 0"
+>
   Edit Selected Books
 </button>
 <!-- Pagination Controls -->
 <div class="container mt-4">
-  <app-books-pagination [totalPages]="totalPages" [pageSize]="pageSize" [currentPage]="currentPage"
-    (pageChanged)="onPageChanged($event)"></app-books-pagination>
+  <app-books-pagination
+    [totalPages]="totalPages"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage"
+    (pageChanged)="onPageChanged($event)"
+  ></app-books-pagination>
 </div>
 <p *ngIf="books.length === 0">No books available.</p>
 <!-- Context Menu -->
-<app-context-menu *ngIf="isContextMenuVisible" [x]="contextMenuPosition.x" [y]="contextMenuPosition.y"
-  [selectedBooks]="selectedBookIds" (action)="onContextMenuAction($event)"></app-context-menu>
+<app-context-menu
+  *ngIf="isContextMenuVisible"
+  [x]="contextMenuPosition.x"
+  [y]="contextMenuPosition.y"
+  [selectedBooks]="selectedBookIds"
+  (action)="onContextMenuAction($event)"
+></app-context-menu>
 <!-- Add to Collection Modal -->
 
 <!-- Modal or conditional form -->
 <div class="modal-backdrop" *ngIf="showAddToCollection">
-  <div class="modal-content">
-    <app-add-to-collection
-      [collections]="collections"
-
-      [selectedBooksCount]="selectedBookIds.length"
-      (createCollection)="handleCreateCollection($event)"
-      (addToCollection)="handleAddToCollection($event)"
-    ></app-add-to-collection>
-    <button class="close-btn" (click)="closeAddToCollection()">×</button>
+  <div class="modal-dialog collection-modal">
+    <div class="modal-content">
+      <app-add-to-collection *ngIf="collections && collections.length > 0"
+        [collections]="collections"
+        [selectedBooksCount]="selectedBookIds.length"
+        (createCollection)="handleCreateCollection($event)"
+        (addToCollection)="handleAddToCollection($event)"
+      ></app-add-to-collection>
+      <button class="close-btn" (click)="closeAddToCollection()">×</button>
+    </div>
   </div>
 </div>

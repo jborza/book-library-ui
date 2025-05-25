@@ -6,6 +6,8 @@ import { Book } from '../book.model';
 import { ToNumberPipe } from '../pipe/to-number.pipe';
 import { CustomSearch } from '../custom-search.model';
 import { SettingsService } from '../settings.service';
+import { Collection } from '../add-to-collection/add-to-collection.component';
+import { CollectionsService } from '../collections.service';
 
 @Component({
   selector: 'app-book-details',
@@ -21,13 +23,15 @@ export class BookDetailsComponent implements OnInit {
   authorOtherBooks: Book[] = [];
   recommendations: any; // TODO type
   customSearches: CustomSearch[] = [];
+  collections: Collection[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private booksService: BooksService,
     private router: Router,
     private location: Location,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private collectionsService: CollectionsService
   ) {
     this.customSearches = this.settingsService.getCustomSearches();
   }
@@ -38,10 +42,11 @@ export class BookDetailsComponent implements OnInit {
     if (this.bookId) {
       this.fetchBookDetails(this.bookId);
       this.fetchRecommendations(this.bookId);
+      this.fetchCollections(this.bookId);
     }
   }
 
-  fetchBookDetails(bookId: string) {
+  fetchBookDetails(bookId: string): void {
     this.booksService.getBookById(bookId).subscribe((data) => {
       this.book = data;
       // ugly hack - page_count
@@ -59,20 +64,28 @@ export class BookDetailsComponent implements OnInit {
     });
   }
 
-  fetchRecommendations(bookId: string) {
-      this.booksService.getRecommendations(bookId).subscribe({
-        next: (response) => {
-          console.log('Import step 1 successful:', response);
-          this.recommendations = response;
-        },
-        error: (error) => {
-          console.error('Error occurred:', error);
-        },
-        complete: () => {
-         },
-      });
-    }
+  fetchRecommendations(bookId: string): void {
+    this.booksService.getRecommendations(bookId).subscribe({
+      next: (response) => {
+        this.recommendations = response;
+      },
+      error: (error) => {
+        console.error('Error occurred:', error);
+      },
+      complete: () => {},
+    });
+  }
 
+  fetchCollections(bookId: string): void {
+    this.collectionsService.getCollectionsForBook(bookId).subscribe({
+      next: (response) => {
+        this.collections = response;
+      },
+      error: (error) => {
+        console.error('Error occurred:', error);
+      },
+    });
+  }
 
   getCoverImageUrl(book: Book, tiny: boolean = false): string {
     if (tiny) {
@@ -101,7 +114,9 @@ export class BookDetailsComponent implements OnInit {
 
   edit(): void {
     // book/:id/edit
-    this.router.navigate(['/books', this.book.id, 'edit'],  { queryParams: { returnUrl: this.router.url } });
+    this.router.navigate(['/books', this.book.id, 'edit'], {
+      queryParams: { returnUrl: this.router.url },
+    });
   }
 
   updateBookStatus(status: string): void {

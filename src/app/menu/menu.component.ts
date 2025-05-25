@@ -7,6 +7,7 @@ import { SettingsService } from '../settings.service';
 import { Library } from '../library';
 import { LibraryEventsService } from '../library-events.service';
 import { MenuService } from '../menu.service';
+import { CollectionsService } from '../collections.service';
 
 @Component({
   selector: 'app-menu',
@@ -121,6 +122,7 @@ export class MenuComponent {
     private settingsService: SettingsService,
     private libraryEvents: LibraryEventsService,
     private menuService: MenuService,
+    private collectionsService: CollectionsService,
   ) { }
 
   ngOnInit(): void {
@@ -131,9 +133,14 @@ export class MenuComponent {
     this.menuService.menuVisibility$.subscribe((isVisible) => {
       this.isMenuVisible = isVisible;
     });
+    this.collectionsService.collectionSaved$.subscribe(() => {
+      this.loadCollections();
+    });
+    this.loadCollections();
   }
 
-  loadLibraries() {
+  loadLibraries() : void {
+    //TODO shouldn't we subscribe to getLibraries?
     this.libraries = this.settingsService.getLibraries() || [];
     this.menuSections[MenuComponent.SAVED_SEARCHES].items.length = 0;
 
@@ -143,6 +150,19 @@ export class MenuComponent {
         url: '/books',
         queryParams: library.filter,
         icon: library.filter.icon || '📖',
+      });
+    });
+  }
+
+  loadCollections() : void {
+    this.menuSections[MenuComponent.COLLECTIONS].items.length = 0;
+    this.collectionsService.getCollections().subscribe((collections) => {
+      collections.forEach((collection: any) => {
+        this.menuSections[MenuComponent.COLLECTIONS].items.push({
+          name: collection.name,
+          url: '/collections/' + collection.id,
+          icon: '📚', // TODO allow picking icons - IconPicker
+        });
       });
     });
   }

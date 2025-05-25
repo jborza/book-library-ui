@@ -31,6 +31,13 @@ export class ApiService {
     thumbnailUpload: `${this.baseUrl}/thumbnails/upload`,
     ping: `${this.baseUrl}/ping`,
     deleteBooks: `${this.baseUrl}/books/delete_books_api`,
+    collections: `${this.baseUrl}/collections`,
+    collectionsCreate: `${this.baseUrl}/collections/create_api`,
+    collectionsAddBooks: (collectionId: string) =>
+      `${this.baseUrl}/collections/${collectionId}/add_books_api`,
+    collectionsForBook: (bookId: string) =>
+      `${this.baseUrl}/book/${bookId}/collections`,
+
   };
 
   getSearchUrl(): string {
@@ -115,5 +122,21 @@ export class ApiService {
 
   getPingUrl(): string {
     return this.endpoints.ping;
+  }
+
+  getCollectionApiUrl(): string{
+    return this.endpoints.collections;
+  }
+
+  getCollectionCreateApiUrl(): string{
+    return this.endpoints.collectionsCreate;
+  }
+
+  getCollectionAddBooksApiUrl(collectionId: string): string {
+    return this.endpoints.collectionsAddBooks(collectionId);
+  }
+
+  getCollectionsForBookApiUrl(bookId: string): string {
+    return this.endpoints.collectionsForBook(bookId);
   }
 }

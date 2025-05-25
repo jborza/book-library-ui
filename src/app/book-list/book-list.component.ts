@@ -11,6 +11,7 @@ import { LibraryEventsService } from '../library-events.service';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { ContextMenuComponent } from '../context-menu/context-menu.component';
 import { AddToCollectionComponent, Collection } from '../add-to-collection/add-to-collection.component';
+import { CollectionsService } from '../collections.service';
 
 @Component({
   standalone: true,
@@ -57,7 +58,8 @@ export class BookListComponent implements OnInit {
     private route: ActivatedRoute,
     private settingsService: SettingsService,
     private router: Router,
-    private libraryEvents: LibraryEventsService
+    private libraryEvents: LibraryEventsService,
+    private collectionsService: CollectionsService
   ) {
     this.currentUrl = router.url;
   }
@@ -70,6 +72,7 @@ export class BookListComponent implements OnInit {
       this.currentPage = Number(params.get('page')) || 1;
       this.fetchBooks();
       this.fetchAuthors();
+      this.fetchCollections();
     });
   }
 
@@ -89,6 +92,13 @@ export class BookListComponent implements OnInit {
   fetchAuthors(): void {
     this.booksService.getAuthorsFiltered().subscribe((response) => {
       this.authors = response;
+    });
+  }
+
+  fetchCollections(): void {
+    this.collectionsService.getCollections().subscribe((response) => {
+      console.log('Collections fetched:', response);
+      this.collections = response || [];
     });
   }
 
@@ -269,10 +279,12 @@ export class BookListComponent implements OnInit {
     // see issue https://github.com/jborza/book-library-ui/issues/16
     this.showAddToCollection = true;
   }
+
   matchSelectedBooks() {
     // see issue https://github.com/jborza/book-library-ui/issues/23
     throw new Error('Method not implemented.');
   }
+
   deleteSelectedBooks() {
     if (!confirm('Are you sure you want to delete selected books?')) {
       return;
@@ -314,11 +326,30 @@ export class BookListComponent implements OnInit {
   }
 
   handleCreateCollection(name: string) {
-    // Create collection logic, then refresh collections
+    this.collectionsService.createCollection(name).subscribe({
+      next: (collection) => {
+        console.log('Collection created:', collection);
+        this.collections.push(collection); // Add the new collection to the list
+      },
+      error: (error) => {
+        console.error('Error creating collection:', error);
+        // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
+      },
+    });
   }
 
   handleAddToCollection(collectionId: number) {
     // Add books to collection logic
-    this.closeAddToCollection();
+    this.collectionsService.addBooksToCollection(collectionId, this.selectedBookIds).subscribe({
+      next: (response) => {
+        console.log('Books added to collection successfully:', response);
+        // close the add to collection dialog
+        this.closeAddToCollection();
+      },
+      error: (error) => {
+        console.error('Error adding books to collection:', error);
+        // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
+      },
+    });
   }
 }
