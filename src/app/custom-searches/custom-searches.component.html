@@ -1,0 +1,45 @@
+<div class="container">
+  <h2>Custom Searches</h2>
+  <ul class="list-group mb-3">
+    <li
+      *ngFor="let search of customSearches"
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <span>{{ search.title }}</span>
+      <button
+        class="btn btn-danger btn-sm"
+        (click)="removeCustomSearch(search.title)"
+      >
+        Remove
+      </button>
+    </li>
+  </ul>
+
+  <h4>Add New Search</h4>
+  <form (submit)="addCustomSearch(); $event.preventDefault()">
+    <div class="mb-3">
+      <label for="searchTitle" class="form-label">Title</label>
+      <input
+        id="searchTitle"
+        type="text"
+        class="form-control"
+        [(ngModel)]="newSearchTitle"
+        name="searchTitle"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="searchUrl" class="form-label">URL</label>
+      <input
+        id="searchUrl"
+        type="text"
+        class="form-control"
+        [(ngModel)]="newSearchUrl"
+        name="searchUrl"
+      />
+      <small class="form-text text-muted">
+        Use <code>&#123;search&#125;</code> in the URL where the search query should be inserted.
+      </small>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Search</button>
+  </form>
+</div>
