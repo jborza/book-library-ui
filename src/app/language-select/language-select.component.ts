@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
@@ -8,6 +8,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
   imports: [NgSelectModule, FormsModule],
   templateUrl: './language-select.component.html',
   styleUrl: './language-select.component.less',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: LanguageSelectComponent,
+      multi: true,
+    },
+  ],
 })
 export class LanguageSelectComponent {
   languages = [
@@ -18,4 +25,19 @@ export class LanguageSelectComponent {
   ];
 
   selectedLanguage = 'en';
+
+  onChange: (value: string) => void = () => {};
+  onTouched: () => void = () => {};
+  writeValue(value: string): void {
+    this.selectedLanguage = value;
+  }
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    // Handle disabled state if necessary
+  }
 }
