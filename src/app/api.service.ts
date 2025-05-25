@@ -30,6 +30,7 @@ export class ApiService {
       `${this.baseUrl}/recommendations/${bookId}`,
     thumbnailUpload: `${this.baseUrl}/thumbnails/upload`,
     ping: `${this.baseUrl}/ping`,
+    deleteBooks: `${this.baseUrl}/books/delete_books_api`,
   };
 
   getSearchUrl(): string {
@@ -98,6 +99,10 @@ export class ApiService {
 
   getUpdateBooksUrl(): string {
     return this.endpoints.updateBooks;
+  }
+
+  getDeleteBooksUrl(): string {
+    return this.endpoints.deleteBooks;
   }
 
   getRecommendationsUrl(bookId: string): string {

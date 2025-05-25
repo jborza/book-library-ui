@@ -97,7 +97,7 @@ export class BookListComponent implements OnInit {
       'filters:',
       this.filters
     );
-    if(!this.filters) {
+    if (!this.filters) {
       return;
     }
     this.booksService
@@ -189,7 +189,7 @@ export class BookListComponent implements OnInit {
   onRowRightClick(bookId: number, event: MouseEvent): void {
     event.preventDefault(); // Prevent the default browser context menu
     // Select the book (single book or multiple books can be selected)
-    if(!this.selectedBookIds.includes(bookId)) {
+    if (!this.selectedBookIds.includes(bookId)) {
       this.selectedBookIds = [bookId];
     }
 
@@ -230,7 +230,7 @@ export class BookListComponent implements OnInit {
     });
   }
 
-  searchCalled($event: any): void{
+  searchCalled($event: any): void {
     console.log('Search called from top bar');
     this.fetchBooks();
   }
@@ -252,6 +252,7 @@ export class BookListComponent implements OnInit {
     }
     this.isContextMenuVisible = false; // Hide the context menu after action
   }
+
   addSelectedBooksToCollection() {
     // see issue https://github.com/jborza/book-library-ui/issues/16
     throw new Error('Method not implemented.');
@@ -261,9 +262,22 @@ export class BookListComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
   deleteSelectedBooks() {
-    throw new Error('Method not implemented.');
+    if (!confirm('Are you sure you want to delete selected books?')) {
+      return;
+    }
+    this.booksService.deleteBooks(this.selectedBookIds).subscribe({
+      next: (response) => {
+        console.log('Books deleted successfully:', response);
+        this.fetchBooks();
+        this.selectedBookIds = [];
+      }
+      , error: (error) => {
+        console.error('Error deleting books:', error);
+        // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
+      }
+    });
   }
-  
+
   markSelectedBooks(status: string) {
     // action can be 'read', 'to-read', 'currently-reading', 'wishlist'
     console.log('Marking selected books as:', status);
@@ -277,6 +291,7 @@ export class BookListComponent implements OnInit {
       , error: (error) => {
         console.error('Error updating books:', error);
         // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
-      }});
+      }
+    });
   }
 }

@@ -143,11 +143,19 @@ export class BooksService {
     return this.http.delete(url);
   }
 
+  deleteBooks(bookIds: number[]): Observable<any> {
+    const url = this.apiService.getDeleteBooksUrl();
+    let body = {
+      book_ids: bookIds,
+    };
+    return this.http.post(url, body);
+  }
+
   updateBooks(bookIds: number[], data: any): Observable<any> {
     const url = this.apiService.getUpdateBooksUrl();
     let body = {
       book_ids: bookIds,
-      data: data, //TODO see how it looks like in the backend
+      data: data, 
     };
 
     return this.http.post(url, body);
