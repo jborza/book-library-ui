@@ -122,7 +122,7 @@
 <div class="modal-backdrop" *ngIf="showAddToCollection">
   <div class="modal-dialog collection-modal">
     <div class="modal-content">
-      <app-add-to-collection *ngIf="collections && collections.length > 0"
+      <app-add-to-collection
         [collections]="collections"
         [selectedBooksCount]="selectedBookIds.length"
         (createCollection)="handleCreateCollection($event)"
