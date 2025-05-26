@@ -52,6 +52,7 @@ export class BookListComponent implements OnInit {
   contextMenuPosition = { x: 0, y: 0 };
   showAddToCollection = false;
   collections: Collection[] = [];
+  lastSelectedBookId: number | null = null; // Track the last clicked book ID
 
   constructor(
     private booksService: BooksService,
@@ -198,13 +199,30 @@ export class BookListComponent implements OnInit {
 
   // Handle row click (supports Ctrl+click for multi-selection)
   onRowClick(bookId: number, event: MouseEvent): void {
-    if (event.ctrlKey) {
+    if (event.shiftKey && this.lastSelectedBookId !== null) {
+      event.preventDefault(); // Prevent default text selection behavior
+
+      // Shift+Click: Select range of rows between last clicked and current clicked row
+      const lastIndex = this.books.findIndex(book => book.id === this.lastSelectedBookId);
+      const currentIndex = this.books.findIndex(book => book.id === bookId);
+
+      if (lastIndex !== -1 && currentIndex !== -1) {
+        const [start, end] = [lastIndex, currentIndex].sort((a, b) => a - b);
+        const rangeIds = this.books.slice(start, end + 1).map(book => book.id);
+
+        // Add the range to the selection
+        this.selectedBookIds = Array.from(new Set([...this.selectedBookIds, ...rangeIds]));
+      }
+    }
+    else if (event.ctrlKey) {
       // Toggle selection for Ctrl+Click
       this.toggleSelection(bookId);
     } else {
       // Clear other selections and select only the clicked row
       this.selectedBookIds = [bookId];
     }
+    // Update the last clicked book ID
+    this.lastSelectedBookId = bookId;
   }
 
   // Handle right-click (context menu) to select a row
