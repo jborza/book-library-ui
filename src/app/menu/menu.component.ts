@@ -43,6 +43,7 @@ export class MenuComponent {
           { name: 'Authors', url: '/authors', icon: '👤' },
           { name: 'Genres', url: '/genres', icon: '🎭' },
           { name: 'Series', url: '/series', icon: '📦' },
+          { name: 'Collections', url: '/collections', icon: '📒' },
           {
             name: 'Ebooks',
             url: '/books',
@@ -160,8 +161,8 @@ export class MenuComponent {
       collections.forEach((collection: any) => {
         this.menuSections[MenuComponent.COLLECTIONS].items.push({
           name: collection.name,
-          url: '/collections',
-          queryParams: { id: collection.id },
+          url: '/books',
+          queryParams: { collection: collection.id },
           icon: '📚', // TODO allow picking icons - IconPicker
         });
       });

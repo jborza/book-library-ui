@@ -92,6 +92,9 @@ export class BooksService {
     if (sortAscending) {
       params = params.set('sort_ascending', sortAscending);
     }
+    if(search?.collection) {
+      params = params.set('collection', search.collection.toString());
+    }
     return this.http.get(this.apiService.getGetUrl(), { params });
   }
 

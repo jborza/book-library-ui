@@ -17,6 +17,7 @@ export class BookFilter {
   status: string = '';
   // this is stupid, should have been outside of the class
   icon: string = '';
+  collection: number | null = null;
 
   summarize(): string {
     let things = [];

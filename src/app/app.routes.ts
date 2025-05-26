@@ -32,5 +32,5 @@ export const routes: Routes = [
   { path: 'import_results', component: ImportResultsComponent },
   { path: 'series', component: SeriesComponent},
   { path: 'settings', component: SettingsComponent},
-  { path: 'collections', component: CollectionsComponent, pathMatch: 'full' },
+  { path: 'collections', component: CollectionsComponent },
 ];

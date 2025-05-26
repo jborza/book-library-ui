@@ -31,8 +31,6 @@ import { CollectionsService } from '../collections.service';
 export class BookListComponent implements OnInit {
   books: Book[] = [];
   originalBooks: Book[] = [];
-  statusFilter: string = '';
-  typeFilter: string = '';
   sortColumn: string = ''; // Column to sort by
   sortDirection: boolean = true; // true = ascending, false = descending
   authors: string[] = [];
@@ -53,6 +51,7 @@ export class BookListComponent implements OnInit {
   showAddToCollection = false;
   collections: Collection[] = [];
   lastSelectedBookId: number | null = null; // Track the last clicked book ID
+  collection: number | null = null; // Selected collection ID for filtering;
 
   constructor(
     private booksService: BooksService,
@@ -68,9 +67,8 @@ export class BookListComponent implements OnInit {
   ngOnInit(): void {
     this.pageSize = this.settingsService.getSetting('pageSize') || 20; // Default page size
     this.route.queryParamMap.subscribe((params) => {
-      this.typeFilter = params.get('type') || '';
-      this.statusFilter = params.get('status') || '';
       this.currentPage = Number(params.get('page')) || 1;
+      this.collection = Number(params.get('collection')) || null;
       this.fetchBooks();
       this.fetchAuthors();
       this.fetchCollections();
@@ -115,6 +113,8 @@ export class BookListComponent implements OnInit {
     if (!this.filters) {
       return;
     }
+    // TODO solve better than this
+    this.filters.collection = this.collection; // Set the collection filter if applicable
     this.booksService
       .getBooksFiltered(
         this.filters,
@@ -148,7 +148,6 @@ export class BookListComponent implements OnInit {
       });
   }
 
-  // TODO we'll have to sort on server side
   sortBy(column: string): void {
     if (this.sortColumn === column) {
       this.sortDirection = !this.sortDirection; // Toggle sort direction
