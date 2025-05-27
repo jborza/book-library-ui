@@ -73,16 +73,18 @@
   </div>
   <div class="book-details" *ngIf="book">
     <p *ngIf="book.series" class="book-meta">Series: {{ book.series }}</p>
-    <p class="book-meta" *ngIf="book.genre">
+    <p class="book-meta" *ngIf="book.genre">      
       Genres:
+
+
       <span *ngFor="let genre of genres">
         <a
           [routerLink]="['/books']"
           [queryParams]="{ genre: genre }"
-          style="text-decoration: none"
+          style="text-decoration: none" class="btn btn-success btn-sm mx-1"
         >
           {{ genre }} </a
-        >,
+        >
       </span>
     </p>
     <p class="book-meta" *ngIf="book.tags">
