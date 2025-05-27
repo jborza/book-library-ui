@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconPickerComponent } from '../icon-picker/icon-picker.component';
+import { IconPickerComponent } from '../shared/components/icon-picker/icon-picker.component';
 
 @Component({
   selector: 'app-test',

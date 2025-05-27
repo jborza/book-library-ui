@@ -3,10 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 // Import any services that should be provided at the app level
 import { ApiService } from './services/api.service';
-import { AuthorsService } from './services/authors.service';
-import { BookDataService } from './services/book-data.service';
 import { CollectionsService } from './services/collections.service';
-import { GenresService } from './services/genres.service';
+import { GenresService } from '../features/genres/services/genres.service';
 import { PingService } from './services/ping.service';
 import { SettingsService } from './services/settings.service';
 import { ThumbnailsService } from './services/thumbnails.service';
@@ -18,8 +16,6 @@ import { LibraryEventsService } from './services/library-events.service';
   ],
   providers: [
     ApiService,
-    AuthorsService,
-    BookDataService,
     CollectionsService,
     GenresService,
     PingService,

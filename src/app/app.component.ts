@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet, Scroll } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MenuService } from './menu.service';
+import { MenuService } from './features/menu/services/menu.service';
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { CoreModule } from './core/core.module';
-import { MenuComponent } from './menu/menu.component';
+import { MenuComponent } from './features/menu/components/menu/menu.component';
 
 @Component({
   selector: 'app-root',

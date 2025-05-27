@@ -1,36 +1,40 @@
 import { Routes } from '@angular/router';
-import { BookListComponent } from './book-list/book-list.component';
-import { BookDetailsComponent } from './book-details/book-details.component';
-import { BookEditorComponent } from './book-editor/book-editor.component';
-import { ImportPageComponent } from './import-page/import-page.component';
-import { AuthorsComponent } from './authors/authors.component';
-import { GenresComponent } from './genres/genres.component';
-import { SearchExternalComponent } from './search-external/search-external.component';
 import { TestComponent } from './test/test.component';
-import { BookMatchResultsComponent } from './book-match-results/book-match-results.component';
-import { ImportResultsComponent } from './import-results/import-results.component';
-import { SeriesComponent } from './series/series.component';
-import { SettingsComponent } from './settings/settings.component';
-import { BookMultipleEditorComponent } from './book-multiple-editor/book-multiple-editor.component';
-import { CollectionsComponent } from './collections/collections.component';
 
 
 export const routes: Routes = [
-  { path: '', component: BookListComponent, pathMatch: 'full' },
-  { path: 'books', component: BookListComponent, pathMatch: 'full' },
-  { path: 'books/edit_multiple', component: BookMultipleEditorComponent, pathMatch: 'full' },
-  { path: 'books/:id', component: BookDetailsComponent },
-  { path: 'books/:id/edit', component: BookEditorComponent },
-  { path: 'books/:author', component: BookListComponent },
-  { path: 'add', component: BookEditorComponent },
-  { path: 'authors', component: AuthorsComponent },
-  { path: 'genres', component: GenresComponent },
-  { path: 'import', component: ImportPageComponent },
-  { path: 'search_external', component: SearchExternalComponent, pathMatch: 'full' },
-  { path: 'test', component: TestComponent},
-  { path: 'book/:id/match', component: BookMatchResultsComponent },
-  { path: 'import_results', component: ImportResultsComponent },
-  { path: 'series', component: SeriesComponent},
-  { path: 'settings', component: SettingsComponent},
-  { path: 'collections', component: CollectionsComponent },
+  { path: '', redirectTo: '/books', pathMatch: 'full' }, // Redirect to books on empty path
+  {
+    path: 'books', loadChildren: () =>
+      import('./features/books/books.module').then((m) => m.BooksModule), // Lazy-load BooksModule
+  },
+  {
+    path: 'authors', loadChildren: () =>
+      import('./features/authors/authors.module').then((m) => m.AuthorsModule), // Lazy-load AuthorsModule 
+  },
+  {
+    path: 'genres', loadChildren: () =>
+      import('./features/genres/genres.module').then((m) => m.GenresModule), // Lazy-load GenresModule
+  },
+  {
+    path: 'search', loadChildren: () =>
+      import('./features/search/search.module').then((m) => m.SearchModule), // Lazy-load SearchModule
+  },
+  {
+    path: 'import', loadChildren: () =>
+      import('./features/import/import.module').then((m) => m.ImportModule), // Lazy-load ImportModule
+  },
+  {
+    path: 'series', loadChildren: () =>
+      import('./features/series/series.module').then((m) => m.SeriesModule), // Lazy-load SeriesModule
+  },
+  {
+    path: 'settings', loadChildren: () =>
+      import('./features/settings/settings.module').then((m) => m.SettingsModule), // Lazy-load SettingsModule
+  },
+  {
+    path: 'collections', loadChildren: () =>
+      import('./features/collections/collections.module').then((m) => m.CollectionsModule), // Lazy-load CollectionsModule
+  },
+  { path: 'test', component: TestComponent },
 ];

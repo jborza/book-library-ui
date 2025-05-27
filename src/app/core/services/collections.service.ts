@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Collection } from '../../add-to-collection/add-to-collection.component'
+import { Collection } from '../../features/collections/models/collection.model';
 import { ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
