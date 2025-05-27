@@ -11,8 +11,7 @@
                     </div>
                 </div>
                 <div class="col-12 text-center">
-                    <!-- TODO make collection details page -->
-                    <a [routerLink]="['/collections']" [queryParams]="{ collection: collection.id }" style="text-decoration: none;"
+                    <a [routerLink]="['/books']" [queryParams]="{ collection: collection.id }" style="text-decoration: none;"
                         class="stretched-link">
                         {{ collection.name }}
                     </a>
