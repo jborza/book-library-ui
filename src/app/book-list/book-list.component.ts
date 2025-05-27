@@ -9,7 +9,7 @@ import { BookFilter } from '../book-filter';
 import { SettingsService } from '../core/services/settings.service';
 import { LibraryEventsService } from '../core/services/library-events.service';
 import { TopBarComponent } from '../top-bar/top-bar.component';
-import { ContextMenuComponent } from '../context-menu/context-menu.component';
+import { ContextMenuComponent } from '../shared/components/context-menu/context-menu.component';
 import { AddToCollectionComponent, Collection } from '../add-to-collection/add-to-collection.component';
 import { CollectionsService } from '../core/services/collections.service';
 

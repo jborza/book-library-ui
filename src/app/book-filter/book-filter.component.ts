@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { AuthorAutocompleteComponent } from '../author-autocomplete/author-autocomplete.component';
 import { BookFilter } from '../book-filter';
-import { loadFromUrlParams } from '../url-parameters';
+import { loadFromUrlParams } from '../shared/utils/url-parameters';
 import { ActivatedRoute } from '@angular/router';
 import { IconPickerComponent } from "../icon-picker/icon-picker.component";
 import { BookSearchService } from '../book-search.service';

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SearchService } from '../search.service';
 import { MatchResultItemComponent } from '../match-result-item/match-result-item.component';
 import { BookDataService } from '../core/services/book-data.service';
-import { levenshteinDistance } from '../string-utils';
+import { levenshteinDistance } from '../shared/utils/string-utils';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({

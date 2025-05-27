@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { abbreviate } from '../string-utils';
+import { abbreviate } from '../shared/utils/string-utils';
 import { CommonModule } from '@angular/common';
 
 @Component({

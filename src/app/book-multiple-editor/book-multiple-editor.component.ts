@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TagInputComponent } from '../tag-input/tag-input.component';
+import { TagInputComponent } from '../shared/components/tag-input/tag-input.component';
 import { ActivatedRoute } from '@angular/router';
 import { BooksService } from '../books.service';
 

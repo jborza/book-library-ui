@@ -12,10 +12,10 @@ import {
 } from '@angular/forms';
 import { BooksService } from '../books.service';
 import { Router } from '@angular/router';
-import { TagInputComponent } from '../tag-input/tag-input.component';
+import { TagInputComponent } from '../shared/components/tag-input/tag-input.component';
 import { ApiService } from '../core/services/api.service';
 import { ThumbnailsService } from '../core/services/thumbnails.service';
-import { LanguageSelectComponent } from '../language-select/language-select.component';
+import { LanguageSelectComponent } from '../shared/components/language-select/language-select.component';
 
 // TODO convert rating entered like 4,6 to 4.6
 
