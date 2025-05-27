@@ -127,7 +127,7 @@ export class BookEditorComponent implements OnInit {
       status: [''], // Book status
       rating: [null, [Validators.min(1), Validators.max(5)]],
       publisher: [''],
-      language: ['English'], // Default language
+      language: [''], // Default language
       pages: [null, [Validators.min(1)]],
       type: ['Ebook'], // Book type
       coverImage: [''],

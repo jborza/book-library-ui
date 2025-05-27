@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -11,7 +11,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: LanguageSelectComponent,
+      useExisting: forwardRef(() => LanguageSelectComponent),
       multi: true,
     },
   ],
@@ -29,6 +29,7 @@ export class LanguageSelectComponent {
   onChange: (value: string) => void = () => {};
   onTouched: () => void = () => {};
   writeValue(value: string): void {
+    console.log('writeValue called with:', value);
     this.selectedLanguage = value;
   }
   registerOnChange(fn: (value: string) => void): void {
