@@ -177,7 +177,7 @@ export class MenuComponent {
   }
 
   onSearchOpenLibrary(): void {
-    this.router.navigate(['/search_external/'], {
+    this.router.navigate(['/search/external/'], {
       queryParams: {
         search_query: this.searchQueryOpenLibrary,
         count: 5,
@@ -187,7 +187,7 @@ export class MenuComponent {
   }
 
   onSearchGoogleBooks(): void {
-    this.router.navigate(['/search_external/'], {
+    this.router.navigate(['/search/external/'], {
       queryParams: {
         search_query: this.searchQueryGoogleBooks,
         count: 5,
