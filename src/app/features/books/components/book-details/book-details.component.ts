@@ -107,7 +107,7 @@ export class BookDetailsComponent implements OnInit {
     // retrieve search results from the service
     const searchQuery = this.book.author_name + ' - ' + this.book.title;
     // book/:id/match
-    this.router.navigate(['/book', this.book.id, 'match'], {
+    this.router.navigate(['/books', this.book.id, 'match'], {
       queryParams: { query: searchQuery },
     });
   }
