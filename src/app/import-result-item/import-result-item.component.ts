@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToNumberPipe } from '../pipe/to-number.pipe';
-import { TruncatePipe } from '../pipe/truncate.pipe'; // Import the TruncatePipe
+import { ToNumberPipe } from '../shared/pipes/to-number.pipe';
+import { TruncatePipe } from '../shared/pipes/truncate.pipe'; // Import the TruncatePipe
 import { Book } from '../book.model';
 
 @Component({

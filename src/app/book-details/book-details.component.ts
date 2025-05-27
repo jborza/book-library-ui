@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BooksService } from '../books.service';
 import { Book } from '../book.model';
-import { ToNumberPipe } from '../pipe/to-number.pipe';
+import { ToNumberPipe } from '../shared/pipes/to-number.pipe';
 import { CustomSearch } from '../custom-search.model';
 import { SettingsService } from '../core/services/settings.service';
 import { Collection } from '../add-to-collection/add-to-collection.component';

@@ -1,4 +1,4 @@
-import { ToNumberPipe } from './to-number.pipe';
+import { ToNumberPipe } from '../../to-number.pipe';
 
 describe('ToNumberPipe', () => {
   it('create an instance', () => {
