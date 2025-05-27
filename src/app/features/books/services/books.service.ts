@@ -8,16 +8,10 @@ import { BookFilter } from '../book-filter';
   providedIn: 'root',
 })
 export class BooksService {
-  constructor(private http: HttpClient, private apiService: ApiService) {}
+  constructor(private http: HttpClient, private apiService: ApiService) { }
 
   getBooks(): Observable<any> {
     return this.http.get(this.apiService.getBookApiUrl());
-  }
-
-  // TODO definitely move this to an authors service
-  // TODO add filters
-  getAuthorsFiltered(search?: BookFilter): Observable<any> {
-    return this.http.get(this.apiService.getAuthorSearchsUrl());
   }
 
   getBooksByAuthor(author: string): Observable<any> {
@@ -28,72 +22,24 @@ export class BooksService {
   }
 
   getBooksFiltered(
-    search?: BookFilter,
+    search: BookFilter,
     sortColumn?: string,
     sortAscending?: boolean,
     currentPage?: number,
     pageSize?: number
   ): Observable<any> {
-    let params = new HttpParams();
-    if (search?.status) {
-      params = params.set('status', search.status);
-    }
-    if (search?.bookType) {
-      params = params.set('type', search.bookType);
-    }
+    let params = search.getSearchParams();
     if (pageSize) {
       params = params.set('page_size', pageSize.toString());
     }
     if (currentPage) {
       params = params.set('page', currentPage.toString());
     }
-    if (search?.search) {
-      params = params.set('search', search.search);
-    }
-    if (search?.genre) {
-      params = params.set('genre', search.genre);
-    }
-    if (search?.language) {
-      params = params.set('language', search.language);
-    }
-    if (search?.yearEnabled) {
-      if (search?.yearMin) {
-        params = params.set('year_min', search.yearMin.toString());
-      }
-      if (search?.yearMax) {
-        params = params.set('year_max', search.yearMax.toString());
-      }
-    }
-    if (search?.pagesEnabled) {
-      if (search?.pagesMin) {
-        params = params.set('pages_min', search.pagesMin.toString());
-      }
-      if (search?.pagesMax) {
-        params = params.set('pages_max', search.pagesMax.toString());
-      }
-    }
-    if (search?.ratingEnabled) {
-      if (search?.ratingMin) {
-        params = params.set('rating_min', search.ratingMin.toString());
-      }
-      if (search?.ratingMax) {
-        params = params.set('rating_max', search.ratingMax.toString());
-      }
-    }
-    if (search?.author) {
-      params = params.set('author', search.author);
-    }
-    if (search?.series) {
-      params = params.set('series', search.series);
-    }
     if (sortColumn) {
       params = params.set('sort_column', sortColumn);
     }
     if (sortAscending) {
       params = params.set('sort_ascending', sortAscending);
-    }
-    if(search?.collection) {
-      params = params.set('collection', search.collection.toString());
     }
     return this.http.get(this.apiService.getGetUrl(), { params });
   }
@@ -158,7 +104,7 @@ export class BooksService {
     const url = this.apiService.getUpdateBooksUrl();
     let body = {
       book_ids: bookIds,
-      data: data, 
+      data: data,
     };
 
     return this.http.post(url, body);
