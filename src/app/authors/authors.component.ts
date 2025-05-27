@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { AuthorsService } from '../authors.service';
+import { AuthorsService } from '../core/services/authors.service';
 
 @Component({
   selector: 'app-authors',

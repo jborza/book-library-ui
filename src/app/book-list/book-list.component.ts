@@ -6,12 +6,12 @@ import { Book } from '../book.model';
 import { BookFilterComponent } from '../book-filter/book-filter.component';
 import { BooksPaginationComponent } from '../books-pagination/books-pagination.component';
 import { BookFilter } from '../book-filter';
-import { SettingsService } from '../settings.service';
-import { LibraryEventsService } from '../library-events.service';
+import { SettingsService } from '../core/services/settings.service';
+import { LibraryEventsService } from '../core/services/library-events.service';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { ContextMenuComponent } from '../context-menu/context-menu.component';
 import { AddToCollectionComponent, Collection } from '../add-to-collection/add-to-collection.component';
-import { CollectionsService } from '../collections.service';
+import { CollectionsService } from '../core/services/collections.service';
 
 @Component({
   standalone: true,

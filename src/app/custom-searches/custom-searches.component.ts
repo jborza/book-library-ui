@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CustomSearch } from '../custom-search.model';
-import { SettingsService } from '../settings.service';
+import { SettingsService } from '../core/services/settings.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 

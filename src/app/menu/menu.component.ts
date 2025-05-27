@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from '../search.service';
-import { SettingsService } from '../settings.service';
+import { SettingsService } from '../core/services/settings.service';
 import { Library } from '../library';
-import { LibraryEventsService } from '../library-events.service';
+import { LibraryEventsService } from '../core/services/library-events.service';
 import { MenuService } from '../menu.service';
-import { CollectionsService } from '../collections.service';
+import { CollectionsService } from '../core/services/collections.service';
 
 @Component({
   selector: 'app-menu',

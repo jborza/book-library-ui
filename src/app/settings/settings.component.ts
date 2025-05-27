@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { SettingsService } from '../settings.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CustomSearchesComponent } from '../custom-searches/custom-searches.component';
+import { SettingsService } from '../core/services/settings.service';
 
 @Component({
   selector: 'app-settings',

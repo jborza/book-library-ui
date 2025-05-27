@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CollectionsService } from '../collections.service';
+import { CollectionsService } from '../core/services/collections.service';
 
 @Component({
   selector: 'app-collections',

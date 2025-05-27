@@ -25,7 +25,7 @@ export class SeriesComponent {
 
   // Calculate the position of each image dynamically
   getImagePosition(index: number, total: number, name: string): string {
-    const containerWidth = 440; // Width of the container
+    const containerWidth = 400; /* 440 */ // Width of the container
     const imageWidth = 128; // Width of each image
     const rightmost = containerWidth - imageWidth;
     const otherBooksWidth = rightmost / (total - 1);

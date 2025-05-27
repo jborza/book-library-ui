@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet, Scroll } from '@angular/router';
-import { MenuComponent } from './menu/menu.component';
 import { FormsModule } from '@angular/forms';
 import { MenuService } from './menu.service';
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs/operators';
-
+import { CoreModule } from './core/core.module';
+import { MenuComponent } from './menu/menu.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MenuComponent, FormsModule, CommonModule],
+  imports: [RouterOutlet, CoreModule, FormsModule, CommonModule, MenuComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.less'
 })

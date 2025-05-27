@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PingService } from '../ping.service';
+import { PingService } from '../core/services/ping.service';
 import { MenuService } from '../menu.service';
 import { BookSearchService } from '../book-search.service';
 

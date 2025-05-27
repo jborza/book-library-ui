@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { GenresService } from '../genres.service';
+import { GenresService } from '../core/services/genres.service';
 @Component({
   selector: 'app-genres',
   imports: [CommonModule, RouterModule],

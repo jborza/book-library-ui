@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SearchService } from '../search.service';
 import { MatchResultItemComponent } from '../match-result-item/match-result-item.component';
-import { BookDataService } from '../book-data.service';
+import { BookDataService } from '../core/services/book-data.service';
 import { levenshteinDistance } from '../string-utils';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 

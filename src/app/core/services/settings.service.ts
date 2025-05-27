@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BookFilter } from './book-filter';
-import { Library } from './library';
-import { CustomSearch } from './custom-search.model';
+import { BookFilter } from '../../book-filter';
+import { Library } from '../../library';
+import { CustomSearch } from '../../custom-search.model';
 
 @Injectable({
   providedIn: 'root',

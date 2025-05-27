@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BookDataService } from '../book-data.service';
+import { BookDataService } from '../core/services/book-data.service';
 import { Book } from '../book.model';
 import {
   FormBuilder,
@@ -13,8 +13,8 @@ import {
 import { BooksService } from '../books.service';
 import { Router } from '@angular/router';
 import { TagInputComponent } from '../tag-input/tag-input.component';
-import { ApiService } from '../api.service';
-import { ThumbnailsService } from '../thumbnails.service';
+import { ApiService } from '../core/services/api.service';
+import { ThumbnailsService } from '../core/services/thumbnails.service';
 import { LanguageSelectComponent } from '../language-select/language-select.component';
 
 // TODO convert rating entered like 4,6 to 4.6

@@ -5,9 +5,9 @@ import { BooksService } from '../books.service';
 import { Book } from '../book.model';
 import { ToNumberPipe } from '../pipe/to-number.pipe';
 import { CustomSearch } from '../custom-search.model';
-import { SettingsService } from '../settings.service';
+import { SettingsService } from '../core/services/settings.service';
 import { Collection } from '../add-to-collection/add-to-collection.component';
-import { CollectionsService } from '../collections.service';
+import { CollectionsService } from '../core/services/collections.service';
 
 @Component({
   selector: 'app-book-details',

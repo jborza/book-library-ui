@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Book } from './book.model';
-import { ApiService } from './api.service';
+import { ApiService } from './core/services/api.service';
 import { BookFilter } from './book-filter';
 @Injectable({
   providedIn: 'root',
