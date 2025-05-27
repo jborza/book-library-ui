@@ -1,3 +1,5 @@
+import { HttpParams } from "@angular/common/http";
+
 export class BookFilter {
   search: string = '';
   genre: string = '';
@@ -43,4 +45,59 @@ export class BookFilter {
       things.push('Series: ' + this.series);
     return things.join(', ');
   }
+
+  getSearchParams() : HttpParams {
+      let params = new HttpParams();
+      if (this?.status) {
+        params = params.set('status', this.status);
+      }
+      if (this?.bookType) {
+        params = params.set('type', this.bookType);
+      }
+     
+      if (this?.search) {
+        params = params.set('this', this.search);
+      }
+      if (this?.genre) {
+        params = params.set('genre', this.genre);
+      }
+      if (this?.language) {
+        params = params.set('language', this.language);
+      }
+      if (this?.yearEnabled) {
+        if (this?.yearMin) {
+          params = params.set('year_min', this.yearMin.toString());
+        }
+        if (this?.yearMax) {
+          params = params.set('year_max', this.yearMax.toString());
+        }
+      }
+      if (this?.pagesEnabled) {
+        if (this?.pagesMin) {
+          params = params.set('pages_min', this.pagesMin.toString());
+        }
+        if (this?.pagesMax) {
+          params = params.set('pages_max', this.pagesMax.toString());
+        }
+      }
+      if (this?.ratingEnabled) {
+        if (this?.ratingMin) {
+          params = params.set('rating_min', this.ratingMin.toString());
+        }
+        if (this?.ratingMax) {
+          params = params.set('rating_max', this.ratingMax.toString());
+        }
+      }
+      if (this?.author) {
+        params = params.set('author', this.author);
+      }
+      if (this?.series) {
+        params = params.set('series', this.series);
+      }
+     
+      if (this?.collection) {
+        params = params.set('collection', this.collection.toString());
+      }
+      return params;
+    }
 }

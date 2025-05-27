@@ -13,6 +13,7 @@ import { ContextMenuComponent } from '../../../../shared/components/context-menu
 import { AddToCollectionComponent } from '../../../collections/components/add-to-collection/add-to-collection.component';
 import { Collection } from '../../../collections/models/collection.model';
 import { CollectionsService } from '../../../../core/services/collections.service';
+import { AuthorsService } from '../../../authors/services/authors.service';
 
 @Component({
   standalone: true,
@@ -60,7 +61,8 @@ export class BookListComponent implements OnInit {
     private settingsService: SettingsService,
     private router: Router,
     private libraryEvents: LibraryEventsService,
-    private collectionsService: CollectionsService
+    private collectionsService: CollectionsService,
+    private authorsService: AuthorsService
   ) {
     this.currentUrl = router.url;
   }
@@ -90,7 +92,11 @@ export class BookListComponent implements OnInit {
   // need to fetch authors for the filter
   // doesn't change on paging, only on filter change
   fetchAuthors(): void {
-    this.booksService.getAuthorsFiltered().subscribe((response) => {
+    if (!this.filters) {
+      return;
+    }
+    console.log('Fetching authors with filters:', this.filters);
+    this.authorsService.getAuthorsFiltered(this.filters).subscribe((response) => {
       this.authors = response;
     });
   }
@@ -171,6 +177,7 @@ export class BookListComponent implements OnInit {
   onFiltersChanged(filters: BookFilter): void {
     this.filters = filters;
     this.fetchBooks();
+    this.fetchAuthors(); // Fetch authors for the filter
     // TODO probably also reset the page to 1
   }
 
