@@ -17,8 +17,6 @@ import { ApiService } from '../../../../core/services/api.service';
 import { ThumbnailsService } from '../../../../core/services/thumbnails.service';
 import { LanguageSelectComponent } from '../../../../shared/components/language-select/language-select.component';
 
-// TODO convert rating entered like 4,6 to 4.6
-
 @Component({
   selector: 'app-book-editor',
   imports: [
@@ -159,6 +157,18 @@ export class BookEditorComponent implements OnInit {
         this.bookDataService.clearSelectedBook();
       }
     });
+    // replace decimal comma with decimal point in rating input
+    this.bookForm.get('rating')?.valueChanges.subscribe((value) => {
+      if (typeof value === 'string' && value.includes(',')) {
+        // Replace decimal comma with decimal point
+        const transformedValue = value.replace(',', '.');
+
+        // Update the `rating` control with the transformed value
+        this.bookForm.get('rating')?.setValue(transformedValue, {
+          emitEvent: false, // Prevent infinite loop
+        });
+      }
+    });
   }
 
   private updateBookFromSearch() {
@@ -250,7 +260,6 @@ export class BookEditorComponent implements OnInit {
     this.booksService.createBook(book).subscribe({
       next: (response) => {
         console.log('Book created successfully:', response);
-        //TODO save the book ID to the book object
         this.book.id = response.id; // Assuming the API returns the created book with its ID
       },
       error: (error) => {
