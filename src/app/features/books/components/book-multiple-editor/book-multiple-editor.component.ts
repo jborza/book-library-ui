@@ -22,7 +22,7 @@ export class BookMultipleEditorComponent {
   bookIds: number[] = [];
 
   bookTypes = ['', 'Ebook', 'Audiobook', 'Physical Book'];
-  languages = ['', 'English', 'German', 'Slovak', 'Czech']; // TODO add country icons
+  languages = ['', 'English', 'German', 'Slovak', 'Czech']; 
   statuses = ['', 'Read', 'Reading', 'To Read', 'Abandoned', 'Wish List'];
 
   constructor(
@@ -107,7 +107,6 @@ export class BookMultipleEditorComponent {
   }, {} as Record<string, string>);
 
   onSubmit(action: 'save' | 'saveAndClose'): void {
-    // TODO handle action 'save' - save the book and stay on the page
     if (this.bookForm.valid) {
       // Extract the form values
       const formData = this.bookForm.value;
