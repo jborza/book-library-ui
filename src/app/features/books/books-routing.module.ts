@@ -11,7 +11,6 @@ const routes: Routes = [
     { path: 'edit_multiple', component: BookMultipleEditorComponent, pathMatch: 'full' },
     { path: ':id', component: BookDetailsComponent },
     { path: ':id/edit', component: BookEditorComponent },
-    { path: 'author/:author', component: BookListComponent }, // TODO fix route, was just :author
     { path: ':id/match', component: BookMatchResultsComponent },    
     { path: 'add', component: BookEditorComponent },
 ];
