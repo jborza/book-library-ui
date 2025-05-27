@@ -10,6 +10,7 @@
     class="form-control"
     [placeholder]="placeholder"
     [(ngModel)]="newTag"
+    (blur)="onBlur()"
     (keydown)="handleKeydown($event)"
   />
 </div>

@@ -24,6 +24,11 @@ export class TagInputComponent {
   tags: string[] = [];
   newTag: string = '';
 
+  // Triggered when the input loses focus
+  onBlur(): void {
+    this.addTag();
+  }
+
   onChange: (tags: string[]) => void = () => { };
   onTouched: () => void = () => { };
 
