@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CollectionsService } from '../../../../core/services/collections.service';
+import { Collection } from '../../models/collection.model';
 
 @Component({
   selector: 'app-collections',
@@ -10,8 +11,7 @@ import { CollectionsService } from '../../../../core/services/collections.servic
   styleUrl: './collections.component.less'
 })
 export class CollectionsComponent {
-  // TODO load collections from the service
-  collections: any[] = []; // TODO type
+  collections: Collection[] = []; 
 
   constructor(private collectionsService: CollectionsService) {
   }
