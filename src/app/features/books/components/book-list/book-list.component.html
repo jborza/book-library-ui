@@ -55,8 +55,8 @@
         </ng-container>
         <!-- Default rendering for link or plain text -->
         <ng-template #defaultRendering>
-          <ng-container *ngIf="col.link; else plainText">
-            <a [routerLink]="col.link(book)">{{ book[col.value] }}</a>
+          <ng-container *ngIf="col.link && col.queryParams; else plainText">
+            <a [routerLink]="col.link(book)" [queryParams]="col.queryParams(book)">{{ book[col.value] }}</a>
           </ng-container>
           <ng-template #plainText>
             {{ book[col.value] }}

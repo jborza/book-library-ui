@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../models/book.model';
 import { BookFilterComponent } from '../book-filter/book-filter.component';
@@ -64,11 +64,15 @@ export class BookListComponent implements OnInit {
     value: keyof Book;
     visible: boolean;
     link?: (row: Book) => string;
+    queryParams?: (row: Book) => Params;
     component?: string;
   }[] = [
-      { name: 'Title', value: 'title', visible: true, link: (row: any) => `/books/${row.id}` },
+      { name: 'Title', value: 'title', visible: true, link: (row: any) => `/books/${row.id}`, queryParams: (row: Book) => ({}) },
       // TODO add query parameter - e.g. `/books?author=author_name`
-      { name: 'Author', value: 'author_name', visible: true, link: (row: any) => `/books?author=${encodeURIComponent(row.author_name)}` },
+      {
+        name: 'Author', value: 'author_name', visible: true, link: (row: any) => '/books',
+        queryParams: (row: Book) => ({ author: row.author_name })
+      },
       { name: 'Publisher', value: 'publisher', visible: true },
       { name: 'Year', value: 'year', visible: true },
       { name: 'Genre', value: 'genre', visible: true },
@@ -163,7 +167,7 @@ export class BookListComponent implements OnInit {
     } else if (this.sortColumn === 'author_name') {
       sortColumnMapped = 'surname_first'; // API uses author
     }
-    else if (this.sortColumn === 'pages'){
+    else if (this.sortColumn === 'pages') {
       sortColumnMapped = 'page_count'; // API uses page_count
     }
     this.booksService
@@ -428,10 +432,10 @@ export class BookListComponent implements OnInit {
 
   toggleColumnVisibility(column: keyof Book): void {
     const columnToUpdate = this.columns.find(col => col.value === column);
-    
+
     if (columnToUpdate) {
       columnToUpdate.visible = !columnToUpdate.visible;
-      const visible = columnToUpdate.visible; 
+      const visible = columnToUpdate.visible;
       console.log(`Column ${column} visibility changed to: ${visible}`);
       this.settingsService.setBookListColumnVisibility(column, visible);
     }
