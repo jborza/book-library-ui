@@ -75,7 +75,7 @@ export class CollectionsComponent {
   }
 
   deleteCollection(collectionId: number): void {
-    if (confirm('Are you sure you want to delete this book?')) {
+    if (confirm('Are you sure you want to delete this collection?')) {
       // TODO use a confirmation dialog instead of confirm
       this.collectionsService.deleteCollection(collectionId).subscribe((data) => {
         console.log('Collection deleted:', data);
