@@ -18,14 +18,14 @@
         </a>
       </p>
       <p *ngIf="book.status">Status: {{ book.status }}</p>
-      <div *ngIf="book.rating" class="book-rating">
+      <div *ngIf="book.rating" class="book-rating" title="Rating: {{ book.rating }}">
         <span
           *ngFor="let star of [1, 2, 3, 4, 5]"
           class="star"
           [class.filled]="star <= (book.rating | toNumber)"
           >★</span
         >
-        <span class="rating-value">{{ book.rating }}</span>
+        {{ book.rating }}
       </div>
       <span *ngIf="book.review" class="rating-info">{{ book.review }}</span>
       <p class="book-description">{{ book.synopsis }}</p>
@@ -155,16 +155,13 @@
             </div>
             <div class="card-footer">
               <small class="text-body-secondary">
-                <div *ngIf="otherBook.rating" class="book-rating">
+                <div *ngIf="otherBook.rating" class="book-rating" title="Rating: {{ book.rating }}">
                   <span
                     *ngFor="let star of [1, 2, 3, 4, 5]"
                     class="star"
                     [class.filled]="star <= (otherBook.rating | toNumber)"
                     >★</span
-                  >
-                  <span class="rating-value"
-                    ><small>{{ otherBook.rating }}</small></span
-                  >
+                  >                 
                 </div>
               </small>
             </div>

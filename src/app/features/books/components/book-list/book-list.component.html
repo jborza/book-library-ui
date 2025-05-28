@@ -86,6 +86,7 @@
 <!-- Add to Collection Modal -->
 
 <!-- Modal or conditional form -->
+<!-- TODO encapsulate also the modal within AddToCollection component -->
 <div class="modal-backdrop" *ngIf="showAddToCollection">
   <div class="modal-dialog collection-modal">
     <div class="modal-content">
@@ -96,3 +97,8 @@
     </div>
   </div>
 </div>
+
+<app-multiple-match-options
+  (submit)="handleSubmitMatchBooks($event)"
+  (cancel)="handleCancelMatchBooks()"
+></app-multiple-match-options>

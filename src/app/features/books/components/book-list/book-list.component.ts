@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../models/book.model';
@@ -16,6 +16,7 @@ import { CollectionsService } from '../../../../core/services/collections.servic
 import { AuthorsService } from '../../../authors/services/authors.service';
 import { FormsModule } from '@angular/forms';
 import { ToNumberPipe } from '../../../../shared/pipes/to-number.pipe';
+import { MultipleMatchOptionsComponent } from '../multiple-match-options/multiple-match-options.component';
 
 @Component({
   standalone: true,
@@ -31,7 +32,8 @@ import { ToNumberPipe } from '../../../../shared/pipes/to-number.pipe';
     ContextMenuComponent,
     AddToCollectionComponent,
     FormsModule,
-    ToNumberPipe
+    ToNumberPipe,
+    MultipleMatchOptionsComponent
   ],
 })
 export class BookListComponent implements OnInit {
@@ -58,6 +60,8 @@ export class BookListComponent implements OnInit {
   collections: Collection[] = [];
   lastSelectedBookId: number | null = null; // Track the last clicked book ID
   collection: number | null = null; // Selected collection ID for filtering;
+  
+  @ViewChild(MultipleMatchOptionsComponent) multipleMatchOptions!: MultipleMatchOptionsComponent;
 
   columns: {
     name: string;
@@ -349,13 +353,30 @@ export class BookListComponent implements OnInit {
   }
 
   addSelectedBooksToCollection() {
-    // see issue https://github.com/jborza/book-library-ui/issues/16
     this.showAddToCollection = true;
   }
 
   matchSelectedBooks() {
     // see issue https://github.com/jborza/book-library-ui/issues/23
-    throw new Error('Method not implemented.');
+    // TODO show confirmation dialog before matching books - ask for selecting metadata and/or covers
+    const matchMetadata = true;
+    const matchCovers = true;
+    // TODO save in settings which provider to use
+    const provider = "google_books"; // or "open_library" based on your choice
+    // open the modal for matching books
+    this.multipleMatchOptions.openModal();
+    return; // TODO remove this line when the modal is implemented
+    this.booksService.matchBooks(this.selectedBookIds, matchMetadata, matchCovers, provider).subscribe({
+      next: (response) => {
+        console.log('Books matched successfully:', response);
+        this.fetchBooks();
+        this.selectedBookIds = [];
+      },
+      error: (error) => {
+        console.error('Error matching books:', error);
+        // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
+      }
+    });
   }
 
   deleteSelectedBooks() {
@@ -450,5 +471,18 @@ export class BookListComponent implements OnInit {
     });
   }
 
+  // match multiple books 
+  handleSubmitMatchBooks(event: { provider: string; updateCover: boolean; updateMetadata: boolean }): void {
+    console.log('Submit clicked with options:', event);
+    // Add your logic here (e.g., send data to a service or API)
+    // const modalElement = document.getElementById('matchBooksModal');
+    // if (modalElement) {
+    //   const bootstrapModal = bootstrap.Modal.getInstance(modalElement);
+    //   bootstrapModal?.hide();
+    // }
+  }
+
+  handleCancelMatchBooks(): void {
+  }
 
 }

@@ -109,4 +109,16 @@ export class BooksService {
 
     return this.http.post(url, body);
   }
+
+  matchBooks(bookIds: number[], matchMetadata: boolean, matchCovers: boolean, provider: string): Observable<any> {
+    const url = this.apiService.getMatchBooksUrl();
+    let body = {
+      book_ids: bookIds,
+      match_metadata: matchMetadata,
+      match_covers: matchCovers,
+      provider: provider,
+    };
+
+    return this.http.post(url, body);
+  }
 }
