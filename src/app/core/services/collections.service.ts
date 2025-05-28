@@ -83,7 +83,7 @@ export class CollectionsService {
   renameCollection(collectionId: number, newName: string): Observable<any> {
     // This method should rename a collection.
     const url = this.apiService.getCollectionRenameApiUrl(collectionId.toString());
-    return this.http.put(url, { name: newName }).pipe(
+    return this.http.post(url, { name: newName }).pipe(
       tap(() => {
         console.log(`Collection ${collectionId} renamed to ${newName}`);
         this.collectionSavedSource.next(); // Notify all subscribers that a collection was renamed
