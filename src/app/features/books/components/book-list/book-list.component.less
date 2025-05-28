@@ -11,14 +11,15 @@ th span {
 }
 
 .sort-icon.asc::after {
-  content: '▲'; 
+  content: '▲';
 }
 
 .sort-icon.desc::after {
-  content: '▼'; 
+  content: '▼';
 }
 
-table th, table td {
+table th,
+table td {
   text-align: left;
 }
 
@@ -27,7 +28,8 @@ button.btn-primary {
 }
 
 tr {
-  user-select: none; /* Disable text selection */
+  user-select: none;
+  /* Disable text selection */
 }
 
 tr:hover {
@@ -36,23 +38,55 @@ tr:hover {
 
 /* Override Bootstrap's table background variable */
 table tbody tr.selected {
-  --bs-table-bg: #D5EBFD !important; /* Light blue background */
-  color: #0c5460 !important; /* Dark blue text */
+  --bs-table-bg: #D5EBFD !important;
+  /* Light blue background */
+  color: #0c5460 !important;
+  /* Dark blue text */
 }
 
 /* Modal styles */
 .modal-backdrop {
-  position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.5); z-index: 1000;
-  display: flex; align-items: center; justify-content: center;
-}
-.modal-content {
-  background: #333; border-radius: 12px; padding: 0; min-width: 400px; position: relative;
-}
-.close-btn {
-  position: absolute; top: 8px; right: 12px; background: none; border: none; color: #fff; font-size: 2em; cursor: pointer;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.collection-modal{
+.modal-content {
+  background: #333;
+  border-radius: 12px;
+  padding: 0;
+  min-width: 400px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.collection-modal {
   width: 600px;
+}
+
+.star {
+  font-size: 20px;
+  color: #ccc;
+  margin-right: 2px;
+}
+
+.star.filled {
+  color: #f39c12;
 }

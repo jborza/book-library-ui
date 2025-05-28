@@ -15,6 +15,7 @@ import { Collection } from '../../../collections/models/collection.model';
 import { CollectionsService } from '../../../../core/services/collections.service';
 import { AuthorsService } from '../../../authors/services/authors.service';
 import { FormsModule } from '@angular/forms';
+import { ToNumberPipe } from '../../../../shared/pipes/to-number.pipe';
 
 @Component({
   standalone: true,
@@ -29,7 +30,8 @@ import { FormsModule } from '@angular/forms';
     TopBarComponent,
     ContextMenuComponent,
     AddToCollectionComponent,
-    FormsModule
+    FormsModule,
+    ToNumberPipe
   ],
 })
 export class BookListComponent implements OnInit {
@@ -56,20 +58,28 @@ export class BookListComponent implements OnInit {
   collections: Collection[] = [];
   lastSelectedBookId: number | null = null; // Track the last clicked book ID
   collection: number | null = null; // Selected collection ID for filtering;
-  
-  columns = [
-    { name: 'Title', value: 'title', visible: true },
-    { name: 'Author', value: 'author_name', visible: true },
-    { name: 'Publisher', value: 'publisher', visible: true },
-    { name: 'Year', value: 'year', visible: true },
-    { name: 'Genre', value: 'genre', visible: true },
-    { name: 'ISBN', value: 'isbn', visible: true },
-    { name: 'Language', value: 'language', visible: true },
-    { name: 'Series', value: 'series_name', visible: true },
-    { name: 'Pages', value: 'pages', visible: true },
-    { name: 'Rating', value: 'rating', visible: true },
-    { name: 'Status', value: 'status', visible: true },
-  ];
+
+  columns: {
+    name: string;
+    value: keyof Book;
+    visible: boolean;
+    link?: (row: Book) => string;
+    component?: string;
+  }[] = [
+      { name: 'Title', value: 'title', visible: true, link: (row: any) => `/books/${row.id}` },
+      { name: 'Author', value: 'author_name', visible: true, link: (row: any) => `/books/author:${encodeURIComponent(row.author_name)}` },
+      { name: 'Publisher', value: 'publisher', visible: true },
+      { name: 'Year', value: 'year', visible: true },
+      { name: 'Genre', value: 'genre', visible: true },
+      { name: 'ISBN', value: 'isbn', visible: true },
+      { name: 'Language', value: 'language', visible: true },
+      { name: 'Series', value: 'series', visible: true },
+      { name: 'Pages', value: 'pages', visible: true },
+      { name: 'Rating', value: 'rating', visible: true, component: 'stars' },
+      { name: 'Status', value: 'status', visible: true },
+    ];
+
+  globalString = String;
 
   constructor(
     private booksService: BooksService,
@@ -92,6 +102,11 @@ export class BookListComponent implements OnInit {
       this.fetchAuthors();
       this.fetchCollections();
     });
+    document.addEventListener('click', this.hideContextMenu.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    document.removeEventListener('click', this.hideContextMenu.bind(this));
   }
 
   onPageChanged(page: number): void {
@@ -138,10 +153,18 @@ export class BookListComponent implements OnInit {
     }
     // TODO solve better than this
     this.filters.collection = this.collection; // Set the collection filter if applicable
+    // TODO fix this in a nicer way
+    // map sort column to the API field
+    let sortColumnMapped = this.sortColumn;
+    if (this.sortColumn === 'year') {
+      sortColumnMapped = 'year_published'; // API uses year_published
+    } else if (this.sortColumn === 'author_name') {
+      sortColumnMapped = 'surname_first'; // API uses author
+    }
     this.booksService
       .getBooksFiltered(
         this.filters,
-        this.sortColumn,
+        sortColumnMapped,
         this.sortDirection,
         this.currentPage,
         this.pageSize
@@ -393,4 +416,9 @@ export class BookListComponent implements OnInit {
       },
     });
   }
+
+  hideContextMenu(): void {
+    this.isContextMenuVisible = false;
+  }
+
 }
