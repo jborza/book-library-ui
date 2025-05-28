@@ -1,0 +1,9 @@
+<div class="context-menu">
+  <button
+    *ngFor="let option of options"
+    (click)="onOptionClick(option.action)"
+    class="context-menu-button"
+  >
+    {{ option.label }}
+  </button>
+</div>

@@ -1,6 +1,9 @@
 <div class="container">
     <div class="row row-cols-2">
-        <div class="card mb-2" *ngFor="let collection of collections">
+        <div class="card mb-2" *ngFor="let collection of collections"
+            (contextmenu)="onRightClick($event, collection)">
+            <a [routerLink]="['/books']" [queryParams]="{ collection: collection.id }" style="text-decoration: none;"
+                        >
             <div class="card-body">
                 <!-- Container for the images -->
                 <div class="image-container" style="background-color: grey">
@@ -11,12 +14,26 @@
                     </div>
                 </div>
                 <div class="col-12 text-center">
-                    <a [routerLink]="['/books']" [queryParams]="{ collection: collection.id }" style="text-decoration: none;"
-                        class="stretched-link">
                         {{ collection.name }}
-                    </a>
+                    <button
+                        class="btn btn-secondary btn-sm"
+                        (click)="showContextMenu($event, collection)"
+                        style="float: right; margin-right: -10px;">⋮</button>
                 </div>
             </div>
+            </a>
         </div>
     </div>
+    <!-- Context Menu -->
+    <app-collections-context-menu
+        *ngIf="contextMenuVisible && selectedCollectionId"
+        [options]="[
+        { label: '✏️ Rename', action: 'rename' },
+        { label: '❌ Delete', action: 'delete' }
+        ]"
+        (optionSelected)="onContextMenuAction($event, selectedCollectionId)"
+        [style.position]="'absolute'"
+        [style.top.px]="contextMenuPosition.y"
+        [style.left.px]="contextMenuPosition.x"
+    ></app-collections-context-menu>
 </div>

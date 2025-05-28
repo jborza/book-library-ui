@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiService {
+
   private baseUrl = 'http://localhost:5000';
   // private baseUrl = 'http://192.168.100.9:5000';
 
@@ -38,7 +39,10 @@ export class ApiService {
       `${this.baseUrl}/collections/${collectionId}/add_books_api`,
     collectionsForBook: (bookId: string) =>
       `${this.baseUrl}/book/${bookId}/collections`,
-
+    collectionsDelete: (collectionId: string) =>
+      `${this.baseUrl}/collections/${collectionId}/delete_api`,
+    collectionsRename: (collectionId: string) =>
+      `${this.baseUrl}/collections/${collectionId}/rename_api`,
   };
 
   getSearchUrl(): string {
@@ -143,5 +147,13 @@ export class ApiService {
 
   getCollectionsForBookApiUrl(bookId: string): string {
     return this.endpoints.collectionsForBook(bookId);
+  }
+
+  getCollectionDeleteApiUrl(collectionId: string): string {
+    return this.endpoints.collectionsDelete(collectionId);
+  }
+
+  getCollectionRenameApiUrl(collectionId: string) {
+    return this.endpoints.collectionsRename(collectionId);
   }
 }

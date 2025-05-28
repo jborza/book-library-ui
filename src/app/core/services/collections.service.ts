@@ -73,4 +73,21 @@ export class CollectionsService {
     const url = this.apiService.getCollectionsForBookApiUrl(bookId);
     return this.http.get<Collection[]>(url);
   }
+
+  deleteCollection(collectionId: number): Observable<any> {
+    // This method should delete a collection by its ID.
+    const url = this.apiService.getCollectionDeleteApiUrl(collectionId.toString());
+    return this.http.delete(url);
+  }
+
+  renameCollection(collectionId: number, newName: string): Observable<any> {
+    // This method should rename a collection.
+    const url = this.apiService.getCollectionRenameApiUrl(collectionId.toString());
+    return this.http.put(url, { name: newName }).pipe(
+      tap(() => {
+        console.log(`Collection ${collectionId} renamed to ${newName}`);
+        this.collectionSavedSource.next(); // Notify all subscribers that a collection was renamed
+      })
+    );
+  }
 }
