@@ -67,7 +67,8 @@ export class BookListComponent implements OnInit {
     component?: string;
   }[] = [
       { name: 'Title', value: 'title', visible: true, link: (row: any) => `/books/${row.id}` },
-      { name: 'Author', value: 'author_name', visible: true, link: (row: any) => `/books/author:${encodeURIComponent(row.author_name)}` },
+      // TODO add query parameter - e.g. `/books?author=author_name`
+      { name: 'Author', value: 'author_name', visible: true, link: (row: any) => `/books?author=${encodeURIComponent(row.author_name)}` },
       { name: 'Publisher', value: 'publisher', visible: true },
       { name: 'Year', value: 'year', visible: true },
       { name: 'Genre', value: 'genre', visible: true },
@@ -103,6 +104,7 @@ export class BookListComponent implements OnInit {
       this.fetchCollections();
     });
     document.addEventListener('click', this.hideContextMenu.bind(this));
+    this.loadColumnVisibility();
   }
 
   ngOnDestroy(): void {
@@ -160,6 +162,9 @@ export class BookListComponent implements OnInit {
       sortColumnMapped = 'year_published'; // API uses year_published
     } else if (this.sortColumn === 'author_name') {
       sortColumnMapped = 'surname_first'; // API uses author
+    }
+    else if (this.sortColumn === 'pages'){
+      sortColumnMapped = 'page_count'; // API uses page_count
     }
     this.booksService
       .getBooksFiltered(
@@ -420,5 +425,26 @@ export class BookListComponent implements OnInit {
   hideContextMenu(): void {
     this.isContextMenuVisible = false;
   }
+
+  toggleColumnVisibility(column: keyof Book): void {
+    const columnToUpdate = this.columns.find(col => col.value === column);
+    
+    if (columnToUpdate) {
+      columnToUpdate.visible = !columnToUpdate.visible;
+      const visible = columnToUpdate.visible; 
+      console.log(`Column ${column} visibility changed to: ${visible}`);
+      this.settingsService.setBookListColumnVisibility(column, visible);
+    }
+  }
+
+  private loadColumnVisibility(): void {
+    const savedVisibility = this.settingsService.getBookListColumnVisibility();
+    this.columns.forEach(col => {
+      if (col.value in savedVisibility) {
+        col.visible = savedVisibility[col.value];
+      }
+    });
+  }
+
 
 }

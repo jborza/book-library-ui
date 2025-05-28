@@ -14,9 +14,13 @@ export class SettingsService {
   private static readonly LIBRARIES_KEY = 'libraries'; // Key for localStorage
   private settings: { [key: string]: any } = {};
 
+  private static readonly BOOK_LIST_COLUMN_VISIBILITY_KEY = 'bookListColumnVisibility'; // Key for column visibility settings
+  private bookListColumnVisibility: { [key: string]: boolean } = {};
+
   constructor() {
     this.loadSettings();
     this.loadCustomSearches();
+    this.loadBookListColumnVisibility();
   }
 
   private loadSettings(): void {
@@ -89,5 +93,27 @@ export class SettingsService {
     if (savedSearches) {
       this.customSearches = JSON.parse(savedSearches);
     }
+  }
+
+  private loadBookListColumnVisibility(): void {
+    const storedVisibility = localStorage.getItem(SettingsService.BOOK_LIST_COLUMN_VISIBILITY_KEY);
+    if (storedVisibility) {
+      this.bookListColumnVisibility = JSON.parse(storedVisibility);
+    }
+  }
+
+  // TODO type
+  private saveBookListColumnVisibility(visibility: any): void {
+    localStorage.setItem(SettingsService.BOOK_LIST_COLUMN_VISIBILITY_KEY, JSON.stringify(visibility));
+  }
+
+  setBookListColumnVisibility(column: string, isVisible: boolean): void {
+    this.bookListColumnVisibility[column] = isVisible;
+    this.saveBookListColumnVisibility(this.bookListColumnVisibility);
+  }
+
+  // TODO use getter
+  getBookListColumnVisibility(): { [key: string]: boolean } {
+    return this.bookListColumnVisibility;
   }
 }
