@@ -14,6 +14,7 @@ import { AddToCollectionComponent } from '../../../collections/components/add-to
 import { Collection } from '../../../collections/models/collection.model';
 import { CollectionsService } from '../../../../core/services/collections.service';
 import { AuthorsService } from '../../../authors/services/authors.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -28,6 +29,7 @@ import { AuthorsService } from '../../../authors/services/authors.service';
     TopBarComponent,
     ContextMenuComponent,
     AddToCollectionComponent,
+    FormsModule
   ],
 })
 export class BookListComponent implements OnInit {
@@ -54,6 +56,20 @@ export class BookListComponent implements OnInit {
   collections: Collection[] = [];
   lastSelectedBookId: number | null = null; // Track the last clicked book ID
   collection: number | null = null; // Selected collection ID for filtering;
+  
+  columns = [
+    { name: 'Title', value: 'title', visible: true },
+    { name: 'Author', value: 'author_name', visible: true },
+    { name: 'Publisher', value: 'publisher', visible: true },
+    { name: 'Year', value: 'year', visible: true },
+    { name: 'Genre', value: 'genre', visible: true },
+    { name: 'ISBN', value: 'isbn', visible: true },
+    { name: 'Language', value: 'language', visible: true },
+    { name: 'Series', value: 'series_name', visible: true },
+    { name: 'Pages', value: 'pages', visible: true },
+    { name: 'Rating', value: 'rating', visible: true },
+    { name: 'Status', value: 'status', visible: true },
+  ];
 
   constructor(
     private booksService: BooksService,
