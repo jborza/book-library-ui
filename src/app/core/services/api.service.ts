@@ -43,6 +43,9 @@ export class ApiService {
       `${this.baseUrl}/collections/${collectionId}/delete_api`,
     collectionsRename: (collectionId: string) =>
       `${this.baseUrl}/collections/${collectionId}/rename_api`,
+    matchBooks: `${this.baseUrl}/books/match_books_api`,
+    searchOpenlibrary: `${this.baseUrl}/search/openlibrary_api`,
+    searchGoogleBooks: `${this.baseUrl}/search/google_books_api`,
   };
 
   getSearchUrl(): string {
@@ -155,5 +158,17 @@ export class ApiService {
 
   getCollectionRenameApiUrl(collectionId: string) {
     return this.endpoints.collectionsRename(collectionId);
+  }
+
+  getMatchBooksUrl(): string {
+    return this.endpoints.matchBooks;
+  }
+
+  getSearchOpenlibraryUrl(): string {
+    return this.endpoints.searchOpenlibrary;
+  }
+
+  getSearchGoogleBooksUrl(): string {
+    return this.endpoints.searchGoogleBooks;
   }
 }
