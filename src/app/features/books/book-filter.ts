@@ -48,13 +48,15 @@ export class BookFilter {
 
   getSearchParams() : HttpParams {
       let params = new HttpParams();
+      if (this?.search){
+        params = params.set('search', this.search);
+      }
       if (this?.status) {
         params = params.set('status', this.status);
       }
       if (this?.bookType) {
         params = params.set('type', this.bookType);
       }
-     
       if (this?.search) {
         params = params.set('this', this.search);
       }
