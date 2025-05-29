@@ -145,3 +145,32 @@ table tbody tr.selected {
   background-color: #e9e9e9;
   cursor: pointer; /* Only show pointer on hover over the content area */
 }
+
+.table-cell {
+  border-right: 1px solid #ccc;
+  padding: 0px 8px;
+  height: 32px;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+/* Ensure table cells have a fixed width and truncate content with ellipsis */
+th, td {
+  overflow: hidden;          /* Prevent content from overflowing the cell */
+  text-overflow: ellipsis;   /* Show "..." when content overflows */
+  white-space: nowrap;       /* Prevent text from wrapping to multiple lines */
+  max-width: 100px;            /* Allow the column width to be constrained */
+}
+
+/* Remove padding for rating cells */
+.rating-cell {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.table-header {
+  padding: 8px 12px;
+}

@@ -49,7 +49,7 @@
           [style.width.px]="col.width"
           [style.min-width.px]="col.width"
           [style.max-width.px]="col.width"
-          class="resizable-header"
+          class="resizable-header table-header"
           (mousedown)="onMouseDown($event, i)"
           style="white-space: nowrap; cursor: col-resize;"
           [style.width.px]="col.width">
@@ -71,13 +71,13 @@
         (click)="onRowClick(book.id, $event)"
         (contextmenu)="onRowRightClick(book.id, $event)">
       <!-- Row Checkbox -->
-      <td>
+      <td class="table-cell">
         <input type="checkbox"
                [checked]="isSelected(book.id)"
                (change)="toggleSelection(book.id)" />
       </td>
       <!-- cover image, tiny and smaller -->
-      <td >
+      <td class="table-cell">
         <img 
             [src]="getCoverImageUrl(book, true)"
              style="max-width: 50px; max-height: 32px;"
@@ -88,6 +88,8 @@
 
       <td *ngFor="let col of columns"
           [hidden]="!col.visible"
+          class="table-cell"
+          [ngClass]="{'rating-cell': col.component === 'stars'}"
           [style.width.px]="col.width">
         <!-- Custom rendering logic for the "Rating" column -->
         <ng-container *ngIf="col.component === 'stars'; else defaultRendering">

@@ -66,7 +66,7 @@ export class BookListComponent implements OnInit {
   private currentColumn: number = -1;
   private startX: number = 0;
   private startWidth: number = 0;
-  
+
   @ViewChild(MultipleMatchOptionsComponent) multipleMatchOptions!: MultipleMatchOptionsComponent;
 
   columns: {
@@ -78,19 +78,22 @@ export class BookListComponent implements OnInit {
     component?: string;
     width?: number;
   }[] = [
-      { name: 'Title', value: 'title', visible: true, link: (row: any) => `/books/${row.id}`, queryParams: (row: Book) => ({}) },
-      // TODO add query parameter - e.g. `/books?author=author_name`
+      {
+        name: 'Title', value: 'title', visible: true, link: (row: any) => `/books/${row.id}`, queryParams: (row: Book) => ({}),
+        width: 300
+      },
       {
         name: 'Author', value: 'author_name', visible: true, link: (row: any) => '/books',
-        queryParams: (row: Book) => ({ author: row.author_name })
+        queryParams: (row: Book) => ({ author: row.author_name }),
+        width: 150
       },
       { name: 'Publisher', value: 'publisher', visible: true, width: 100 },
       { name: 'Year', value: 'year', visible: true },
       { name: 'Genre', value: 'genre', visible: true, width: 150 },
-      { name: 'ISBN', value: 'isbn', visible: true },
+      { name: 'ISBN', value: 'isbn', visible: true, width: 140 },
       { name: 'Language', value: 'language', visible: true },
       { name: 'Series', value: 'series', visible: true },
-      { name: 'Pages', value: 'pages', visible: true },
+      { name: 'Pages', value: 'pages', visible: true, width: 50 },
       { name: 'Rating', value: 'rating', visible: true, component: 'stars' },
       { name: 'Status', value: 'status', visible: true },
     ];
@@ -132,13 +135,13 @@ export class BookListComponent implements OnInit {
     if (this.isNearRightEdge(event)) {
       event.preventDefault();
       event.stopPropagation();
-      
+
       this.isResizing = true;
       this.currentColumn = columnIndex;
       this.startX = event.clientX;
-      const width = this.columns[columnIndex].width || 100; 
+      const width = this.columns[columnIndex].width || 100;
       this.startWidth = width;
-      
+
       document.body.style.cursor = 'col-resize';
       document.body.style.userSelect = 'none';
     }
@@ -428,7 +431,7 @@ export class BookListComponent implements OnInit {
     const matchCovers = true;
     // TODO save in settings which provider to use
     // open the modal for matching books
-    this.multipleMatchOptions.openModal();        
+    this.multipleMatchOptions.openModal();
   }
 
   deleteSelectedBooks() {
