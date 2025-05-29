@@ -139,7 +139,7 @@ export class BookMultipleEditorComponent {
       if (formData.genres) {
         const genres = dbGenres;
         if (genres.length > 0) {
-          changedItems['genres'] = genres;
+          changedItems['genre'] = genres;
         }
       }
       if (formData.tags) {
