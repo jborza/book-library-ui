@@ -36,13 +36,13 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>
+      <th class="table-header">
         <!-- Select All Checkbox -->
         <input type="checkbox"
                (change)="toggleAllSelections($event)"
                [checked]="areAllSelected()" />
       </th>
-      <th></th>
+      <th class="table-header"></th>
       <th *ngFor="let col of columns; let i = index"
           [hidden]="!col.visible"
           (click)="sortBy(col.value, $event)"          
@@ -62,7 +62,7 @@
         </div>
         <div class="resize-handle"></div>
       </th>
-      <th>Actions</th>
+      <th class="table-header">Actions</th>
     </tr>
   </thead>
   <tbody>
