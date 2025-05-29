@@ -88,6 +88,7 @@ export class BookDetailsComponent implements OnInit {
   }
 
   getCoverImageUrl(book: Book, tiny: boolean = false): string {
+    // TODO really use a service to define the base URL
     if (tiny) {
       if (book?.cover_image_tiny) {
         return 'http://localhost:5000/static/' + book.cover_image_tiny;

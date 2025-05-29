@@ -33,7 +33,7 @@ import { MultipleMatchOptionsComponent } from '../multiple-match-options/multipl
     AddToCollectionComponent,
     FormsModule,
     ToNumberPipe,
-    MultipleMatchOptionsComponent
+    MultipleMatchOptionsComponent,
   ],
 })
 export class BookListComponent implements OnInit {
@@ -60,6 +60,12 @@ export class BookListComponent implements OnInit {
   collections: Collection[] = [];
   lastSelectedBookId: number | null = null; // Track the last clicked book ID
   collection: number | null = null; // Selected collection ID for filtering;
+
+  //resizing
+  private isResizing: boolean = false;
+  private currentColumn: number = -1;
+  private startX: number = 0;
+  private startWidth: number = 0;
   
   @ViewChild(MultipleMatchOptionsComponent) multipleMatchOptions!: MultipleMatchOptionsComponent;
 
@@ -70,6 +76,7 @@ export class BookListComponent implements OnInit {
     link?: (row: Book) => string;
     queryParams?: (row: Book) => Params;
     component?: string;
+    width?: number;
   }[] = [
       { name: 'Title', value: 'title', visible: true, link: (row: any) => `/books/${row.id}`, queryParams: (row: Book) => ({}) },
       // TODO add query parameter - e.g. `/books?author=author_name`
@@ -77,9 +84,9 @@ export class BookListComponent implements OnInit {
         name: 'Author', value: 'author_name', visible: true, link: (row: any) => '/books',
         queryParams: (row: Book) => ({ author: row.author_name })
       },
-      { name: 'Publisher', value: 'publisher', visible: true },
+      { name: 'Publisher', value: 'publisher', visible: true, width: 100 },
       { name: 'Year', value: 'year', visible: true },
-      { name: 'Genre', value: 'genre', visible: true },
+      { name: 'Genre', value: 'genre', visible: true, width: 150 },
       { name: 'ISBN', value: 'isbn', visible: true },
       { name: 'Language', value: 'language', visible: true },
       { name: 'Series', value: 'series', visible: true },
@@ -113,10 +120,65 @@ export class BookListComponent implements OnInit {
     });
     document.addEventListener('click', this.hideContextMenu.bind(this));
     this.loadColumnVisibility();
+    this.loadColumnWidths();
+    this.setupResizeListeners();
   }
 
   ngOnDestroy(): void {
     document.removeEventListener('click', this.hideContextMenu.bind(this));
+  }
+
+  onMouseDown(event: MouseEvent, columnIndex: number) {
+    if (this.isNearRightEdge(event)) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      this.isResizing = true;
+      this.currentColumn = columnIndex;
+      this.startX = event.clientX;
+      const width = this.columns[columnIndex].width || 100; 
+      this.startWidth = width;
+      
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+    }
+  }
+
+  // TODO save column widths to settings
+  private saveColumnWidths() {
+    const widths = this.columns.map(col => ({ value: col.value, width: col.width }));
+    // TODO save
+  }
+
+  // TODO load column widths from settings
+  private loadColumnWidths() {
+  }
+
+  private isNearRightEdge(event: MouseEvent): boolean {
+    const target = event.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const rightEdgeZone = 10; // 10px zone for resize
+    return event.clientX > rect.right - rightEdgeZone;
+  }
+
+  private setupResizeListeners() {
+    document.addEventListener('mousemove', (event) => {
+      if (this.isResizing && this.currentColumn !== -1) {
+        const deltaX = event.clientX - this.startX;
+        const newWidth = Math.max(50, this.startWidth + deltaX); // Minimum width of 50px
+        this.columns[this.currentColumn].width = newWidth;
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (this.isResizing) {
+        this.isResizing = false;
+        this.currentColumn = -1;
+        document.body.style.cursor = 'default';
+        document.body.style.userSelect = 'auto';
+        this.saveColumnWidths();
+      }
+    });
   }
 
   onPageChanged(page: number): void {
@@ -207,7 +269,12 @@ export class BookListComponent implements OnInit {
       });
   }
 
-  sortBy(column: string): void {
+  sortBy(column: string, event: MouseEvent): void {
+    console.log('Sorting start :', column, 'Event:', event);
+    if (this.isResizing || this.isNearRightEdge(event)) {
+      return; // Don't sort if we're resizing
+    }
+    console.log('Sorting by column:', column);
     if (this.sortColumn === column) {
       this.sortDirection = !this.sortDirection; // Toggle sort direction
     } else {
@@ -475,4 +542,25 @@ export class BookListComponent implements OnInit {
   handleCancelMatchBooks(): void {
   }
 
+  onResizeEnd(event: any, column: any): void {
+    column.width = event.rectangle.width;
+    console.log(`Column "${column.name}" resized to ${column.width}px`);
+  }
+
+  getCoverImageUrl(book: Book, tiny: boolean = false): string {
+    // TODO really use a service to define the base URL
+    if (tiny) {
+      if (book?.cover_image_tiny) {
+        return 'http://localhost:5000/static/' + book.cover_image_tiny;
+      } else {
+        return 'http://localhost:5000/static/placeholder_book.svg';
+      }
+    } else {
+      if (book?.cover_image) {
+        return 'http://localhost:5000/static/' + book.cover_image;
+      } else {
+        return 'http://localhost:5000/static/placeholder_book.svg';
+      }
+    }
+  }
 }
