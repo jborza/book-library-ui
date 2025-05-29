@@ -357,26 +357,11 @@ export class BookListComponent implements OnInit {
   }
 
   matchSelectedBooks() {
-    // see issue https://github.com/jborza/book-library-ui/issues/23
-    // TODO show confirmation dialog before matching books - ask for selecting metadata and/or covers
     const matchMetadata = true;
     const matchCovers = true;
     // TODO save in settings which provider to use
-    const provider = "google_books"; // or "open_library" based on your choice
     // open the modal for matching books
-    this.multipleMatchOptions.openModal();
-    return; // TODO remove this line when the modal is implemented
-    this.booksService.matchBooks(this.selectedBookIds, matchMetadata, matchCovers, provider).subscribe({
-      next: (response) => {
-        console.log('Books matched successfully:', response);
-        this.fetchBooks();
-        this.selectedBookIds = [];
-      },
-      error: (error) => {
-        console.error('Error matching books:', error);
-        // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
-      }
-    });
+    this.multipleMatchOptions.openModal();        
   }
 
   deleteSelectedBooks() {
@@ -474,12 +459,17 @@ export class BookListComponent implements OnInit {
   // match multiple books 
   handleSubmitMatchBooks(event: { provider: string; updateCover: boolean; updateMetadata: boolean }): void {
     console.log('Submit clicked with options:', event);
-    // Add your logic here (e.g., send data to a service or API)
-    // const modalElement = document.getElementById('matchBooksModal');
-    // if (modalElement) {
-    //   const bootstrapModal = bootstrap.Modal.getInstance(modalElement);
-    //   bootstrapModal?.hide();
-    // }
+    this.booksService.matchBooks(this.selectedBookIds, event.updateMetadata, event.updateCover, event.provider).subscribe({
+      next: (response) => {
+        console.log('Books matched successfully:', response);
+        this.fetchBooks();
+        this.selectedBookIds = [];
+      },
+      error: (error) => {
+        console.error('Error matching books:', error);
+        // TODO Handle error appropriately, e.g., show alert https://getbootstrap.com/docs/5.3/components/alerts/
+      }
+    });
   }
 
   handleCancelMatchBooks(): void {

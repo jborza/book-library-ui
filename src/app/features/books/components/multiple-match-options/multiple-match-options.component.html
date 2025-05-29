@@ -1,35 +1,20 @@
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="matchBooksModal"
-  tabindex="-1"
-  aria-labelledby="matchBooksModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="matchBooksModal" tabindex="-1" aria-labelledby="matchBooksModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="matchBooksModalLabel">Match Books</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>
           <!-- Provider Dropdown -->
           <div class="mb-3">
             <label for="provider-select" class="form-label">Provider</label>
-            <select
-              id="provider-select"
-              class="form-select"
-              [(ngModel)]="provider"
-              name="provider"
-            >
-              <option value="Google Books">Google Books</option>
-              <option value="Open Library">Open Library</option>
+            <select id="provider-select" class="form-select" [(ngModel)]="provider" name="provider">
+              <option *ngFor="let provider of providers" [value]="provider.value">
+                {{ provider.label }}
+              </option>
             </select>
           </div>
 
@@ -42,13 +27,8 @@
 
           <!-- Update Cover Checkbox -->
           <div class="form-check form-switch mb-3">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="updateCover"
-              [(ngModel)]="updateCover"
-              name="updateCover"
-            />
+            <input class="form-check-input" type="checkbox" id="updateCover" [(ngModel)]="updateCover"
+              name="updateCover" />
             <label class="form-check-label" for="updateCover">
               Update Cover
             </label>
@@ -56,13 +36,8 @@
 
           <!-- Update Metadata Checkbox -->
           <div class="form-check form-switch mb-3">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="updateMetadata"
-              [(ngModel)]="updateMetadata"
-              name="updateMetadata"
-            />
+            <input class="form-check-input" type="checkbox" id="updateMetadata" [(ngModel)]="updateMetadata"
+              name="updateMetadata" />
             <label class="form-check-label" for="updateMetadata">
               Update Metadata
             </label>
@@ -70,19 +45,10 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-            (click)="onCancel()"
-        >
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCancel()">
           Cancel
         </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="onSubmit()"
-        >
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">
           Submit
         </button>
       </div>
