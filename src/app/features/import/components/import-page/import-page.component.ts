@@ -118,7 +118,7 @@ export class ImportPageComponent {
           // response is { ... import_books: [ ... ] }
           const importBooks = this.response.import_books;
           this.importDataService.setImportResults(importBooks);
-          this.router.navigate(['/import_results']);
+          this.router.navigate(['/import/results']);
         },
       });
     }
@@ -151,7 +151,7 @@ export class ImportPageComponent {
           // response is { ... import_books: [ ... ] }
           const importBooks = this.response.import_books;
           this.importDataService.setImportResults(importBooks);
-          this.router.navigate(['/import_results']);
+          this.router.navigate(['/import/results']);
         },
       });
     }
