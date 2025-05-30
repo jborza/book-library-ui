@@ -138,9 +138,8 @@
 </div>
 <p *ngIf="books.length === 0">No books available.</p>
 <!-- Context Menu -->
-<app-context-menu *ngIf="isContextMenuVisible"
-                  [x]="contextMenuPosition.x"
-                  [y]="contextMenuPosition.y"
+<app-context-menu [style.display]="isContextMenuVisible ? 'block' : 'none'"
+                  #contextMenu
                   [selectedBooks]="selectedBookIds"
                   (action)="onContextMenuAction($event)"></app-context-menu>
 <!-- Add to Collection Modal -->

@@ -60,6 +60,16 @@ export class BookListComponent implements OnInit {
   collections: Collection[] = [];
   lastSelectedBookId: number | null = null; // Track the last clicked book ID
   collection: number | null = null; // Selected collection ID for filtering;
+  contextMenu: ContextMenuComponent | null = null;
+
+  @ViewChild('contextMenu') set contextMenuSetter(cm: ContextMenuComponent | null) {
+    this.contextMenu = cm;
+    if (cm) {
+      console.log('Context Menu Initialized:', cm);
+    } else {
+      console.log('Context Menu Destroyed');
+    }
+  }
 
   //resizing
   private isResizing: boolean = false;
@@ -366,6 +376,7 @@ export class BookListComponent implements OnInit {
     // Show the context menu
     this.isContextMenuVisible = true;
     this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+    this.contextMenu?.openMenu(event);
   }
 
   // Toggle selection for a single book

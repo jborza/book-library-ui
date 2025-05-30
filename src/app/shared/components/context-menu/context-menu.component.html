@@ -1,7 +1,7 @@
 <div
+  #menu
   class="dropdown-menu show position-fixed"
-  [style.left.px]="x"
-  [style.top.px]="y"
+  [ngStyle]="{ top: menuPosition.top, left: menuPosition.left }"
   style="z-index: 1050;"
 >
   <button class="dropdown-item" (click)="onAction('read')">Mark as Read</button>
