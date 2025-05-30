@@ -1,0 +1,23 @@
+<h5>Books where Title is duplicated</h5>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="table-header">Title</th>
+            <th class="table-header">Author</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let book of books">
+            <td class="table-cell">
+                <a [routerLink]="['/books', book.id]">
+                    {{ book.title }}</a>
+            </td>
+            <td class="table-cell">
+                <a [routerLink]="['/books']"
+                   [queryParams]="{ author: book.author_name}">
+                    {{ book.author_name }}
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

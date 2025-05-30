@@ -37,4 +37,5 @@ export const routes: Routes = [
       import('./features/collections/collections.module').then((m) => m.CollectionsModule), // Lazy-load CollectionsModule
   },
   { path: 'test', component: TestComponent },
+  { path: '**', redirectTo: '/test' } // Redirect any unknown paths to test page
 ];

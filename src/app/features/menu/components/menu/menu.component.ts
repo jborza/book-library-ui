@@ -99,6 +99,7 @@ export class MenuComponent {
           { name: 'Import', url: '/import', icon: '📥' },
           { name: 'Export', url: '/export', icon: '📤' },
           { name: 'Test', url: '/test', icon: '🧪' },
+          { name: 'Duplicate Titles', url: '/books/duplicate', icon: '🔍' },
         ],
       },
       {

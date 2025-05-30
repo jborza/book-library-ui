@@ -257,6 +257,7 @@ export class BookListComponent implements OnInit {
         if (Array.isArray(books)) {
           this.books = books.map((bookData) => new Book(bookData));
           // generate surnames for each book
+          // TODO not necessary anymore
           for (const book of this.books) {
             const authorName = book.author_name;
             const surname = authorName.split(' ').slice(-1)[0]; // Get the last name

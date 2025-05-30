@@ -121,4 +121,9 @@ export class BooksService {
 
     return this.http.post(url, body);
   }
+
+  getDuplicateTitleBooks(): Observable<any> {
+    const url = this.apiService.getDuplicateTitleBooksUrl();
+    return this.http.get(url);
+  }
 }

@@ -46,6 +46,7 @@ export class ApiService {
     matchBooks: `${this.baseUrl}/books/match_books_api`,
     searchOpenlibrary: `${this.baseUrl}/search/openlibrary_api`,
     searchGoogleBooks: `${this.baseUrl}/search/google_books_api`,
+    duplicateTitleBooks: `${this.baseUrl}/books/duplicate_title_api`,
   };
 
   getSearchUrl(): string {
@@ -170,5 +171,9 @@ export class ApiService {
 
   getSearchGoogleBooksUrl(): string {
     return this.endpoints.searchGoogleBooks;
+  }
+
+  getDuplicateTitleBooksUrl(): string {
+    return this.endpoints.duplicateTitleBooks;
   }
 }
