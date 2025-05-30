@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -24,8 +24,20 @@ export class AuthorAutocompleteComponent implements ControlValueAccessor {
   // Input and filtered authors
   authorInput: string = '';
   filteredAuthors: string[] = [];
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: string) => void = () => { };
+  private onTouched: () => void = () => { };
+
+  dropdownOpen = false;
+
+  constructor(private elementRef: ElementRef) { }
+
+  // Listen for clicks anywhere in the document
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.filteredAuthors = [];
+    }
+  }
 
   // Filter authors based on input
   onInputChange(): void {
@@ -44,7 +56,7 @@ export class AuthorAutocompleteComponent implements ControlValueAccessor {
     this.onTouched(); // Mark as touched
   }
 
-   // ControlValueAccessor methods
+  // ControlValueAccessor methods
   writeValue(value: string): void {
     this.authorInput = value || '';
   }
