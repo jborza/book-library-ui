@@ -76,28 +76,6 @@ export class BookEditorComponent implements OnInit {
     return acc;
   }, {} as Record<string, string>);
 
-  private languageMapping: Record<string, string> = {
-    en: 'English',
-    de: 'German',
-    sk: 'Slovak',
-    cs: 'Czech',
-    english: 'English',
-    german: 'German',
-    slovak: 'Slovak',
-    czech: 'Czech',
-    eng: 'English',
-    ger: 'German',
-    skl: 'Slovak',
-    cze: 'Czech',
-  };
-
-  private reverseLanguageMapping: Record<string, string> = Object.entries(
-    this.languageMapping
-  ).reduce((acc, [dbValue, displayValue]) => {
-    acc[displayValue] = dbValue;
-    return acc;
-  }, {} as Record<string, string>);
-
   constructor(
     private route: ActivatedRoute,
     private bookDataService: BookDataService,
@@ -197,8 +175,8 @@ export class BookEditorComponent implements OnInit {
   updateBookForm(book: Book) {
     const displayStatus =
       this.statusMapping[book.status ?? 'to-read'] || 'To Read';
-    const displayLanguage =
-      this.languageMapping[book.language ?? 'en'] || 'English';
+    // const displayLanguage =
+      // this.languageMapping[book.language ?? 'en'] || 'English';
     const displayType = this.typeMapping[book.book_type ?? 'ebook'] || 'Ebook';
     // genres can be a list of genres
     const genres = [book.genre?.split(', ') ?? []].flat();
@@ -213,7 +191,7 @@ export class BookEditorComponent implements OnInit {
       tags: book.tags ?? [],
       isbn: book.isbn,
       publisher: book.publisher,
-      language: displayLanguage,
+      language: book.language ?? 'en', // Default to English if not set
       status: displayStatus,
       pages: book.pages,
       rating: book.rating,
@@ -301,7 +279,6 @@ export class BookEditorComponent implements OnInit {
       // convert the form data to the book object
       const dbStatus = this.reverseStatusMapping[formData.status];
       const dbType = this.reverseTypeMapping[formData.type];
-      const dbLanguage = this.reverseLanguageMapping[formData.language];
       const dbGenres = formData.genres
         .map((genre: string) => genre.trim())
         .join(', '); // Join genres with commas
@@ -314,7 +291,7 @@ export class BookEditorComponent implements OnInit {
         id: this.book.id,
         status: dbStatus,
         book_type: dbType,
-        language: dbLanguage,
+        language: formData.language,
         genre: dbGenres,
         tags: dbTags,
         year: formData.year,

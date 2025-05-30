@@ -1,19 +1,30 @@
-<ng-select
-  [items]="languages"
-  bindLabel="label"
-  bindValue="value"
-  [(ngModel)]="selectedLanguage"
-  name="language"
-  placeholder="Select language"
-  [clearable]="false"
-  class="w-100"
->
-  <ng-template ng-option-tmp let-item="item">
-    <img [src]="item.flag" width="20" style="vertical-align: middle; margin-right: 4px;" />
-    {{ item.label }}
-  </ng-template>
-  <ng-template ng-label-tmp let-item="item">
-    <img [src]="item.flag" width="20" style="vertical-align: middle; margin-right: 4px;" />
-    {{ item.label }}
-  </ng-template>
-</ng-select>
+<div class="custom-dropdown" [class.open]="isOpen">
+  <!-- Dropdown trigger -->
+  <div class="dropdown-trigger" (click)="toggleDropdown()">
+    <div class="selected-item" *ngIf="selectedLanguage; else placeholderTemplate">
+      <img [src]="selectedLanguage.flagUrl" 
+           [alt]="selectedLanguage.name + ' flag'"
+           class="flag-image"
+           (error)="onImageError($event)">
+      <span class="text">{{ selectedLanguage.name }}</span>
+    </div>
+    <ng-template #placeholderTemplate>
+      <span class="placeholder">{{ placeholder }}</span>
+    </ng-template>
+    <span class="arrow" [class.rotated]="isOpen">▼</span>
+  </div>
+
+  <!-- Dropdown list -->
+  <div class="dropdown-list" *ngIf="isOpen">
+    <div class="dropdown-item" 
+         *ngFor="let language of languages" 
+         (click)="selectLanguage(language)"
+         [class.selected]="selectedLanguage?.code === language.code">
+      <img [src]="language.flagUrl" 
+           [alt]="language.name + ' flag'"
+           class="flag-image"
+           (error)="onImageError($event)">
+      <span class="text">{{ language.name }}</span>
+    </div>
+  </div>
+</div>
