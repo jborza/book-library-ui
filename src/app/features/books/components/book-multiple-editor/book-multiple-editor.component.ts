@@ -23,7 +23,7 @@ export class BookMultipleEditorComponent {
 
   bookTypes = ['', 'Ebook', 'Audiobook', 'Physical Book'];
   languages = ['', 'English', 'German', 'Slovak', 'Czech']; 
-  statuses = ['', 'Read', 'Reading', 'To Read', 'Abandoned', 'Wish List'];
+  statuses = ['', 'Read', 'Reading', 'To Read', 'Abandoned', 'Waiting', 'Wish List'];
 
   constructor(
     private route: ActivatedRoute,
@@ -62,6 +62,7 @@ export class BookMultipleEditorComponent {
     'currently-reading': 'Reading',
     wishlist: 'Wish List',
     abandoned: 'Abandoned',
+    waiting: 'Waiting',
   };
 
   private reverseStatusMapping: Record<string, string> = Object.entries(
