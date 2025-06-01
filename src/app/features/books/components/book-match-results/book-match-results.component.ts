@@ -20,7 +20,7 @@ export class BookMatchResultsComponent {
   bookId!: number;
   searchResults: any[] = [];
   searchForm: FormGroup;
-  providers = ['Google Books', 'Open Library'];
+  providers = ['Google Books', 'Open Library', 'Amazon'];
 
   constructor(
     private route: ActivatedRoute,
@@ -76,37 +76,58 @@ export class BookMatchResultsComponent {
     } else if (provider === 'Open Library') {
       return SearchService.OPENLIBRARY;
     }
+    else if (provider === 'Amazon') {
+      return SearchService.AMAZON;
+    }
     else {
       throw new Error('Invalid search provider');
     }
   }
 
+  private sortSearchedResults(searchQuery: string, response: any): any[] {
+    if (searchQuery.includes(' - ')) {
+      return this.sortByLevenshteinDistance(
+        response,
+        searchQuery.split(' - ')[1] || '',
+        searchQuery.split(' - ')[0] || ''
+      );
+    }
+    else {
+      return this.sortByLevenshteinDistance(
+        response,
+        searchQuery,
+        ''
+      );
+    }
+  }
+
   performSearch(): void {
-    // SearchService.GOOGLEBOOKS
     this.searchService.searchBooks(this.searchProvider(), this.searchTitle()).subscribe(
       {
         next: (response: any) => {
+          if (!response || response.length === 0) {
+            console.warn('No search results found for:', this.searchTitle());
+            this.searchResults = [];
+            return;
+          }
           console.log('Search results:', response);
           // sort the results by relevance
           const searchQuery = this.searchTitle();
-          const sortedBooks = this.sortByLevenshteinDistance(
-            response,
-            searchQuery.split(' - ')[1] || '',
-            searchQuery.split(' - ')[0] || ''
-          );
+          // if there is an author in the search query, split it
+          const sortedBooks = this.sortSearchedResults(searchQuery, response);                  
           this.searchResults = sortedBooks || [];
-        },
-        error: (err: any) => {
-          console.error('Error fetching search results:', err);
-        },
-        complete: () => { }
+      },
+      error: (err: any) => {
+        console.error('Error fetching search results:', err);
+      },
+      complete: () => { }
       });
-  }
+}
 
-  selectSearchResult(selectedItem: any): void {
-    console.log('Selected Item:', selectedItem);
-    this.bookDataService.setSelectedBook(selectedItem);
-    // book/:id/edit_match
-    this.router.navigate(['/books', this.bookId, 'edit'],);
-  }
+selectSearchResult(selectedItem: any): void {
+  console.log('Selected Item:', selectedItem);
+  this.bookDataService.setSelectedBook(selectedItem);
+  // book/:id/edit_match
+  this.router.navigate(['/books', this.bookId, 'edit'],);
+}
 }

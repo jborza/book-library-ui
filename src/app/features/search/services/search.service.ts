@@ -9,6 +9,7 @@ import { ApiService } from '../../../core/services/api.service';
 export class SearchService {
   public static readonly GOOGLEBOOKS = 'googlebooks';
   public static readonly OPENLIBRARY = 'openlibrary';
+  public static readonly AMAZON = 'amazon';
 
   constructor(private http: HttpClient,
     private apiService: ApiService) { }
@@ -21,7 +22,7 @@ export class SearchService {
     const apiUrls: { [key: string]: string } = {
       googlebooks: this.apiService.getSearchGoogleBooksUrl(),
       openlibrary: this.apiService.getSearchOpenlibraryUrl(),
-      // You can add more mappings here
+      amazon: this.apiService.getSearchAmazonUrl(),
     };
     const apiUrl = apiUrls[where] || this.apiService.getSearchOpenlibraryUrl();
     return this.http.get<any>(
