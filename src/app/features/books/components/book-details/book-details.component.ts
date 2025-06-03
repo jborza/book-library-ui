@@ -93,7 +93,6 @@ export class BookDetailsComponent implements OnInit {
     return this.apiService.getBookCoverUrl(book.id);
   }
 
-  // TODO what to do with file_path?
   getFileUrl(book: Book): string {
     if (!book.file_path) return ''; //this is stupid
     else return this.apiService.getBookFileUrl(book.id, book.file_path);

@@ -1,7 +1,6 @@
 <h2>Book Details</h2>
 <div class="book-detail-container">
   <div class="book-main">
-    <!-- todo fill in http://localhost:5000/static/ -->
     <img
       src="{{ getCoverImageUrl(book) }}"
       class="book-cover thumbnail-small"
@@ -18,7 +17,11 @@
         </a>
       </p>
       <p *ngIf="book.status">Status: {{ book.status }}</p>
-      <div *ngIf="book.rating" class="book-rating" title="Rating: {{ book.rating }}">
+      <div
+        *ngIf="book.rating"
+        class="book-rating"
+        title="Rating: {{ book.rating }}"
+      >
         <span
           *ngFor="let star of [1, 2, 3, 4, 5]"
           class="star"
@@ -30,7 +33,12 @@
       <span *ngIf="book.review" class="rating-info">{{ book.review }}</span>
       <p class="book-description">{{ book.synopsis }}</p>
       <p class="book-meta" *ngIf="book.notes">Notes: {{ book.notes }}</p>
-
+      <!-- download link -->
+      <!-- TODO add download link if file_path is available -->
+      <a *ngIf="book.file_path" [href]="getFileUrl(book)" target="_blank"
+        >Download 📘</a
+      >
+      <br />
       <button class="btn btn-primary m-1" (click)="edit()">Edit</button>
       <button class="btn btn-secondary m-1" (click)="match()">
         Match (by search)
@@ -73,17 +81,18 @@
   </div>
   <div class="book-details" *ngIf="book">
     <p *ngIf="book.series" class="book-meta">Series: {{ book.series }}</p>
-    <p class="book-meta" *ngIf="book.genre">      
+    <p class="book-meta" *ngIf="book.genre">
       Genres:
 
       <span *ngFor="let genre of genres">
         <a
           [routerLink]="['/books']"
           [queryParams]="{ genre: genre }"
-          style="text-decoration: none" class="btn btn-success btn-sm mx-1"
+          style="text-decoration: none"
+          class="btn btn-success btn-sm mx-1"
         >
-          {{ genre }} </a
-        >
+          {{ genre }}
+        </a>
       </span>
     </p>
     <p class="book-meta" *ngIf="book.tags">
@@ -105,9 +114,7 @@
   <div class="card mt-3 mb-3" *ngIf="collections && collections.length > 0">
     <div class="card-header">
       Collections
-      <span class="badge text-bg-secondary">{{
-        collections.length
-      }}</span>
+      <span class="badge text-bg-secondary">{{ collections.length }}</span>
     </div>
     <div class="card-body">
       <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -155,13 +162,17 @@
             </div>
             <div class="card-footer">
               <small class="text-body-secondary">
-                <div *ngIf="otherBook.rating" class="book-rating" title="Rating: {{ book.rating }}">
+                <div
+                  *ngIf="otherBook.rating"
+                  class="book-rating"
+                  title="Rating: {{ book.rating }}"
+                >
                   <span
                     *ngFor="let star of [1, 2, 3, 4, 5]"
                     class="star"
                     [class.filled]="star <= (otherBook.rating | toNumber)"
                     >★</span
-                  >                 
+                  >
                 </div>
               </small>
             </div>
