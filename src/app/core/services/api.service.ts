@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiService {
-
   private baseUrl = 'http://localhost:5000';
   // private baseUrl = 'http://192.168.100.9:5000';
 
@@ -48,6 +47,11 @@ export class ApiService {
     searchGoogleBooks: `${this.baseUrl}/search/google_books_api`,
     searchAmazon: `${this.baseUrl}/search/amazon_api`,
     duplicateTitleBooks: `${this.baseUrl}/books/duplicate_title_api`,
+    bookCover: (bookId: number) => `${this.baseUrl}/files/${bookId}/cover.jpg`,
+    bookFile: (bookId: number, file: string) =>
+      `${this.baseUrl}/files/${bookId}/${file}`,
+    directoryBrowse: `${this.baseUrl}/import_path/browse`,
+    importDirectory: `${this.baseUrl}/import_path/import`,
   };
 
   getSearchUrl(): string {
@@ -134,15 +138,15 @@ export class ApiService {
     return this.endpoints.ping;
   }
 
-  getCollectionApiUrl(): string{
+  getCollectionApiUrl(): string {
     return this.endpoints.collections;
   }
 
-  getCollectionsWithCoversApiUrl(): string{
+  getCollectionsWithCoversApiUrl(): string {
     return this.endpoints.collectionsWithCovers;
   }
 
-  getCollectionCreateApiUrl(): string{
+  getCollectionCreateApiUrl(): string {
     return this.endpoints.collectionsCreate;
   }
 
@@ -180,5 +184,21 @@ export class ApiService {
 
   getDuplicateTitleBooksUrl(): string {
     return this.endpoints.duplicateTitleBooks;
+  }
+
+  getBookCoverUrl(bookId: number){
+    return this.endpoints.bookCover(bookId);
+  }
+
+  getBookFileUrl(bookId: number, file: string){
+    return this.endpoints.bookFile(bookId, file);
+  }
+
+  getDirectoryBrowseUrl(): string {
+    return this.endpoints.directoryBrowse;
+  }
+
+  getImportDirectoryUrl(): string {
+    return this.endpoints.importDirectory;
   }
 }

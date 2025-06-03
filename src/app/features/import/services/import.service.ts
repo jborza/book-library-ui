@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
@@ -7,6 +7,7 @@ import { ApiService } from '../../../core/services/api.service';
   providedIn: 'root'
 })
 export class ImportService {
+
 
   constructor(private http: HttpClient,
               private apiService: ApiService
@@ -30,6 +31,13 @@ export class ImportService {
   confirmImport(importResults: any) : Observable<any> {
     const apiUrl = this.apiService.getConfirmImportUrl();
     return this.http.post(apiUrl, importResults);
+  }
+
+  importDirectory(path: string) : Observable<any> {
+    const apiUrl = this.apiService.getImportDirectoryUrl();
+    let params = new HttpParams();
+    params = params.set('path', path);
+    return this.http.get(apiUrl, { params} );
   }
 
 }

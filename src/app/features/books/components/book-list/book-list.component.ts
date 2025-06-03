@@ -61,6 +61,7 @@ export class BookListComponent implements OnInit {
   lastSelectedBookId: number | null = null; // Track the last clicked book ID
   collection: number | null = null; // Selected collection ID for filtering;
   contextMenu: ContextMenuComponent | null = null;
+  bookIds: number[] = [];
 
   @ViewChild('contextMenu') set contextMenuSetter(cm: ContextMenuComponent | null) {
     this.contextMenu = cm;
@@ -127,6 +128,11 @@ export class BookListComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       this.currentPage = Number(params.get('page')) || 1;
       this.collection = Number(params.get('collection')) || null;
+      // if bookids is in the URL, parse it
+      const bookIdsParam = params.get('books');
+      if (bookIdsParam) {
+        this.bookIds = bookIdsParam.split(',').map(id => Number(id));
+      }
       this.fetchBooks();
       this.fetchAuthors();
       this.fetchCollections();
@@ -237,7 +243,9 @@ export class BookListComponent implements OnInit {
       return;
     }
     // TODO solve better than this
-    this.filters.collection = this.collection; // Set the collection filter if applicable
+    this.filters.collection = this.collection;
+    this.filters.bookIds = this.bookIds;
+
     // TODO fix this in a nicer way
     // map sort column to the API field
     let sortColumnMapped = this.sortColumn;

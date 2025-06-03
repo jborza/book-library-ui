@@ -28,8 +28,9 @@ export class Book {
   series?: string;
   tags?: string;
   publisher?: string;
-  author_surname?: string; // Added surname property
-  notes?: string; // Added notes property
+  author_surname?: string;
+  notes?: string;
+  file_path?: string;
 
   constructor(data: any) {
     this.id = data.id;
@@ -51,5 +52,6 @@ export class Book {
     this.tags = data.tags;
     this.publisher = data.publisher;
     this.notes = data.notes;
+    this.file_path = data.file_path;
   }
 }

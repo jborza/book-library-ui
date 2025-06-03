@@ -1,0 +1,13 @@
+<div class="directory-browser">
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="!loading && !error">
+    <div class="current-path"><strong>Current Path:</strong> /{{ currentPath }}</div>
+    <ul>
+      <li *ngFor="let dir of directories" (click)="onDirectoryClick(dir)" class="directory">
+        📁 {{ dir }}
+      </li>
+    </ul>
+    <button (click)="onOkClick()" [disabled]="!selectedDirectory">OK</button>
+  </div>
+</div>

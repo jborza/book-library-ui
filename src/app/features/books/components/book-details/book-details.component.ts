@@ -4,11 +4,11 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../models/book.model';
 import { ToNumberPipe } from '../../../../shared/pipes/to-number.pipe';
-import { CustomSearch } from '../../../search/models/custom-search.model'
+import { CustomSearch } from '../../../search/models/custom-search.model';
 import { SettingsService } from '../../../../core/services/settings.service';
 import { Collection } from '../../../collections/models/collection.model';
 import { CollectionsService } from '../../../../core/services/collections.service';
-
+import { ApiService } from '../../../../core/services/api.service';
 @Component({
   selector: 'app-book-details',
   imports: [CommonModule, ToNumberPipe, RouterModule],
@@ -31,7 +31,8 @@ export class BookDetailsComponent implements OnInit {
     private router: Router,
     private location: Location,
     private settingsService: SettingsService,
-    private collectionsService: CollectionsService
+    private collectionsService: CollectionsService,
+    private apiService: ApiService
   ) {
     this.customSearches = this.settingsService.getCustomSearches();
   }
@@ -88,20 +89,14 @@ export class BookDetailsComponent implements OnInit {
   }
 
   getCoverImageUrl(book: Book, tiny: boolean = false): string {
-    // TODO really use a service to define the base URL
-    if (tiny) {
-      if (book?.cover_image_tiny) {
-        return 'http://localhost:5000/static/' + book.cover_image_tiny;
-      } else {
-        return 'http://localhost:5000/static/placeholder_book.svg';
-      }
-    } else {
-      if (book?.cover_image) {
-        return 'http://localhost:5000/static/' + book.cover_image;
-      } else {
-        return 'http://localhost:5000/static/placeholder_book.svg';
-      }
-    }
+    // dunno, maybe skip tiny images altogether
+    return this.apiService.getBookCoverUrl(book.id);
+  }
+
+  // TODO what to do with file_path?
+  getFileUrl(book: Book): string {
+    if (!book.file_path) return ''; //this is stupid
+    else return this.apiService.getBookFileUrl(book.id, book.file_path);
   }
 
   match(): void {

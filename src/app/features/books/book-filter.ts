@@ -20,6 +20,7 @@ export class BookFilter {
   // this is stupid, should have been outside of the class
   icon: string = '';
   collection: number | null = null;
+  bookIds: number[] = [];
 
   summarize(): string {
     let things = [];
@@ -99,6 +100,9 @@ export class BookFilter {
      
       if (this?.collection) {
         params = params.set('collection', this.collection.toString());
+      }
+      if (this?.bookIds && this.bookIds.length > 0) {
+        params = params.set('book_ids', this.bookIds.join(','));
       }
       return params;
     }

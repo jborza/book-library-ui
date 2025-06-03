@@ -9,9 +9,10 @@ import {
 import { ImportService } from '../../services/import.service';
 import { Router } from '@angular/router';
 import { ImportDataService } from '../../services/import-data.service';
+import { DirectoryBrowserComponent } from '../directory-browser/directory-browser.component';
 @Component({
   selector: 'app-import-page',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, DirectoryBrowserComponent],
   templateUrl: './import-page.component.html',
   styleUrl: './import-page.component.less',
 })
@@ -35,11 +36,16 @@ export class ImportPageComponent {
     notes: new FormControl(null, [Validators.required]),
   });
 
+  importDirectoryForm = new FormGroup({
+    directory: new FormControl<string | null>(null, [Validators.required]),
+  });
+
   private selectedFile: File | null = null;
   private selectedFileAll: File | null = null;
   private response: any;
   importAllError: string | null = null;
   importError: string | null = null;
+  selectedDirectory: string | null = null;
 
   constructor(
     private importService: ImportService,
@@ -86,7 +92,8 @@ export class ImportPageComponent {
         },
         error: (error) => {
           console.error('Error occurred:', error);
-          this.importAllError = 'An error occurred while importing all books. Please try again.';
+          this.importAllError =
+            'An error occurred while importing all books. Please try again.';
         },
         complete: () => {
           // navigate back to the book details page
@@ -111,7 +118,8 @@ export class ImportPageComponent {
         },
         error: (error) => {
           console.error('Error occurred:', error);
-          this.importError = 'An error occurred while importing all books. Please try again.';
+          this.importError =
+            'An error occurred while importing all books. Please try again.';
         },
         complete: () => {
           // navigate back to the book details page
@@ -155,5 +163,38 @@ export class ImportPageComponent {
         },
       });
     }
+  }
+
+  onSubmitDirectory() {
+    // launch the import with the selected directory
+    if (this.importDirectoryForm.valid && this.selectedDirectory) {
+      this.importService.importDirectory(this.selectedDirectory).subscribe({
+        next: (response) => {
+          console.log('Import directory successful:', response);
+          this.response = response;
+        },
+        error: (error) => {
+          console.error('Error occurred:', error);
+          this.importError =
+            'An error occurred while importing the directory. Please try again.';
+        },
+        complete: () => {
+          // navigate to books - it would be nice to show the books we've just imported
+          // TODO add navigation of added books to /books
+          const ids = this.response.added_books;
+          this.router.navigate(['/books'], {
+            queryParams: { books: ids.join(',') },
+          });
+        },
+      });
+    }
+  }
+
+  onDirectoryPicked(directory: string) {
+    console.log('Selected directory:', directory);
+    this.selectedDirectory = directory;
+    this.importDirectoryForm.patchValue({
+      directory: directory,
+    });
   }
 }

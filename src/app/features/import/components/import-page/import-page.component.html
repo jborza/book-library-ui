@@ -121,3 +121,13 @@
     <button type="submit" [disabled]="!importNotesForm.valid">Submit</button>
   </div>
 </form>
+
+<form [formGroup]="importDirectoryForm" (ngSubmit)="onSubmitDirectory()">
+  <div class="p-3">
+    <label for="directory">Import books from directory:</label>
+    <app-directory-browser
+      (directoryPicked)="onDirectoryPicked($event)"
+    ></app-directory-browser>
+    <button type="submit" [disabled]="!selectedDirectory">Submit</button>
+  </div>
+</form>
