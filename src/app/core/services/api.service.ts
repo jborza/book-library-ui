@@ -28,7 +28,6 @@ export class ApiService {
     updateBooks: `${this.baseUrl}/books/update_books_api`,
     recommendations: (bookId: string) =>
       `${this.baseUrl}/recommendations/${bookId}`,
-    thumbnailUpload: `${this.baseUrl}/thumbnails/upload`,
     ping: `${this.baseUrl}/ping`,
     deleteBooks: `${this.baseUrl}/books/delete_books_api`,
     collections: `${this.baseUrl}/collections`,
@@ -54,6 +53,8 @@ export class ApiService {
     importDirectory: `${this.baseUrl}/import_path/import`,
     bookFileUpload: (bookId: number) =>
       `${this.baseUrl}/files/${bookId}/upload`,
+    thumbnailUpload: (bookId: number) => `${this.baseUrl}/files/${bookId}/cover`,
+    placeholderImage: `${this.baseUrl}/static/placeholder_book.png`,
   };
 
   getSearchUrl(): string {
@@ -132,8 +133,8 @@ export class ApiService {
     return this.endpoints.recommendations(bookId);
   }
 
-  getThumbnailUploadUrl(): string {
-    return this.endpoints.thumbnailUpload;
+  getThumbnailUploadUrl(bookId: number): string {
+    return this.endpoints.thumbnailUpload(bookId);
   }
 
   getPingUrl(): string {
@@ -186,6 +187,10 @@ export class ApiService {
 
   getDuplicateTitleBooksUrl(): string {
     return this.endpoints.duplicateTitleBooks;
+  }
+
+  getPlaceholderCoverUrl(): string {
+    return this.endpoints.placeholderImage;;
   }
 
   getBookCoverUrl(bookId: number){

@@ -385,7 +385,7 @@ export class BookEditorComponent implements OnInit {
       const file = input.files[0];
       const formData = new FormData();
       formData.append('file', file);
-      this.thumbnailService.uploadImage(formData).subscribe({
+      this.thumbnailService.uploadImage(this.book.id, formData).subscribe({
         next: (response) => {
           console.log('Image uploaded successfully:', response);
           // Update the cover image URL in the form

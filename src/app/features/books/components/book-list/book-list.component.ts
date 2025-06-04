@@ -573,6 +573,9 @@ export class BookListComponent implements OnInit {
   }
 
   getCoverImageUrl(book: Book, tiny: boolean = false): string {
+    // it's possible that the book has no cover image, so we need to handle that case
+    if(book.cover_image == 'placeholder_book.png')
+      return this.apiService.getPlaceholderCoverUrl();
     // dunno, maybe skip tiny images altogether
     return this.apiService.getBookCoverUrl(book.id);
   }

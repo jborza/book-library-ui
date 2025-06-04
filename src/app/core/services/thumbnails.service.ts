@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 export class ThumbnailsService {
   constructor(private http: HttpClient, private apiService: ApiService) {}
 
-  uploadImage(formData: FormData): Observable<any> {
-    const apiUrl = this.apiService.getThumbnailUploadUrl();
+  uploadImage(bookId: number, formData: FormData): Observable<any> {
+    const apiUrl = this.apiService.getThumbnailUploadUrl(bookId);
     return this.http.post(apiUrl, formData);
   }
 }
