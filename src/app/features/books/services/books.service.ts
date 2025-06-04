@@ -8,7 +8,7 @@ import { BookFilter } from '../book-filter';
   providedIn: 'root',
 })
 export class BooksService {
-  constructor(private http: HttpClient, private apiService: ApiService) { }
+  constructor(private http: HttpClient, private apiService: ApiService) {}
 
   getBooks(): Observable<any> {
     return this.http.get(this.apiService.getBookApiUrl());
@@ -110,7 +110,12 @@ export class BooksService {
     return this.http.post(url, body);
   }
 
-  matchBooks(bookIds: number[], matchMetadata: boolean, matchCovers: boolean, provider: string): Observable<any> {
+  matchBooks(
+    bookIds: number[],
+    matchMetadata: boolean,
+    matchCovers: boolean,
+    provider: string
+  ): Observable<any> {
     const url = this.apiService.getMatchBooksUrl();
     let body = {
       book_ids: bookIds,
@@ -125,5 +130,10 @@ export class BooksService {
   getDuplicateTitleBooks(): Observable<any> {
     const url = this.apiService.getDuplicateTitleBooksUrl();
     return this.http.get(url);
+  }
+
+  uploadBookFile(bookId: number, formData: FormData) {
+    const apiUrl = this.apiService.getBookFileUploadUrl(bookId);
+    return this.http.post(apiUrl, formData);
   }
 }

@@ -400,4 +400,22 @@ export class BookEditorComponent implements OnInit {
       });
     }
   }
+
+  onBookFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      // upload the book file
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      this.booksService.uploadBookFile(this.book.id, formData).subscribe({
+        next: (response) => {
+          console.log('Book file uploaded successfully:', response);
+        },
+        error: (error) => {
+          console.error('Error occurred while uploading book file:', error);
+        },
+      });
+    }
+  }
 }

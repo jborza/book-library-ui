@@ -52,6 +52,8 @@ export class ApiService {
       `${this.baseUrl}/files/${bookId}/${file}`,
     directoryBrowse: `${this.baseUrl}/import_path/browse`,
     importDirectory: `${this.baseUrl}/import_path/import`,
+    bookFileUpload: (bookId: number) =>
+      `${this.baseUrl}/files/${bookId}/upload`,
   };
 
   getSearchUrl(): string {
@@ -200,5 +202,9 @@ export class ApiService {
 
   getImportDirectoryUrl(): string {
     return this.endpoints.importDirectory;
+  }
+
+  getBookFileUploadUrl(bookId: number): string {
+    return this.endpoints.bookFileUpload(bookId);
   }
 }
