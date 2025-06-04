@@ -17,6 +17,7 @@ import { AuthorsService } from '../../../authors/services/authors.service';
 import { FormsModule } from '@angular/forms';
 import { ToNumberPipe } from '../../../../shared/pipes/to-number.pipe';
 import { MultipleMatchOptionsComponent } from '../multiple-match-options/multiple-match-options.component';
+import { ApiService } from '../../../../core/services/api.service';
 
 @Component({
   standalone: true,
@@ -118,7 +119,8 @@ export class BookListComponent implements OnInit {
     private router: Router,
     private libraryEvents: LibraryEventsService,
     private collectionsService: CollectionsService,
-    private authorsService: AuthorsService
+    private authorsService: AuthorsService,
+    private apiService: ApiService
   ) {
     this.currentUrl = router.url;
   }
@@ -571,19 +573,7 @@ export class BookListComponent implements OnInit {
   }
 
   getCoverImageUrl(book: Book, tiny: boolean = false): string {
-    // TODO really use a service to define the base URL
-    if (tiny) {
-      if (book?.cover_image_tiny) {
-        return 'http://localhost:5000/static/' + book.cover_image_tiny;
-      } else {
-        return 'http://localhost:5000/static/placeholder_book.svg';
-      }
-    } else {
-      if (book?.cover_image) {
-        return 'http://localhost:5000/static/' + book.cover_image;
-      } else {
-        return 'http://localhost:5000/static/placeholder_book.svg';
-      }
-    }
+    // dunno, maybe skip tiny images altogether
+    return this.apiService.getBookCoverUrl(book.id);
   }
 }
