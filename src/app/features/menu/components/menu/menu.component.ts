@@ -116,6 +116,7 @@ export class MenuComponent {
   searchQuery: string = ''; // Default value (can be empty or changed dynamically)
   libraries: Library[] = [];
   isMenuVisible = true;
+  searchProvider: string = SearchService.OPENLIBRARY; // Default search provider
 
   static readonly SAVED_SEARCHES = 1;
   static readonly COLLECTIONS = 2;
@@ -177,22 +178,12 @@ export class MenuComponent {
     });
   }
 
-  onSearchOpenLibrary(): void {
+  onSearchExternal(): void {
     this.router.navigate(['/search/external/'], {
       queryParams: {
-        search_query: this.searchQueryOpenLibrary,
+        search_query: this.searchQuery,
         count: 5,
-        where: SearchService.OPENLIBRARY,
-      },
-    });
-  }
-
-  onSearchGoogleBooks(): void {
-    this.router.navigate(['/search/external/'], {
-      queryParams: {
-        search_query: this.searchQueryGoogleBooks,
-        count: 5,
-        where: SearchService.GOOGLEBOOKS,
+        where: this.searchProvider,
       },
     });
   }

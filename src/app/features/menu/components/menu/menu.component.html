@@ -1,46 +1,67 @@
-<nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar" [ngClass]="{ 'menu-hidden': !isMenuVisible, 'menu-visible': isMenuVisible }">
+<nav
+  class="col-md-3 col-lg-2 d-md-block bg-light sidebar"
+  [ngClass]="{ 'menu-hidden': !isMenuVisible, 'menu-visible': isMenuVisible }"
+>
   <h3 style="color: black">Book Library</h3>
   <div class="sidebar-sticky">
-
     <ul class="nav flex-column">
       <li class="nav-item" *ngFor="let section of menuSections">
         <h6 class="sidebar-heading">{{ section.title }}</h6>
         <ul class="nav flex-column">
           <li class="nav-item" *ngFor="let item of section.items">
-            <a class="nav-link pt-0 pb-0" [routerLink]="item.url" [queryParams]="item.queryParams || null">
-              {{item.icon}} {{ item.name }}
+            <a
+              class="nav-link pt-0 pb-0"
+              [routerLink]="item.url"
+              [queryParams]="item.queryParams || null"
+            >
+              {{ item.icon }} {{ item.name }}
             </a>
           </li>
         </ul>
       </li>
     </ul>
 
-    <h6 class="sidebar-heading">Search</h6>
+    <h6 class="sidebar-heading">Search</h6>  
 
-    <form class="px-3" (ngSubmit)="onSearchOpenLibrary()">
+    <form class="px-3" (ngSubmit)="onSearchExternal()">
       <div class="form-group">
-        <input type="text" class="form-control form-control-sm" name="search_query" id="search_query"
-          placeholder="Search books..." [(ngModel)]="searchQueryOpenLibrary" />
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          name="search_query"
+          id="search_query"
+          placeholder="Search books..."
+          [(ngModel)]="searchQuery"
+        />
       </div>
-      <button type="submit" class="btn btn-primary btn-block btn-sm">
-        Search OpenLibrary
-      </button>
-    </form>
-
-    <form class="px-3" (ngSubmit)="onSearchGoogleBooks()">
-      <div class="form-group">
-        <input type="text" class="form-control form-control-sm" name="search_query" id="search_query"
-          placeholder="Search books..." [(ngModel)]="searchQueryGoogleBooks" />
+      <div class="form-group mt-2">
+        <select
+          class="form-control form-control-sm"
+          name="search_provider"
+          id="search_provider"
+          [(ngModel)]="searchProvider"
+        >
+          <option value="openlibrary">OpenLibrary</option>
+          <option value="google">Google Books</option>
+          <option value="amazon">Amazon</option>
+          <option value="goodreads">Goodreads</option>
+        </select>
       </div>
-      <button type="submit" class="btn btn-primary btn-block btn-sm">
-        Search Google Books
+      <button type="submit" class="btn btn-primary btn-block btn-sm mt-2">
+        Search
       </button>
     </form>
 
     <form class="px-3" (ngSubmit)="onSearch()">
       <div class="form-group">
-        <input type="text" class="form-control form-control-sm" name="search_query" id="search_query"
-          placeholder="Search books..." [(ngModel)]="searchQuery" />
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          name="search_query"
+          id="search_query"
+          placeholder="Search books..."
+          [(ngModel)]="searchQuery"
+        />
       </div>
       <button type="submit" class="btn btn-primary btn-block btn-sm">
         Search Books
