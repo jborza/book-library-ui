@@ -34,7 +34,6 @@
       <p class="book-description">{{ book.synopsis }}</p>
       <p class="book-meta" *ngIf="book.notes">Notes: {{ book.notes }}</p>
       <!-- download link -->
-      <!-- TODO add download link if file_path is available -->
       <a *ngIf="book.file_path" [href]="getFileUrl(book)" target="_blank"
         >Download 📘</a
       >

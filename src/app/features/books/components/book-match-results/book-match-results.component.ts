@@ -6,6 +6,7 @@ import { MatchResultItemComponent } from '../match-result-item/match-result-item
 import { BookDataService } from '../../services/book-data.service';
 import { levenshteinDistance } from '../../../../shared/utils/string-utils';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatchProvidersService } from '../../services/match-providers.service';
 
 @Component({
   selector: 'app-book-match-results',
@@ -16,11 +17,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './book-match-results.component.less'
 })
 export class BookMatchResultsComponent {
-  // searchQuery: string = '';
   bookId!: number;
   searchResults: any[] = [];
   searchForm: FormGroup;
-  providers = ['Google Books', 'Open Library', 'Amazon'];
+  providers: string[] = MatchProvidersService.PROVIDERS;
 
   constructor(
     private route: ActivatedRoute,

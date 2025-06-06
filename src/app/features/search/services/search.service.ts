@@ -7,9 +7,11 @@ import { ApiService } from '../../../core/services/api.service';
   providedIn: 'root',
 })
 export class SearchService {
+  // TODO merge with MatchProvidersService
   public static readonly GOOGLEBOOKS = 'googlebooks';
   public static readonly OPENLIBRARY = 'openlibrary';
   public static readonly AMAZON = 'amazon';
+  public static readonly GOODREADS = 'goodreads';
 
   constructor(private http: HttpClient,
     private apiService: ApiService) { }
@@ -23,6 +25,7 @@ export class SearchService {
       googlebooks: this.apiService.getSearchGoogleBooksUrl(),
       openlibrary: this.apiService.getSearchOpenlibraryUrl(),
       amazon: this.apiService.getSearchAmazonUrl(),
+      goodreads: this.apiService.getSearchGoodreadsUrl(),
     };
     const apiUrl = apiUrls[where] || this.apiService.getSearchOpenlibraryUrl();
     return this.http.get<any>(

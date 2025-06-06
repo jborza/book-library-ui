@@ -45,6 +45,7 @@ export class ApiService {
     searchOpenlibrary: `${this.baseUrl}/search/openlibrary_api`,
     searchGoogleBooks: `${this.baseUrl}/search/google_books_api`,
     searchAmazon: `${this.baseUrl}/search/amazon_api`,
+    searchGoodreads: `${this.baseUrl}/search/goodreads_api`,
     duplicateTitleBooks: `${this.baseUrl}/books/duplicate_title_api`,
     bookCover: (bookId: number) => `${this.baseUrl}/files/${bookId}/cover.jpg`,
     bookFile: (bookId: number, file: string) =>
@@ -183,6 +184,10 @@ export class ApiService {
 
   getSearchAmazonUrl(): string {
     return this.endpoints.searchAmazon;
+  }
+
+  getSearchGoodreadsUrl(): string {
+    return this.endpoints.searchGoodreads;
   }
 
   getDuplicateTitleBooksUrl(): string {

@@ -11,7 +11,7 @@ import { BooksService } from '../../../books/services/books.service';
   styleUrl: './search-external.component.less'
 })
 export class SearchExternalComponent {
-  // parametrized - where - google or openlibrary
+  // parametrized - where - SearchService.*
   // search - search term
 
   searchQuery: string = '';
