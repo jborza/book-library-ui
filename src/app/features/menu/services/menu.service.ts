@@ -68,6 +68,37 @@ export class MenuService {
       ],
     },
     {
+      title: 'Language',
+      collapsible: true,
+      expanded: false,
+      items: [
+        {
+          name: 'English',
+          url: '/books',
+          queryParams: { language: 'en' },
+          icon: '🇬🇧',
+        },
+        {
+          name: 'Slovak',
+          url: '/books',
+          queryParams: { language: 'sk' },
+          icon: '🇸🇰',
+        },
+        {
+          name: 'Czech',
+          url: '/books',
+          queryParams: { language: 'cs' },
+          icon: '🇨🇿',
+        },
+        {
+          name: 'German',
+          url: '/books',
+          queryParams: { language: 'de' },
+          icon: '🇩🇪',
+        }
+      ],
+    },
+    {
       title: 'Library',
       collapsible: true,
       expanded: true,
