@@ -6,8 +6,18 @@
   <div class="sidebar-sticky">
     <ul class="nav flex-column">
       <li class="nav-item" *ngFor="let section of menuSections">
-        <h6 class="sidebar-heading">{{ section.title }}</h6>
-        <ul class="nav flex-column">
+        <h6
+          class="sidebar-heading"
+          [class.collapsible]="section.collapsible"
+          (click)="toggleSection(section)"
+        >
+          {{ section.title }}
+          <span *ngIf="section.collapsible">
+        <span *ngIf="section.expanded">▼</span>
+        <span *ngIf="!section.expanded">➤</span>
+      </span>
+        </h6>
+        <ul class="nav flex-column" *ngIf="!section.collapsible || section.expanded">
           <li class="nav-item" *ngFor="let item of section.items">
             <a
               class="nav-link pt-0 pb-0"
@@ -21,7 +31,7 @@
       </li>
     </ul>
 
-    <h6 class="sidebar-heading">Search</h6>  
+    <h6 class="sidebar-heading">Search</h6>
 
     <form class="px-3" (ngSubmit)="onSearchExternal()">
       <div class="form-group">

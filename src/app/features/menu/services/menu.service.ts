@@ -14,18 +14,38 @@ export class MenuService {
   menuSections: Array<MenuSection> = [
       {
         title: '',
+        collapsible: false,
+        expanded: true,
         items: [{ name: 'Books', url: '/', icon: '📚' }],
       },
       {
         title: 'Saved searches',
+        collapsible: true,
+        expanded: true,
         items: [],
       },
       {
         title: 'Collections',
+        collapsible: true,
+        expanded: true,
         items: [],
       },
       {
+        title: 'Rating',
+        collapsible: true,
+        expanded: false,
+        items: [
+          { name: '', url: '/books', queryParams: { rating: 5 }, icon: '⭐️⭐️⭐️⭐️⭐️' },
+          { name: '', url: '/books', queryParams: { rating: 4 }, icon: '⭐️⭐️⭐️⭐️' },
+          { name: '', url: '/books', queryParams: { rating: 3 }, icon: '⭐️⭐️⭐️' },
+          { name: '', url: '/books', queryParams: { rating: 2 }, icon: '⭐️⭐️' },
+          { name: '', url: '/books', queryParams: { rating: 1 }, icon: '⭐️' },
+        ]
+      },
+      {
         title: 'Library',
+        collapsible: true,
+        expanded: true,
         items: [
           { name: 'Authors', url: '/authors', icon: '👤' },
           { name: 'Genres', url: '/genres', icon: '🎭' },
@@ -53,6 +73,8 @@ export class MenuService {
       },
       {
         title: 'Status',
+        collapsible: true,
+        expanded: true,
         items: [
           {
             name: 'Read',
@@ -82,6 +104,8 @@ export class MenuService {
       },
       {
         title: 'Tools',
+        collapsible: false,
+        expanded: true,
         items: [
           { name: 'Import', url: '/import', icon: '📥' },
           { name: 'Export', url: '/export', icon: '📤' },
@@ -91,6 +115,8 @@ export class MenuService {
       },
       {
         title: '',
+        collapsible: false,
+        expanded: true,
         items: [
           { name: 'Add Book', url: '/books/add', icon: '➕' },
           { name: 'Settings', url: '/settings', icon: '⚙' },

@@ -100,4 +100,10 @@ export class MenuComponent {
   get menuSections(): Array<MenuSection> {
     return this.menuService.menuSections;
   }
+
+  toggleSection(section: any) {
+    if (section.collapsible) {
+      section.expanded = !section.expanded;
+    }
+  }
 }
