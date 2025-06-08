@@ -39,7 +39,7 @@ export class CollectionsService {
           'Collection created successfully by service:',
           newlyCreatedCollection
         );
-        this.collectionSavedSource.next(); // Notify all subscribers that a collection was added
+        this.notifyCollectionSaved();
       })
     );
   }
@@ -77,7 +77,12 @@ export class CollectionsService {
   deleteCollection(collectionId: number): Observable<any> {
     // This method should delete a collection by its ID.
     const url = this.apiService.getCollectionDeleteApiUrl(collectionId.toString());
-    return this.http.delete(url);
+    return this.http.delete(url).pipe(
+      tap(() => {
+        console.log(`Collection ${collectionId} deleted`);
+        this.notifyCollectionSaved();
+      }
+    ));
   }
 
   renameCollection(collectionId: number, newName: string): Observable<any> {
@@ -86,7 +91,7 @@ export class CollectionsService {
     return this.http.post(url, { name: newName }).pipe(
       tap(() => {
         console.log(`Collection ${collectionId} renamed to ${newName}`);
-        this.collectionSavedSource.next(); // Notify all subscribers that a collection was renamed
+        this.notifyCollectionSaved();
       })
     );
   }

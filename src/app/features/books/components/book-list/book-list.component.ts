@@ -66,11 +66,6 @@ export class BookListComponent implements OnInit {
 
   @ViewChild('contextMenu') set contextMenuSetter(cm: ContextMenuComponent | null) {
     this.contextMenu = cm;
-    if (cm) {
-      console.log('Context Menu Initialized:', cm);
-    } else {
-      console.log('Context Menu Destroyed');
-    }
   }
 
   //resizing
@@ -289,7 +284,6 @@ export class BookListComponent implements OnInit {
         }
         // let the paging component know how many books there are
         this.totalPages = Math.ceil(this.count / this.pageSize);
-        console.log('list: Total pages:', this.totalPages);
       });
   }
 
