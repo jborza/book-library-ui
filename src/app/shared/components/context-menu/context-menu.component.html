@@ -1,8 +1,9 @@
 <div
   #menu
-  class="dropdown-menu show position-fixed"
+  class="dropdown-menu show position-fixed context-menu"
   [ngStyle]="{ top: menuPosition.top, left: menuPosition.left }"
-  style="z-index: 1050;"
+  style="z-index: 1050; "
+  [class.open]="isMenuOpen"
 >
   <button class="dropdown-item" (click)="onAction('read')">Mark as Read</button>
   <button class="dropdown-item" (click)="onAction('reading')">Mark as Reading</button>

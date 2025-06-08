@@ -1,3 +1,14 @@
 .dropdown-menu {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.context-menu {
+  position: fixed;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.context-menu.open {
+  visibility: visible;
+  pointer-events: auto;
+}
