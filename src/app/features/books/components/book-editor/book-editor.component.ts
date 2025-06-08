@@ -301,7 +301,7 @@ export class BookEditorComponent implements OnInit {
         notes: formData.notes,
       };
       // this feels like a hack, find a better way to store cover image urls
-      if (this.book.cover_image) {
+      if (this.book.cover_image && this.book.cover_image !== 'cover.jpg') {
         saveData.cover_image = this.book.cover_image;
       }
       if (this.book.cover_image_tiny) {
