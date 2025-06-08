@@ -8,109 +8,15 @@ import { Library } from '../../../books/library';
 import { LibraryEventsService } from '../../../../core/services/library-events.service';
 import { MenuService } from '../../services/menu.service';
 import { CollectionsService } from '../../../../core/services/collections.service';
+import { MenuSection } from '../../models/menu-section';
 
 @Component({
   selector: 'app-menu',
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.less',  
+  styleUrl: './menu.component.less',
 })
 export class MenuComponent {
-  menuSections: Array<{
-    title: string;
-    items: Array<{
-      name: string;
-      url: string;
-      icon: string;
-      queryParams?: { [key: string]: any };
-    }>;
-  }> = [
-      {
-        title: '',
-        items: [{ name: 'Books', url: '/', icon: '📚' }],
-      },
-      {
-        title: 'Saved searches',
-        items: [],
-      },
-      {
-        title: 'Collections',
-        items: [],
-      },
-      {
-        title: 'Library',
-        items: [
-          { name: 'Authors', url: '/authors', icon: '👤' },
-          { name: 'Genres', url: '/genres', icon: '🎭' },
-          { name: 'Series', url: '/series', icon: '📦' },
-          { name: 'Collections', url: '/collections', icon: '📒' },
-          {
-            name: 'Ebooks',
-            url: '/books',
-            queryParams: { bookType: 'ebook' },
-            icon: '📲',
-          },
-          {
-            name: 'Physical',
-            url: '/books',
-            queryParams: { bookType: 'physical' },
-            icon: '📙',
-          },
-          {
-            name: 'Audiobooks',
-            url: '/books',
-            queryParams: { bookType: 'audiobook' },
-            icon: '🔊',
-          },
-        ],
-      },
-      {
-        title: 'Status',
-        items: [
-          {
-            name: 'Read',
-            url: '/books',
-            queryParams: { status: 'read' },
-            icon: '✔',
-          },
-          {
-            name: 'To Read',
-            url: '/books',
-            queryParams: { status: 'to-read' },
-            icon: '🔜',
-          },
-          {
-            name: 'Reading',
-            url: '/books',
-            queryParams: { status: 'currently-reading' },
-            icon: '⌛',
-          },
-          {
-            name: 'Wishlist',
-            url: '/books',
-            queryParams: { status: 'wishlist' },
-            icon: '💡',
-          },
-        ],
-      },
-      {
-        title: 'Tools',
-        items: [
-          { name: 'Import', url: '/import', icon: '📥' },
-          { name: 'Export', url: '/export', icon: '📤' },
-          { name: 'Test', url: '/test', icon: '🧪' },
-          { name: 'Duplicate Titles', url: '/books/duplicate', icon: '🔍' },
-        ],
-      },
-      {
-        title: '',
-        items: [
-          { name: 'Add Book', url: '/books/add', icon: '➕' },
-          { name: 'Settings', url: '/settings', icon: '⚙' },
-        ],
-      },
-    ];
-
   searchQueryOpenLibrary: string = '';
   searchQueryGoogleBooks: string = '';
   searchQuery: string = ''; // Default value (can be empty or changed dynamically)
@@ -121,12 +27,13 @@ export class MenuComponent {
   static readonly SAVED_SEARCHES = 1;
   static readonly COLLECTIONS = 2;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private settingsService: SettingsService,
     private libraryEvents: LibraryEventsService,
     private menuService: MenuService,
-    private collectionsService: CollectionsService,
-  ) { }
+    private collectionsService: CollectionsService
+  ) {}
 
   ngOnInit(): void {
     this.libraryEvents.librarySaved$.subscribe(() => {
@@ -142,13 +49,15 @@ export class MenuComponent {
     this.loadCollections();
   }
 
-  loadLibraries() : void {
+  loadLibraries(): void {
     //TODO shouldn't we subscribe to getLibraries?
     this.libraries = this.settingsService.getLibraries() || [];
-    this.menuSections[MenuComponent.SAVED_SEARCHES].items.length = 0;
+    this.menuService.menuSections[
+      MenuComponent.SAVED_SEARCHES
+    ].items.length = 0;
 
     this.libraries.forEach((library) => {
-      this.menuSections[MenuComponent.SAVED_SEARCHES].items.push({
+      this.menuService.menuSections[MenuComponent.SAVED_SEARCHES].items.push({
         name: library.name,
         url: '/books',
         queryParams: library.filter,
@@ -157,11 +66,11 @@ export class MenuComponent {
     });
   }
 
-  loadCollections() : void {
-    this.menuSections[MenuComponent.COLLECTIONS].items.length = 0;
+  loadCollections(): void {
+    this.menuService.menuSections[MenuComponent.COLLECTIONS].items.length = 0;
     this.collectionsService.getCollections().subscribe((collections) => {
       collections.forEach((collection: any) => {
-        this.menuSections[MenuComponent.COLLECTIONS].items.push({
+        this.menuService.menuSections[MenuComponent.COLLECTIONS].items.push({
           name: collection.name,
           url: '/books',
           queryParams: { collection: collection.id },
@@ -186,5 +95,9 @@ export class MenuComponent {
         where: this.searchProvider,
       },
     });
+  }
+
+  get menuSections(): Array<MenuSection> {
+    return this.menuService.menuSections;
   }
 }
