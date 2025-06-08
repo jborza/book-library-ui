@@ -219,9 +219,8 @@ export class BookEditorComponent implements OnInit {
   // Getter for the image URL
   get coverImageUrl(): string {
     const coverImage = this.bookForm.get('coverImage')?.value;
-    if (coverImage?.startsWith('covers/')) {
-      // Prepend the base path for saved URLs
-      return this.apiService.getImageUrl(coverImage);
+    if (coverImage == "cover.jpg") {
+      return this.apiService.getBookCoverUrl(this.book.id);
     }
     // Return the external URL as-is
     return coverImage || '';
