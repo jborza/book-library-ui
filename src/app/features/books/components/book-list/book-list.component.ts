@@ -443,8 +443,6 @@ export class BookListComponent implements OnInit {
   }
 
   matchSelectedBooks() {
-    const matchMetadata = true;
-    const matchCovers = true;
     // TODO save in settings which provider to use
     // open the modal for matching books
     this.multipleMatchOptions.openModal();
