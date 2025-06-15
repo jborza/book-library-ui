@@ -15,9 +15,9 @@ import { Collection } from '../../../collections/models/collection.model';
 import { CollectionsService } from '../../../../core/services/collections.service';
 import { AuthorsService } from '../../../authors/services/authors.service';
 import { FormsModule } from '@angular/forms';
-import { ToNumberPipe } from '../../../../shared/pipes/to-number.pipe';
 import { MultipleMatchOptionsComponent } from '../multiple-match-options/multiple-match-options.component';
 import { ApiService } from '../../../../core/services/api.service';
+import { BookListTableComponent } from '../book-list-table/book-list-table.component';
 
 @Component({
   standalone: true,
@@ -33,8 +33,8 @@ import { ApiService } from '../../../../core/services/api.service';
     ContextMenuComponent,
     AddToCollectionComponent,
     FormsModule,
-    ToNumberPipe,
     MultipleMatchOptionsComponent,
+    BookListTableComponent
   ],
 })
 export class BookListComponent implements OnInit {
@@ -63,6 +63,7 @@ export class BookListComponent implements OnInit {
   collection: number | null = null; // Selected collection ID for filtering;
   contextMenu: ContextMenuComponent | null = null;
   bookIds: number[] = [];
+  viewMode: 'table' | 'thumbnails' = 'table'; // TODO add thumbnails view mode
 
   @ViewChild('contextMenu') set contextMenuSetter(cm: ContextMenuComponent | null) {
     this.contextMenu = cm;
@@ -76,6 +77,7 @@ export class BookListComponent implements OnInit {
 
   @ViewChild(MultipleMatchOptionsComponent) multipleMatchOptions!: MultipleMatchOptionsComponent;
 
+  // TODO this will go away
   columns: {
     name: string;
     value: keyof Book;
@@ -160,6 +162,7 @@ export class BookListComponent implements OnInit {
     }
   }
 
+  // TODO this will go away
   // TODO save column widths to settings
   private saveColumnWidths() {
     const widths = this.columns.map(col => ({ value: col.value, width: col.width }));
@@ -177,6 +180,7 @@ export class BookListComponent implements OnInit {
     return event.clientX > rect.right - rightEdgeZone;
   }
 
+  // TODO move this to book list table component
   private setupResizeListeners() {
     document.addEventListener('mousemove', (event) => {
       if (this.isResizing && this.currentColumn !== -1) {
@@ -289,6 +293,7 @@ export class BookListComponent implements OnInit {
 
   sortBy(column: string, event: MouseEvent): void {
     console.log('Sorting start :', column, 'Event:', event);
+    // TODO this should be only for the table view, not for the thumbnails view
     if (this.isResizing || this.isNearRightEdge(event)) {
       return; // Don't sort if we're resizing
     }
@@ -303,12 +308,7 @@ export class BookListComponent implements OnInit {
     this.fetchBooks(); // Fetch books again after sorting
   }
 
-  getSortIcon(column: string): string {
-    if (this.sortColumn === column) {
-      return this.sortDirection ? 'sort-icon asc' : 'sort-icon desc';
-    }
-    return '';
-  }
+
 
   // Update the list when filters change
   onFiltersChanged(filters: BookFilter): void {
@@ -342,7 +342,7 @@ export class BookListComponent implements OnInit {
   }
 
   // Handle row click (supports Ctrl+click for multi-selection)
-  onRowClick(bookId: number, event: MouseEvent): void {
+  onBookRowClick(bookId: number, event: MouseEvent): void {
     if (event.shiftKey && this.lastSelectedBookId !== null) {
       event.preventDefault(); // Prevent default text selection behavior
 
@@ -370,7 +370,7 @@ export class BookListComponent implements OnInit {
   }
 
   // Handle right-click (context menu) to select a row
-  onRowRightClick(bookId: number, event: MouseEvent): void {
+  onBookRowRightClick(bookId: number, event: MouseEvent): void {
     event.preventDefault(); // Prevent the default browser context menu
     // Select the book (single book or multiple books can be selected)
     if (!this.selectedBookIds.includes(bookId)) {
@@ -526,6 +526,7 @@ export class BookListComponent implements OnInit {
     this.isContextMenuVisible = false;
   }
 
+  // TODO move this to book list table component
   toggleColumnVisibility(column: keyof Book): void {
     const columnToUpdate = this.columns.find(col => col.value === column);
 
@@ -537,6 +538,7 @@ export class BookListComponent implements OnInit {
     }
   }
 
+  // TODO move this to book list table component
   private loadColumnVisibility(): void {
     const savedVisibility = this.settingsService.getBookListColumnVisibility();
     this.columns.forEach(col => {
@@ -565,16 +567,9 @@ export class BookListComponent implements OnInit {
   handleCancelMatchBooks(): void {
   }
 
+  // TODO move this to book list table component
   onResizeEnd(event: any, column: any): void {
     column.width = event.rectangle.width;
     console.log(`Column "${column.name}" resized to ${column.width}px`);
-  }
-
-  getCoverImageUrl(book: Book, tiny: boolean = false): string {
-    // it's possible that the book has no cover image, so we need to handle that case
-    if(book.cover_image == 'placeholder_book.png')
-      return this.apiService.getPlaceholderCoverUrl();
-    // dunno, maybe skip tiny images altogether
-    return this.apiService.getBookCoverUrl(book.id);
   }
 }

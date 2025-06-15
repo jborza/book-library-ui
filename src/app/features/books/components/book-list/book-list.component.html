@@ -7,98 +7,25 @@
                  [languages]="languages"
                  (saveRequested)="onSaveRequested($event)"
                  (filtersChanged)="onFiltersChanged($event)"></app-book-filter>
-<!-- TODO move to a better place-->
+<!-- TODO add thumbnails view
+<book-list-thumbnails
+  [books]="books"
+  [selectedBooks]="selectedBooks"
+  (contextMenu)="onContextMenu($event)"
+  (highlight)="onHighlight($event)"
+  *ngIf="viewMode === 'thumbnails'"
+></book-list-thumbnails>
+-->
+<book-list-table
+  [books]="books"
+  [selectedBookIds]="selectedBookIds"
+  (rowClick)="onBookRowClick($event.bookId, $event.event)"
+  (rowRightClick)="onBookRowRightClick($event.bookId, $event.event)"
+  *ngIf="viewMode === 'table'"
+  (sort)="sortBy($event.column, $event.event)"
+  [allSelected]="areAllSelected()"
+></book-list-table>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th class="table-header">
-        <!-- Select All Checkbox -->
-        <input type="checkbox"
-               (change)="toggleAllSelections($event)"
-               [checked]="areAllSelected()" />
-      </th>
-      <th class="table-header"></th>
-      <th *ngFor="let col of columns; let i = index"
-          [hidden]="!col.visible"
-          (click)="sortBy(col.value, $event)"          
-          [style.width.px]="col.width"
-          [style.min-width.px]="col.width"
-          [style.max-width.px]="col.width"
-          class="resizable-header table-header"
-          (mousedown)="onMouseDown($event, i)"
-          style="white-space: nowrap; cursor: col-resize;"
-          [style.width.px]="col.width">
-          <div class="header-content">
-        {{ col.name }}
-        <!-- Conditionally display sort direction -->
-        <span *ngIf="sortColumn === col.value">
-          {{ sortDirection ? '▲' : '▼' }}
-        </span>
-        </div>
-        <div class="resize-handle"></div>
-      </th>
-      <th class="table-header">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let book of books"
-        [class.selected]="isSelected(book.id)"
-        (click)="onRowClick(book.id, $event)"
-        (contextmenu)="onRowRightClick(book.id, $event)">
-      <!-- Row Checkbox -->
-      <td class="table-cell">
-        <input type="checkbox"
-               [checked]="isSelected(book.id)"
-               (change)="toggleSelection(book.id)" />
-      </td>
-      <!-- cover image, tiny and smaller -->
-      <td class="table-cell">
-        <img 
-            [src]="getCoverImageUrl(book, true)"
-             style="max-width: 50px; max-height: 32px;"
-             alt="{{ book.title }} cover"
-             class="book-cover"
-             [title]="book.title" />
-             </td>
-
-      <td *ngFor="let col of columns"
-          [hidden]="!col.visible"
-          class="table-cell"
-          [ngClass]="{'rating-cell': col.component === 'stars'}"
-          [style.width.px]="col.width">
-        <!-- Custom rendering logic for the "Rating" column -->
-        <ng-container *ngIf="col.component === 'stars'; else defaultRendering">
-          <div *ngIf="book[col.value]"
-               class="book-rating"
-               title="Rating: {{ book[col.value] | number }}">
-            <span *ngFor="let star of [1, 2, 3, 4, 5]"
-                  class="star"
-                  [class.filled]="star <= (book[col.value] ? (globalString(book[col.value]) | toNumber) : 0)">★</span>
-          </div>
-        </ng-container>
-        <!-- Default rendering for link or plain text -->
-        <ng-template #defaultRendering>
-          <ng-container *ngIf="col.link && col.queryParams; else plainText">
-            <a [routerLink]="col.link(book)"
-               [queryParams]="col.queryParams(book)">{{ book[col.value] }}</a>
-          </ng-container>
-          <ng-template #plainText>
-            <div class="text-truncate"
-                 [attr.title]="book[col.value]">
-              {{ book[col.value] }}
-            </div>
-          </ng-template>
-        </ng-template>
-      </td>
-      <!-- Actions Column -->
-      <td>
-        <a [routerLink]="['/books', book.id, 'edit']"
-           [queryParams]="{ returnUrl: currentUrl }">Edit</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
 <button class="btn btn-primary"
         [disabled]="selectedBookIds.length === 0"
         (click)="editSelectedBooks()"
