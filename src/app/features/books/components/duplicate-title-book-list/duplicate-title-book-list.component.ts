@@ -13,7 +13,8 @@ import { RouterModule } from '@angular/router';
 export class DuplicateTitleBookListComponent {
 
   books: Book[] = [];
-  
+  selectedBooks = new Set<number>();
+
   constructor(private booksService: BooksService) {
   }
 
@@ -35,4 +36,28 @@ export class DuplicateTitleBookListComponent {
     });
   }
 
+  toggleSelection(bookId: number, event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+    if (checked) {
+      this.selectedBooks.add(bookId);
+    } else {
+      this.selectedBooks.delete(bookId);
+    }
+  }
+
+  deleteSelected(): void {
+    if (this.selectedBooks.size === 0) {
+      return;
+    }
+    // TODO use the same service method as in the books list
+    this.booksService.deleteBooks(Array.from(this.selectedBooks)).subscribe({
+      next: () => {
+        this.selectedBooks.clear(); 
+        this.fetchDuplicateTitleBooks();
+      },
+      error: (error) => {
+        console.error('Error deleting selected books:', error);
+      },
+    });
+  }
 }

@@ -2,12 +2,21 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            <th style="width: 1%">
+
+            </th>
             <th class="table-header">Title</th>
             <th class="table-header">Author</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let book of books">
+            <td>
+                <input
+                type="checkbox"
+                [checked]="selectedBooks.has(book.id)"
+                (change)="toggleSelection(book.id, $event)" />
+            </td>
             <td class="table-cell">
                 <a [routerLink]="['/books', book.id]">
                     {{ book.title }}</a>
@@ -21,3 +30,11 @@
         </tr>
     </tbody>
 </table>
+<div class="mb-2">
+  <button
+    class="btn btn-danger"
+    (click)="deleteSelected()"
+    [disabled]="selectedBooks.size === 0">
+    Delete ({{ selectedBooks.size }})
+  </button>
+</div>
