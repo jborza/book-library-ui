@@ -184,7 +184,11 @@ export class BookDetailsComponent implements OnInit {
       this.booksService.deleteBook(this.book.id).subscribe((data) => {
         console.log('Book deleted:', data);
         // navigate back to wherever the user came from
-        this.location.back();
+        if (window.history.length > 1) {
+          this.location.back();
+        } else {
+          this.router.navigate(['/books']);
+        }
       });
     }
   }
