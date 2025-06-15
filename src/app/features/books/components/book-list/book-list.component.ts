@@ -409,6 +409,12 @@ export class BookListComponent implements OnInit {
 
   // Navigate to the edit page with selected book IDs
   editSelectedBooks(): void {
+    // if just 1 book is selected, navigate to the edit page for that book
+    if (this.selectedBookIds.length === 1) {
+      const bookId = this.selectedBookIds[0];
+      this.router.navigate([`/books/${bookId}/edit`]);
+      return;
+    }
     const queryParams = this.selectedBookIds.join(',');
     this.router.navigate([`/books/edit_multiple`], {
       queryParams: { id: queryParams },
