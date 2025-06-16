@@ -1,23 +1,21 @@
-<table class="table table-striped">
+<table class="table table-striped" style="table-layout:fixed">
   <thead>
     <tr>
-      <th class="table-header">
+      <th class="table-header" style="width:30px">
         <!-- Select All Checkbox -->
         <input type="checkbox"
                (change)="onToggleAll($event)"
                [checked]="allSelected" />
       </th>
-      <th class="table-header"></th>
-      <th *ngFor="let col of columns$ | async; let i = index"
-          [hidden]="!col.visible"
+      <th class="table-header" style="width:42px"></th>
+      <th *ngFor="let col of visibleColumns; let i = index"
           (click)="onSort(col.value, $event)"
           [style.width.px]="col.width"
           [style.min-width.px]="col.width"
           [style.max-width.px]="col.width"
           class="resizable-header table-header"
           (mousedown)="onMouseDown($event, i)"
-          style="white-space: nowrap; cursor: col-resize;"
-          [style.width.px]="col.width">
+          style="white-space: nowrap; cursor: col-resize;">
           <div class="header-content">
         {{ col.name }}
         <!-- Conditionally display sort direction -->
@@ -35,6 +33,7 @@
         [class.selected]="selectedBookIds.includes(book.id)"
         (click)="onRowClick(book.id, $event)"
         (contextmenu)="onRowRightClick(book.id, $event)">
+
       <!-- Row Checkbox -->
       <td class="table-cell">
         <input type="checkbox"
@@ -51,8 +50,7 @@
              [title]="book.title" />
              </td>
 
-      <td *ngFor="let col of columns$ | async"
-          [hidden]="!col.visible"
+      <td *ngFor="let col of visibleColumns"
           class="table-cell"
           [ngClass]="{'rating-cell': col.component === 'stars'}"
           [style.width.px]="col.width">

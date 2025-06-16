@@ -45,43 +45,6 @@ export class BookListTableComponent {
   columns$;
   columns: TableColumn[] = [];
 
-  /*{
-    name: string;
-    value: keyof Book;
-    visible: boolean;
-    link?: (row: Book) => string;
-    queryParams?: (row: Book) => Params;
-    component?: string;
-    width?: number;
-  }*/
-  // columns: TableColumn[] = [
-  //   {
-  //     name: 'Title',
-  //     value: 'title',
-  //     visible: true,
-  //     link: (row: any) => `/books/${row.id}`,
-  //     queryParams: (row: Book) => ({}),
-  //     width: 300,
-  //   },
-  //   {
-  //     name: 'Author',
-  //     value: 'author_name',
-  //     visible: true,
-  //     link: (row: any) => '/books',
-  //     queryParams: (row: Book) => ({ author: row.author_name }),
-  //     width: 150,
-  //   },
-  //   { name: 'Publisher', value: 'publisher', visible: true, width: 100 },
-  //   { name: 'Year', value: 'year', visible: true },
-  //   { name: 'Genre', value: 'genre', visible: true, width: 150 },
-  //   { name: 'ISBN', value: 'isbn', visible: true, width: 140 },
-  //   { name: 'Language', value: 'language', visible: true },
-  //   { name: 'Series', value: 'series', visible: true },
-  //   { name: 'Pages', value: 'pages', visible: true, width: 50 },
-  //   { name: 'Rating', value: 'rating', visible: true, component: 'stars' },
-  //   { name: 'Status', value: 'status', visible: true },
-  // ];
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -95,6 +58,36 @@ export class BookListTableComponent {
     });
   }
 
+  ngOnInit() {
+    // Load initial column visibility settings
+    this.loadColumnWidths();
+    this.setupResizeListeners();
+  }
+
+  get visibleColumns(): TableColumn[] {
+    return this.columns.filter(col => col.visible);
+  }
+
+  private setupResizeListeners() {
+    document.addEventListener('mousemove', (event) => {
+      if (this.isResizing && this.currentColumn !== -1) {
+        const deltaX = event.clientX - this.startX;
+        const newWidth = Math.max(50, this.startWidth + deltaX); // Minimum width of 50px
+        this.columns[this.currentColumn].width = newWidth;
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (this.isResizing) {
+        this.isResizing = false;
+        this.currentColumn = -1;
+        document.body.style.cursor = 'default';
+        document.body.style.userSelect = 'auto';
+        this.saveColumnWidths();
+      }
+    });
+  }
+
   getCoverImageUrl(book: Book, tiny: boolean = false): string {
     // it's possible that the book has no cover image, so we need to handle that case
     if (book.cover_image == 'placeholder_book.png')
@@ -104,6 +97,7 @@ export class BookListTableComponent {
   }
 
   onMouseDown(event: MouseEvent, columnIndex: number) {
+    console.log('onMouseDown', event, columnIndex);
     if (this.isNearRightEdge(event)) {
       event.preventDefault();
       event.stopPropagation();
@@ -120,6 +114,7 @@ export class BookListTableComponent {
   }
 
   private isNearRightEdge(event: MouseEvent): boolean {
+    console.log('isNearRightEdge', event);
     const target = event.target as HTMLElement;
     const rect = target.getBoundingClientRect();
     const rightEdgeZone = 10; // 10px zone for resize

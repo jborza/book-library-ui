@@ -10,3 +10,62 @@ tr {
   user-select: none;
   /* Disable text selection */
 }
+
+
+.resizable-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.resizable-header {
+  position: relative;
+  padding: 0;
+  height: 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+  cursor: default;
+}
+
+.resizable-header:last-child {
+  border-right: none;
+}
+
+.resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 100%;
+  cursor: col-resize;
+  background-color: transparent;
+}
+
+.resize-handle:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.table-header {
+  padding: 8px 12px;
+  background-color: #f5f5f5;
+  border-bottom: 2px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+.table-cell {
+  border-right: 1px solid #ccc;
+  padding: 0px 8px;
+  height: 32px;
+}
+
+.table-cell {
+  border-right: 1px solid #ccc;
+  padding: 0px 8px;
+  height: 32px;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}

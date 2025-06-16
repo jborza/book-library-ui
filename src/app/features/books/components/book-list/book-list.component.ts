@@ -73,9 +73,6 @@ export class BookListComponent implements OnInit {
 
   //resizing
   private isResizing: boolean = false;
-  private currentColumn: number = -1;
-  private startX: number = 0;
-  private startWidth: number = 0;
 
   @ViewChild(MultipleMatchOptionsComponent) multipleMatchOptions!: MultipleMatchOptionsComponent;
 
@@ -141,28 +138,28 @@ export class BookListComponent implements OnInit {
     document.addEventListener('click', this.hideContextMenu.bind(this));
     this.loadColumnVisibility();
     this.loadColumnWidths();
-    this.setupResizeListeners();
+    // this.setupResizeListeners();
   }
 
   ngOnDestroy(): void {
     document.removeEventListener('click', this.hideContextMenu.bind(this));
   }
 
-  onMouseDown(event: MouseEvent, columnIndex: number) {
-    if (this.isNearRightEdge(event)) {
-      event.preventDefault();
-      event.stopPropagation();
+  // onMouseDown(event: MouseEvent, columnIndex: number) {
+  //   if (this.isNearRightEdge(event)) {
+  //     event.preventDefault();
+  //     event.stopPropagation();
 
-      this.isResizing = true;
-      this.currentColumn = columnIndex;
-      this.startX = event.clientX;
-      const width = this.columns[columnIndex].width || 100;
-      this.startWidth = width;
+  //     this.isResizing = true;
+  //     this.currentColumn = columnIndex;
+  //     this.startX = event.clientX;
+  //     const width = this.columns[columnIndex].width || 100;
+  //     this.startWidth = width;
 
-      document.body.style.cursor = 'col-resize';
-      document.body.style.userSelect = 'none';
-    }
-  }
+  //     document.body.style.cursor = 'col-resize';
+  //     document.body.style.userSelect = 'none';
+  //   }
+  // }
 
   // TODO this will go away
   // TODO save column widths to settings
@@ -183,25 +180,7 @@ export class BookListComponent implements OnInit {
   }
 
   // TODO move this to book list table component
-  private setupResizeListeners() {
-    document.addEventListener('mousemove', (event) => {
-      if (this.isResizing && this.currentColumn !== -1) {
-        const deltaX = event.clientX - this.startX;
-        const newWidth = Math.max(50, this.startWidth + deltaX); // Minimum width of 50px
-        this.columns[this.currentColumn].width = newWidth;
-      }
-    });
 
-    document.addEventListener('mouseup', () => {
-      if (this.isResizing) {
-        this.isResizing = false;
-        this.currentColumn = -1;
-        document.body.style.cursor = 'default';
-        document.body.style.userSelect = 'auto';
-        this.saveColumnWidths();
-      }
-    });
-  }
 
   onPageChanged(page: number): void {
     this.currentPage = page;
