@@ -1,27 +1,35 @@
-<table class="table table-striped" style="table-layout:fixed">
+<table
+  class="table table-striped"
+  style="table-layout: fixed"
+  [style.width.px]="tableWidthPx"
+>
   <thead>
     <tr>
-      <th class="table-header" style="width:30px">
+      <th class="table-header" style="width: 30px">
         <!-- Select All Checkbox -->
-        <input type="checkbox"
-               (change)="onToggleAll($event)"
-               [checked]="allSelected" />
+        <input
+          type="checkbox"
+          (change)="onToggleAll($event)"
+          [checked]="allSelected"
+        />
       </th>
-      <th class="table-header" style="width:42px"></th>
-      <th *ngFor="let col of visibleColumns; let i = index"
-          (click)="onSort(col.value, $event)"
-          [style.width.px]="col.width"
-          [style.min-width.px]="col.width"
-          [style.max-width.px]="col.width"
-          class="resizable-header table-header"
-          (mousedown)="onMouseDown($event, i)"
-          style="white-space: nowrap; cursor: col-resize;">
-          <div class="header-content">
-        {{ col.name }}
-        <!-- Conditionally display sort direction -->
-        <span *ngIf="sortColumn === col.value">
-          {{ sortDirection ? '▲' : '▼' }}
-        </span>
+      <th class="table-header" style="width: 42px"></th>
+      <th
+        *ngFor="let col of visibleColumns; let i = index"
+        (click)="onSort(col.value, $event)"
+        [style.width.px]="col.width"
+        [style.min-width.px]="col.width"
+        [style.max-width.px]="col.width"
+        class="resizable-header table-header"
+        (mousedown)="onMouseDown($event, i)"
+        style="white-space: nowrap; cursor: col-resize"
+      >
+        <div class="header-content">
+          {{ col.name }}
+          <!-- Conditionally display sort direction -->
+          <span *ngIf="sortColumn === col.value">
+            {{ sortDirection ? "▲" : "▼" }}
+          </span>
         </div>
         <div class="resize-handle"></div>
       </th>
@@ -29,50 +37,68 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let book of books"
-        [class.selected]="selectedBookIds.includes(book.id)"
-        (click)="onRowClick(book.id, $event)"
-        (contextmenu)="onRowRightClick(book.id, $event)">
-
+    <tr
+      *ngFor="let book of books"
+      [class.selected]="selectedBookIds.includes(book.id)"
+      (click)="onRowClick(book.id, $event)"
+      (contextmenu)="onRowRightClick(book.id, $event)"
+    >
       <!-- Row Checkbox -->
       <td class="table-cell">
-        <input type="checkbox"
-               [checked]="selectedBookIds.includes(book.id)"
-               (change)="onToggleSelection(book.id)" />
+        <input
+          type="checkbox"
+          [checked]="selectedBookIds.includes(book.id)"
+          (change)="onToggleSelection(book.id)"
+        />
       </td>
       <!-- cover image, tiny and smaller -->
       <td class="table-cell">
-        <img 
-            [src]="getCoverImageUrl(book, true)"
-             style="max-width: 50px; max-height: 32px;"
-             alt="{{ book.title }} cover"
-             class="book-cover"
-             [title]="book.title" />
-             </td>
+        <img
+          [src]="getCoverImageUrl(book, true)"
+          style="max-width: 50px; max-height: 32px"
+          alt="{{ book.title }} cover"
+          class="book-cover"
+          [title]="book.title"
+        />
+      </td>
 
-      <td *ngFor="let col of visibleColumns"
-          class="table-cell"
-          [ngClass]="{'rating-cell': col.component === 'stars'}"
-          [style.width.px]="col.width">
+      <td
+        *ngFor="let col of visibleColumns"
+        class="table-cell"
+        [ngClass]="{ 'rating-cell': col.component === 'stars' }"
+        [style.width.px]="col.width"
+      >
         <!-- Custom rendering logic for the "Rating" column -->
         <ng-container *ngIf="col.component === 'stars'; else defaultRendering">
-          <div *ngIf="book[col.value]"
-               class="book-rating"
-               title="Rating: {{ book[col.value] | number }}">
-            <span *ngFor="let star of [1, 2, 3, 4, 5]"
-                  class="star"
-                  [class.filled]="star <= (book[col.value] ? (globalString(book[col.value]) | toNumber) : 0)">★</span>
+          <div
+            *ngIf="book[col.value]"
+            class="book-rating"
+            title="Rating: {{ book[col.value] | number }}"
+          >
+            <span
+              *ngFor="let star of [1, 2, 3, 4, 5]"
+              class="star"
+              [class.filled]="
+                star <=
+                (book[col.value]
+                  ? (globalString(book[col.value]) | toNumber)
+                  : 0)
+              "
+              >★</span
+            >
           </div>
         </ng-container>
         <!-- Default rendering for link or plain text -->
         <ng-template #defaultRendering>
           <ng-container *ngIf="col.link && col.queryParams; else plainText">
-            <a [routerLink]="col.link(book)"
-               [queryParams]="col.queryParams(book)">{{ book[col.value] }}</a>
+            <a
+              [routerLink]="col.link(book)"
+              [queryParams]="col.queryParams(book)"
+              >{{ book[col.value] }}</a
+            >
           </ng-container>
           <ng-template #plainText>
-            <div class="text-truncate"
-                 [attr.title]="book[col.value]">
+            <div class="text-truncate" [attr.title]="book[col.value]">
               {{ book[col.value] }}
             </div>
           </ng-template>
@@ -80,8 +106,11 @@
       </td>
       <!-- Actions Column -->
       <td>
-        <a [routerLink]="['/books', book.id, 'edit']"
-           [queryParams]="{ returnUrl: currentUrl }">Edit</a>
+        <a
+          [routerLink]="['/books', book.id, 'edit']"
+          [queryParams]="{ returnUrl: currentUrl }"
+          >Edit</a
+        >
       </td>
     </tr>
   </tbody>

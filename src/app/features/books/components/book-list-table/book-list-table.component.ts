@@ -17,6 +17,7 @@ export class BookListTableComponent {
   globalString = String;
   currentUrl: string;
 
+  staticColumnsWidth: number = 72;
   //resizing
   private isResizing: boolean = false;
   private currentColumn: number = -1;
@@ -65,7 +66,7 @@ export class BookListTableComponent {
   }
 
   get visibleColumns(): TableColumn[] {
-    return this.columns.filter(col => col.visible);
+    return this.columns.filter((col) => col.visible);
   }
 
   private setupResizeListeners() {
@@ -153,5 +154,12 @@ export class BookListTableComponent {
   onRowRightClick(bookId: number, event: MouseEvent) {
     event.preventDefault(); // Prevents default browser context menu
     this.rowRightClick.emit({ bookId, event });
+  }
+
+  get tableWidthPx(): number {
+    return (
+      this.visibleColumns.reduce((sum, col) => sum + (col.width || 100), 0) +
+      this.staticColumnsWidth
+    ); // Add widths of static columns
   }
 }

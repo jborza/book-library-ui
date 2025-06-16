@@ -19,6 +19,8 @@ import { MultipleMatchOptionsComponent } from '../multiple-match-options/multipl
 import { ApiService } from '../../../../core/services/api.service';
 import { BookListTableComponent } from '../book-list-table/book-list-table.component';
 import { ColumnSelectorComponent } from '../column-selector/column-selector.component';
+import { ColumnVisibilityService } from '../../services/column-visibility.service';
+import { TableColumn } from '../../table-column';
 
 @Component({
   standalone: true,
@@ -76,35 +78,7 @@ export class BookListComponent implements OnInit {
 
   @ViewChild(MultipleMatchOptionsComponent) multipleMatchOptions!: MultipleMatchOptionsComponent;
 
-  // TODO this will go away
-  columns: {
-    name: string;
-    value: keyof Book;
-    visible: boolean;
-    link?: (row: Book) => string;
-    queryParams?: (row: Book) => Params;
-    component?: string;
-    width?: number;
-  }[] = [
-      {
-        name: 'Title', value: 'title', visible: true, link: (row: any) => `/books/${row.id}`, queryParams: (row: Book) => ({}),
-        width: 300
-      },
-      {
-        name: 'Author', value: 'author_name', visible: true, link: (row: any) => '/books',
-        queryParams: (row: Book) => ({ author: row.author_name }),
-        width: 150
-      },
-      { name: 'Publisher', value: 'publisher', visible: true, width: 100 },
-      { name: 'Year', value: 'year', visible: true },
-      { name: 'Genre', value: 'genre', visible: true, width: 150 },
-      { name: 'ISBN', value: 'isbn', visible: true, width: 140 },
-      { name: 'Language', value: 'language', visible: true },
-      { name: 'Series', value: 'series', visible: true },
-      { name: 'Pages', value: 'pages', visible: true, width: 50 },
-      { name: 'Rating', value: 'rating', visible: true, component: 'stars' },
-      { name: 'Status', value: 'status', visible: true },
-    ];
+  columns: TableColumn[] = [];
 
   globalString = String;
 
@@ -116,9 +90,12 @@ export class BookListComponent implements OnInit {
     private libraryEvents: LibraryEventsService,
     private collectionsService: CollectionsService,
     private authorsService: AuthorsService,
-    private apiService: ApiService
+    private columnVisibilityService: ColumnVisibilityService
   ) {
     this.currentUrl = router.url;
+    this.columnVisibilityService.columns$.subscribe((cols) => {
+      this.columns = cols;
+    });
   }
 
   ngOnInit(): void {
@@ -137,39 +114,10 @@ export class BookListComponent implements OnInit {
     });
     document.addEventListener('click', this.hideContextMenu.bind(this));
     this.loadColumnVisibility();
-    this.loadColumnWidths();
-    // this.setupResizeListeners();
   }
 
   ngOnDestroy(): void {
     document.removeEventListener('click', this.hideContextMenu.bind(this));
-  }
-
-  // onMouseDown(event: MouseEvent, columnIndex: number) {
-  //   if (this.isNearRightEdge(event)) {
-  //     event.preventDefault();
-  //     event.stopPropagation();
-
-  //     this.isResizing = true;
-  //     this.currentColumn = columnIndex;
-  //     this.startX = event.clientX;
-  //     const width = this.columns[columnIndex].width || 100;
-  //     this.startWidth = width;
-
-  //     document.body.style.cursor = 'col-resize';
-  //     document.body.style.userSelect = 'none';
-  //   }
-  // }
-
-  // TODO this will go away
-  // TODO save column widths to settings
-  private saveColumnWidths() {
-    const widths = this.columns.map(col => ({ value: col.value, width: col.width }));
-    // TODO save
-  }
-
-  // TODO load column widths from settings
-  private loadColumnWidths() {
   }
 
   private isNearRightEdge(event: MouseEvent): boolean {
@@ -178,9 +126,6 @@ export class BookListComponent implements OnInit {
     const rightEdgeZone = 10; // 10px zone for resize
     return event.clientX > rect.right - rightEdgeZone;
   }
-
-  // TODO move this to book list table component
-
 
   onPageChanged(page: number): void {
     this.currentPage = page;
@@ -294,6 +239,7 @@ export class BookListComponent implements OnInit {
   // Update the list when filters change
   onFiltersChanged(filters: BookFilter): void {
     this.filters = filters;
+    this.currentPage = 1; // Reset to the first page when filters change
     this.fetchBooks();
     this.fetchAuthors(); // Fetch authors for the filter
     // TODO probably also reset the page to 1
@@ -548,9 +494,4 @@ export class BookListComponent implements OnInit {
   handleCancelMatchBooks(): void {
   }
 
-  // TODO move this to book list table component
-  onResizeEnd(event: any, column: any): void {
-    column.width = event.rectangle.width;
-    console.log(`Column "${column.name}" resized to ${column.width}px`);
-  }
 }
