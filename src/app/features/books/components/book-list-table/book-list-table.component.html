@@ -8,7 +8,7 @@
                [checked]="allSelected" />
       </th>
       <th class="table-header"></th>
-      <th *ngFor="let col of columns; let i = index"
+      <th *ngFor="let col of columns$ | async; let i = index"
           [hidden]="!col.visible"
           (click)="onSort(col.value, $event)"
           [style.width.px]="col.width"
@@ -51,7 +51,7 @@
              [title]="book.title" />
              </td>
 
-      <td *ngFor="let col of columns"
+      <td *ngFor="let col of columns$ | async"
           [hidden]="!col.visible"
           class="table-cell"
           [ngClass]="{'rating-cell': col.component === 'stars'}"

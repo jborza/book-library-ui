@@ -4,6 +4,8 @@ import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { ToNumberPipe } from '../../../../shared/pipes/to-number.pipe';
 import { Book } from '../../models/book.model';
 import { ApiService } from '../../../../core/services/api.service';
+import { TableColumn } from '../../table-column';
+import { ColumnVisibilityService } from '../../services/column-visibility.service';
 
 @Component({
   selector: 'book-list-table',
@@ -14,7 +16,7 @@ import { ApiService } from '../../../../core/services/api.service';
 export class BookListTableComponent {
   globalString = String;
   currentUrl: string;
-  
+
   //resizing
   private isResizing: boolean = false;
   private currentColumn: number = -1;
@@ -23,7 +25,7 @@ export class BookListTableComponent {
 
   // inputs
   @Input() books: Book[] = [];
-  @Input() selectedBookIds: number[] = []
+  @Input() selectedBookIds: number[] = [];
   @Input() sortColumn: string = '';
   @Input() sortDirection: boolean = true; // true = ascending, false = descending
   @Input() allSelected: boolean = false;
@@ -40,7 +42,10 @@ export class BookListTableComponent {
     event: MouseEvent;
   }>();
 
-  columns: {
+  columns$;
+  columns: TableColumn[] = [];
+
+  /*{
     name: string;
     value: keyof Book;
     visible: boolean;
@@ -48,45 +53,46 @@ export class BookListTableComponent {
     queryParams?: (row: Book) => Params;
     component?: string;
     width?: number;
-  }[] = [
-    {
-      name: 'Title',
-      value: 'title',
-      visible: true,
-      link: (row: any) => `/books/${row.id}`,
-      queryParams: (row: Book) => ({}),
-      width: 300,
-    },
-    {
-      name: 'Author',
-      value: 'author_name',
-      visible: true,
-      link: (row: any) => '/books',
-      queryParams: (row: Book) => ({ author: row.author_name }),
-      width: 150,
-    },
-    { name: 'Publisher', value: 'publisher', visible: true, width: 100 },
-    { name: 'Year', value: 'year', visible: true },
-    { name: 'Genre', value: 'genre', visible: true, width: 150 },
-    { name: 'ISBN', value: 'isbn', visible: true, width: 140 },
-    { name: 'Language', value: 'language', visible: true },
-    { name: 'Series', value: 'series', visible: true },
-    { name: 'Pages', value: 'pages', visible: true, width: 50 },
-    { name: 'Rating', value: 'rating', visible: true, component: 'stars' },
-    { name: 'Status', value: 'status', visible: true },
-  ];
+  }*/
+  // columns: TableColumn[] = [
+  //   {
+  //     name: 'Title',
+  //     value: 'title',
+  //     visible: true,
+  //     link: (row: any) => `/books/${row.id}`,
+  //     queryParams: (row: Book) => ({}),
+  //     width: 300,
+  //   },
+  //   {
+  //     name: 'Author',
+  //     value: 'author_name',
+  //     visible: true,
+  //     link: (row: any) => '/books',
+  //     queryParams: (row: Book) => ({ author: row.author_name }),
+  //     width: 150,
+  //   },
+  //   { name: 'Publisher', value: 'publisher', visible: true, width: 100 },
+  //   { name: 'Year', value: 'year', visible: true },
+  //   { name: 'Genre', value: 'genre', visible: true, width: 150 },
+  //   { name: 'ISBN', value: 'isbn', visible: true, width: 140 },
+  //   { name: 'Language', value: 'language', visible: true },
+  //   { name: 'Series', value: 'series', visible: true },
+  //   { name: 'Pages', value: 'pages', visible: true, width: 50 },
+  //   { name: 'Rating', value: 'rating', visible: true, component: 'stars' },
+  //   { name: 'Status', value: 'status', visible: true },
+  // ];
 
   constructor(
-    // private booksService: BooksService,
     private route: ActivatedRoute,
-    // private settingsService: SettingsService,
     private router: Router,
-    // private libraryEvents: LibraryEventsService,
-    // private collectionsService: CollectionsService,
-    // private authorsService: AuthorsService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private columnVisibilityService: ColumnVisibilityService
   ) {
     this.currentUrl = router.url;
+    this.columns$ = this.columnVisibilityService.columns$;
+    this.columnVisibilityService.columns$.subscribe((cols) => {
+      this.columns = cols;
+    });
   }
 
   getCoverImageUrl(book: Book, tiny: boolean = false): string {

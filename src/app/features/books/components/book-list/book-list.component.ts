@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { MultipleMatchOptionsComponent } from '../multiple-match-options/multiple-match-options.component';
 import { ApiService } from '../../../../core/services/api.service';
 import { BookListTableComponent } from '../book-list-table/book-list-table.component';
+import { ColumnSelectorComponent } from '../column-selector/column-selector.component';
 
 @Component({
   standalone: true,
@@ -34,7 +35,8 @@ import { BookListTableComponent } from '../book-list-table/book-list-table.compo
     AddToCollectionComponent,
     FormsModule,
     MultipleMatchOptionsComponent,
-    BookListTableComponent
+    BookListTableComponent,
+    ColumnSelectorComponent
   ],
 })
 export class BookListComponent implements OnInit {
