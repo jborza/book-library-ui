@@ -16,8 +16,8 @@ import { CollectionsService } from '../../../../core/services/collections.servic
 import { AuthorsService } from '../../../authors/services/authors.service';
 import { FormsModule } from '@angular/forms';
 import { MultipleMatchOptionsComponent } from '../multiple-match-options/multiple-match-options.component';
-import { ApiService } from '../../../../core/services/api.service';
 import { BookListTableComponent } from '../book-list-table/book-list-table.component';
+import { BookListGridComponent } from '../book-list-grid/book-list-grid.component';
 import { ColumnSelectorComponent } from '../column-selector/column-selector.component';
 import { ColumnVisibilityService } from '../../services/column-visibility.service';
 import { TableColumn } from '../../table-column';
@@ -38,7 +38,8 @@ import { TableColumn } from '../../table-column';
     FormsModule,
     MultipleMatchOptionsComponent,
     BookListTableComponent,
-    ColumnSelectorComponent
+    ColumnSelectorComponent,
+    BookListGridComponent,
   ],
 })
 export class BookListComponent implements OnInit {
@@ -67,7 +68,7 @@ export class BookListComponent implements OnInit {
   collection: number | null = null; // Selected collection ID for filtering;
   contextMenu: ContextMenuComponent | null = null;
   bookIds: number[] = [];
-  viewMode: 'table' | 'thumbnails' = 'table'; // TODO add thumbnails view mode
+  viewMode: 'table' | 'grid' = 'grid';
 
   @ViewChild('contextMenu') set contextMenuSetter(cm: ContextMenuComponent | null) {
     this.contextMenu = cm;

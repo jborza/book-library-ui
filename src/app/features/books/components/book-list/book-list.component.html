@@ -6,16 +6,18 @@
                  [series]="series"
                  [languages]="languages"
                  (saveRequested)="onSaveRequested($event)"
-                 (filtersChanged)="onFiltersChanged($event)"></app-book-filter>
-<!-- TODO add thumbnails view
-<book-list-thumbnails
+                 (filtersChanged)="onFiltersChanged($event)"
+                 (resetPage)="onResetPage($event)"></app-book-filter>
+<book-list-grid
   [books]="books"
-  [selectedBooks]="selectedBooks"
-  (contextMenu)="onContextMenu($event)"
-  (highlight)="onHighlight($event)"
-  *ngIf="viewMode === 'thumbnails'"
-></book-list-thumbnails>
--->
+  [selectedBookIds]="selectedBookIds"
+  (rowClick)="onBookRowClick($event.bookId, $event.event)"
+  (rowRightClick)="onBookRowRightClick($event.bookId, $event.event)"
+  *ngIf="viewMode === 'grid'"
+  (sort)="sortBy($event.column, $event.event)"
+  [allSelected]="areAllSelected()">
+</book-list-grid>
+
 <book-list-table
   [books]="books"
   [selectedBookIds]="selectedBookIds"

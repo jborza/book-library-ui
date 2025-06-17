@@ -1,0 +1,28 @@
+<div class="book-grid">
+  <div
+    class="book-card"
+    *ngFor="let book of books"
+    [class.selected]="selectedBookIds.includes(book.id)"
+    (click)="onRowClick(book, $event)"
+    (contextmenu)="onRowRightClick(book, $event)"
+    tabindex="0"
+  >
+    <div class="cover-wrapper">
+      <img
+        *ngIf="getCoverImageUrl(book); else noCover"
+        [src]="getCoverImageUrl(book)"
+        [alt]="book.title"
+        class="book-cover"
+        draggable="false"
+      />
+      <ng-template #noCover>
+        <div class="no-cover"></div>
+      </ng-template>
+    </div>
+    <div class="book-info">
+      <div class="book-title" [title]="book.title">{{ book.title }}</div>
+      <div class="book-author" [title]="book.author_name">{{ book.author_name }}</div>
+    </div>
+    <div *ngIf="selectedBookIds.includes(book.id)" class="selected-overlay"></div>
+  </div>
+</div>

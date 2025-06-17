@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ToNumberPipe } from '../../../../shared/pipes/to-number.pipe';
 import { Book } from '../../models/book.model';
 import { ApiService } from '../../../../core/services/api.service';
@@ -47,7 +47,6 @@ export class BookListTableComponent {
   columns: TableColumn[] = [];
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private apiService: ApiService,
     private columnVisibilityService: ColumnVisibilityService
