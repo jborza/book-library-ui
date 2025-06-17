@@ -234,12 +234,14 @@ export class BookListComponent implements OnInit {
     this.fetchBooks(); // Fetch books again after sorting
   }
 
-
+  onResetPage(event: any): void {
+    console.log('Resetting page to 1');
+    this.currentPage = 1; // Reset to the first page
+  }
 
   // Update the list when filters change
   onFiltersChanged(filters: BookFilter): void {
     this.filters = filters;
-    this.currentPage = 1; // Reset to the first page when filters change
     this.fetchBooks();
     this.fetchAuthors(); // Fetch authors for the filter
     // TODO probably also reset the page to 1

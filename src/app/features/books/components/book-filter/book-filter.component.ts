@@ -39,6 +39,7 @@ export class BookFilterComponent {
   // Emit the filter changes to the parent component
   @Output() filtersChanged = new EventEmitter<any>();
 
+  @Output() resetPage = new EventEmitter<any>();
   @Output() saveRequested = new EventEmitter<any[]>();
 
   @Input() genres: string[] = [];
@@ -128,6 +129,7 @@ export class BookFilterComponent {
     this.filters.ratingEnabled = this.ratingEnabled;
     this.filters.yearEnabled = this.yearEnabled;
     this.filters.pagesEnabled = this.pagesEnabled;
+    this.resetPage.emit();
     this.filtersChanged.emit(this.filters);
     console.log('Filters changed: status:', this.filters.status);
   }
