@@ -64,7 +64,7 @@
     </div>
   </div>
 </div>
-<p>{{ count }} books found</p>
-<column-selector-component></column-selector-component>
+<p *ngIf="viewMode === 'table'">{{ count }} books found</p>
+<column-selector-component *ngIf="viewMode === 'table'"></column-selector-component>
 <app-multiple-match-options (submit)="handleSubmitMatchBooks($event)"
                             (cancel)="handleCancelMatchBooks()"></app-multiple-match-options>
