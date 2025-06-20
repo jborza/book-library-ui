@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Book } from '../../models/book.model';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../../../core/services/api.service';
 import { TableColumn } from '../../table-column';
 import { ColumnVisibilityService } from '../../services/column-visibility.service';
@@ -9,7 +9,9 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'book-list-grid',
-  imports: [CommonModule],
+  imports: [CommonModule,
+    RouterModule
+  ],
   templateUrl: './book-list-grid.component.html',
   styleUrl: './book-list-grid.component.less'
 })
@@ -47,8 +49,9 @@ export class BookListGridComponent {
   }
 
   onRowClick(book: Book, event: MouseEvent) {
-    this.rowClick.emit({ bookId: book.id, event });
+    this.router.navigate(['/books', book.id]);
   }
+
   onRowRightClick(book: Book, event: MouseEvent) {
     event.preventDefault();
     this.rowRightClick.emit({ bookId: book.id, event });
