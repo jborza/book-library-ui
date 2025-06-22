@@ -4,25 +4,26 @@ import { FormsModule } from '@angular/forms';
 import { PingService } from '../core/services/ping.service';
 import { MenuService } from '../features/menu/services/menu.service';
 import { BookSearchService } from '../features/books/services/book-search.service';
+import { BookListService } from '../features/books/services/book-list.service';
 
 @Component({
   selector: 'app-top-bar',
   imports: [CommonModule, FormsModule],
   templateUrl: './top-bar.component.html',
-  styleUrl: './top-bar.component.less'
+  styleUrl: './top-bar.component.less',
 })
 export class TopBarComponent {
   @Input() searchText: string = '';
   @Output() searchTextChange = new EventEmitter<string>();
   @Output() searchCalled = new EventEmitter<void>();
   pingStatus: boolean = false;
-  gridItemSize: number = 120;
-  readonly gridSizeIncrement: number = 20;
-  viewMode: 'grid' | 'table' = 'grid';
 
-  constructor(private pingService: PingService,
+  constructor(
+    private pingService: PingService,
     private menuService: MenuService,
-    private bookSearchService: BookSearchService) {
+    private bookSearchService: BookSearchService,
+    public bookListService: BookListService
+  ) {
     pingService.pingCalled.subscribe((response) => {
       this.pingStatus = response;
     });
@@ -41,27 +42,23 @@ export class TopBarComponent {
   }
 
   decrement() {
-    if (this.gridItemSize > 60) {
-      this.gridItemSize -= this.gridSizeIncrement;
-    }
+    this.bookListService.decrement();
   }
 
   increment() {
-    if (this.gridItemSize < 200) {
-      this.gridItemSize += this.gridSizeIncrement;
-    }
+    this.bookListService.increment();
   }
 
   get isGridView(): boolean {
-    return this.viewMode === 'grid';
+    return this.bookListService.viewMode === 'grid';
   }
 
   selectGrid(): void {
-    this.viewMode = 'grid';
+    this.bookListService.setViewMode('grid');
   }
 
   selectTable(): void {
-    this.viewMode = 'table';
+    this.bookListService.setViewMode('table');
   }
 
   onSearchChange(event: Event): void {
@@ -70,10 +67,10 @@ export class TopBarComponent {
   }
 
   pingResponse() {
-    return this.pingStatus ? "✅" : "❌";
+    return this.pingStatus ? '✅' : '❌';
   }
 
   get pingTooltipText() {
-    return this.pingStatus ? "Backend is up" : "Backend is down";
+    return this.pingStatus ? 'Backend is up' : 'Backend is down';
   }
 }

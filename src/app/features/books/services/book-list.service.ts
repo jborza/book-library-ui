@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BookListService {
   gridItemSize: number = 120;
@@ -9,5 +9,21 @@ export class BookListService {
   // TODO save this in settings
   viewMode: 'grid' | 'table' = 'grid';
 
-  constructor() { }
+  constructor() {}
+
+  setViewMode(mode: 'grid' | 'table') {
+    this.viewMode = mode;
+  }
+
+  decrement() {
+    if (this.gridItemSize > 60) {
+      this.gridItemSize -= this.gridSizeIncrement;
+    }
+  }
+
+  increment() {
+    if (this.gridItemSize < 200) {
+      this.gridItemSize += this.gridSizeIncrement;
+    }
+  }
 }
