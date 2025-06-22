@@ -41,8 +41,8 @@
   </div>
 
  <div class="btn-group ms-auto me-2">
-    <button class="btn btn-outline-secondary" type="button" (click)="selectGrid()">⠿</button>
-    <button class="btn btn-sm btn-outline-secondary" type="button" (click)="selectTable()">☰</button>
+    <button class="btn btn-outline-secondary" [class.selected]="bookListService.viewMode === 'grid'" type="button" (click)="selectGrid()">⠿</button>
+    <button class="btn btn-sm btn-outline-secondary" [class.selected]="bookListService.viewMode === 'table'" type="button" (click)="selectTable()">☰</button>
   </div>
 <div class="navbar-item  me-2" *ngIf="isGridView">
   <div class="counter-control d-flex align-items-center px-3">
