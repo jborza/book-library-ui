@@ -13,7 +13,7 @@
   [selectedBookIds]="selectedBookIds"
   (rowClick)="onBookRowClick($event.bookId, $event.event)"
   (rowRightClick)="onBookRowRightClick($event.bookId, $event.event)"
-  *ngIf="viewMode === 'grid'"
+  *ngIf="bookListService.viewMode === 'grid'"
   (sort)="sortBy($event.column, $event.event)"
   [allSelected]="areAllSelected()">
 </book-list-grid>
@@ -23,7 +23,7 @@
   [selectedBookIds]="selectedBookIds"
   (rowClick)="onBookRowClick($event.bookId, $event.event)"
   (rowRightClick)="onBookRowRightClick($event.bookId, $event.event)"
-  *ngIf="viewMode === 'table'"
+  *ngIf="bookListService.viewMode === 'table'"
   (sort)="sortBy($event.column, $event.event)"
   [allSelected]="areAllSelected()"
 ></book-list-table>
@@ -64,7 +64,7 @@
     </div>
   </div>
 </div>
-<p *ngIf="viewMode === 'table'">{{ count }} books found</p>
-<column-selector-component *ngIf="viewMode === 'table'"></column-selector-component>
+<p *ngIf="bookListService.viewMode === 'table'">{{ count }} books found</p>
+<column-selector-component *ngIf="bookListService.viewMode === 'table'"></column-selector-component>
 <app-multiple-match-options (submit)="handleSubmitMatchBooks($event)"
                             (cancel)="handleCancelMatchBooks()"></app-multiple-match-options>

@@ -21,6 +21,7 @@ import { BookListGridComponent } from '../book-list-grid/book-list-grid.componen
 import { ColumnSelectorComponent } from '../column-selector/column-selector.component';
 import { ColumnVisibilityService } from '../../services/column-visibility.service';
 import { TableColumn } from '../../table-column';
+import { BookListService } from '../../services/book-list.service';
 
 @Component({
   standalone: true,
@@ -68,7 +69,6 @@ export class BookListComponent implements OnInit {
   collection: number | null = null; // Selected collection ID for filtering;
   contextMenu: ContextMenuComponent | null = null;
   bookIds: number[] = [];
-  viewMode: 'table' | 'grid' = 'grid';
 
   @ViewChild('contextMenu') set contextMenuSetter(cm: ContextMenuComponent | null) {
     this.contextMenu = cm;
@@ -91,7 +91,8 @@ export class BookListComponent implements OnInit {
     private libraryEvents: LibraryEventsService,
     private collectionsService: CollectionsService,
     private authorsService: AuthorsService,
-    private columnVisibilityService: ColumnVisibilityService
+    private columnVisibilityService: ColumnVisibilityService,
+    public bookListService: BookListService
   ) {
     this.currentUrl = router.url;
     this.columnVisibilityService.columns$.subscribe((cols) => {
