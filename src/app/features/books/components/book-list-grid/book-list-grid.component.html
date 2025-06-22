@@ -11,7 +11,7 @@
     [ngStyle]="{
       'width.px': bookListService.gridItemSize,
       'height.px': bookListService.gridItemSize,
-      'min-height.px': bookListService.gridItemSize+60,
+      'min-height.px': bookListService.gridMinHeight,
     }"
     tabindex="0"
   >
@@ -27,7 +27,7 @@
         <div class="no-cover"></div>
       </ng-template>
     </div>
-    <div class="book-info">
+    <div class="book-info" *ngIf="bookListService.showTitles">
       <div class="book-title" [title]="book.title">
         <a class="book-title" [routerLink]="['/books', book.id]">{{
           book.title

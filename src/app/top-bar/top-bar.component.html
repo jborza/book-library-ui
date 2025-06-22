@@ -40,21 +40,52 @@
     </form>
   </div>
 
- <div class="btn-group ms-auto me-2">
-    <button class="btn btn-outline-secondary" [class.selected]="bookListService.viewMode === 'grid'" type="button" (click)="selectGrid()">⠿</button>
-    <button class="btn btn-sm btn-outline-secondary" [class.selected]="bookListService.viewMode === 'table'" type="button" (click)="selectTable()">☰</button>
-  </div>
-<div class="navbar-item  me-2" *ngIf="isGridView">
-  <div class="counter-control d-flex align-items-center px-3">
-    <button type="button" class="btn btn-link btn-sm p-0 counter-btn" (click)="decrement()">
-      &minus;
+  <div class="btn-group ms-auto me-2">
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      [class.selected]="bookListService.viewMode === 'grid'"
+      type="button"
+      (click)="selectGrid()"
+    >
+      ⠿
     </button>
-    <span class="counter-value">{{ bookListService.gridItemSize }}</span>
-    <button type="button" class="btn btn-link btn-sm p-0 counter-btn" (click)="increment()">
-      +
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      [class.selected]="bookListService.viewMode === 'table'"
+      type="button"
+      (click)="selectTable()"
+    >
+      ☰
     </button>
   </div>
-</div>
+  <button
+    class="btn btn-sm me-2"
+    [class.selected]="bookListService.showTitles"
+    (click)="bookListService.toggleShowTitles()"
+    type="button"
+    title="Toggle Titles"
+  >
+    👀
+  </button>
+  <div class="navbar-item me-2" *ngIf="isGridView">
+    <div class="counter-control d-flex align-items-center px-3">
+      <button
+        type="button"
+        class="btn btn-link btn-sm p-0 counter-btn"
+        (click)="decrement()"
+      >
+        &minus;
+      </button>
+      <span class="counter-value">{{ bookListService.gridItemSize }}</span>
+      <button
+        type="button"
+        class="btn btn-link btn-sm p-0 counter-btn"
+        (click)="increment()"
+      >
+        +
+      </button>
+    </div>
+  </div>
 
   <!-- status icon -->
   <span class="status-icon float-end" [title]="pingTooltipText">{{
