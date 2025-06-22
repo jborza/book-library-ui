@@ -8,7 +8,6 @@
 }
 
 .input-group .btn {
-  border-left: none; /* Remove the border between input and button */
   border-radius: 0 0.375rem 0.375rem 0; /* Rounded corners for the right side */
 }
 
@@ -27,4 +26,37 @@
   border-right-color: rgb(222, 226, 230) !important;
   border-top-color: rgb(222, 226, 230) !important;
   border-bottom-color: rgb(222, 226, 230) !important;
+  border-left: none;
+}
+
+/* Add to your component's styles or global styles */
+.counter-control {
+  background-color: #F2F2F2;
+  border-radius: 2rem;
+  border: 1px solid #555;
+  min-width: 80px;
+  justify-content: center;
+  color: #6C757D;
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  user-select: none;
+}
+
+.counter-btn {
+  color: #6C757D;
+  width: 16px;
+  height: 32px;
+  border-radius: 50%;
+  transition: background 0.2s;
+  text-decoration: none !important;
+}
+.counter-btn:hover, .counter-btn:focus {
+  background: rgba(255,255,255,0.09);
+  color: #000;
+  text-decoration: none;
+}
+.counter-value {
+  min-width: 36px;
+  text-align: center;
+  display: inline-block;
 }

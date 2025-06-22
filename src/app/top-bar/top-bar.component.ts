@@ -16,6 +16,9 @@ export class TopBarComponent {
   @Output() searchTextChange = new EventEmitter<string>();
   @Output() searchCalled = new EventEmitter<void>();
   pingStatus: boolean = false;
+  gridItemSize: number = 120;
+  readonly gridSizeIncrement: number = 20;
+  viewMode: 'grid' | 'table' = 'grid';
 
   constructor(private pingService: PingService,
     private menuService: MenuService,
@@ -37,9 +40,29 @@ export class TopBarComponent {
     this.menuService.toggleMenu();
   }
 
-  // onInputChange(value: any) {
-  //   this.bookSearchService.setSearchValue(value);
-  // }
+  decrement() {
+    if (this.gridItemSize > 60) {
+      this.gridItemSize -= this.gridSizeIncrement;
+    }
+  }
+
+  increment() {
+    if (this.gridItemSize < 200) {
+      this.gridItemSize += this.gridSizeIncrement;
+    }
+  }
+
+  get isGridView(): boolean {
+    return this.viewMode === 'grid';
+  }
+
+  selectGrid(): void {
+    this.viewMode = 'grid';
+  }
+
+  selectTable(): void {
+    this.viewMode = 'table';
+  }
 
   onSearchChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement; // Cast the target to HTMLInputElement
