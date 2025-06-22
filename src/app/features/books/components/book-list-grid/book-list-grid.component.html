@@ -21,19 +21,18 @@
     </div>
     <div class="book-info">
       <div class="book-title" [title]="book.title">
-      <a class="book-title"
-              [routerLink]="['/books', book.id]"
-
-              >{{ book.title }}</a
-            >
-            </div>
+        <a class="book-title" [routerLink]="['/books', book.id]">{{
+          book.title
+        }}</a>
+      </div>
       <div class="book-author" [title]="book.author_name">
-            <a class="book-author"
-              [routerLink]="['/books/']"
-              [queryParams]="{ author: book.author_name}"
-              >{{ book.author_name }}</a>
-              </div>
+        <a
+          class="book-author"
+          [routerLink]="['/books/']"
+          [queryParams]="{ author: book.author_name }"
+          >{{ book.author_name }}</a
+        >
+      </div>
     </div>
-    <div *ngIf="selectedBookIds.includes(book.id)" class="selected-overlay"></div>
   </div>
 </div>

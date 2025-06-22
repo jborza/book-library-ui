@@ -49,6 +49,11 @@ export class BookListGridComponent {
   }
 
   onRowClick(book: Book, event: MouseEvent) {
+    // ctrl + click / shift + click is selection
+    if(event.ctrlKey || event.shiftKey) {
+      this.rowClick.emit({ bookId: book.id, event });
+      return;
+    }
     this.router.navigate(['/books', book.id]);
   }
 
