@@ -5,6 +5,7 @@ import { ApiService } from '../../../../core/services/api.service';
 import { TableColumn } from '../../table-column';
 import { ColumnVisibilityService } from '../../services/column-visibility.service';
 import { CommonModule } from '@angular/common';
+import { BookListService } from '../../services/book-list.service';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class BookListGridComponent {
     constructor(
     private router: Router,
     private apiService: ApiService,
-    private columnVisibilityService: ColumnVisibilityService
+    private columnVisibilityService: ColumnVisibilityService,
+    public bookListService: BookListService
   ) {
     this.currentUrl = router.url;
     this.columns$ = this.columnVisibilityService.columns$;

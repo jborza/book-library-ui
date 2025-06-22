@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class BookListService {
-  gridItemSize: number = 120;
+  gridItemSize: number = 200;
   readonly gridSizeIncrement: number = 20;
   // TODO save this in settings
   viewMode: 'grid' | 'table' = 'grid';
@@ -16,13 +16,13 @@ export class BookListService {
   }
 
   decrement() {
-    if (this.gridItemSize > 60) {
+  if (this.gridItemSize > 60) {
       this.gridItemSize -= this.gridSizeIncrement;
     }
   }
 
   increment() {
-    if (this.gridItemSize < 200) {
+    if (this.gridItemSize < 300) {
       this.gridItemSize += this.gridSizeIncrement;
     }
   }

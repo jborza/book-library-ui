@@ -1,10 +1,18 @@
-<div class="book-grid">
+<div
+  class="book-grid"
+  [style.--grid-item-size.px]="bookListService.gridItemSize"
+>
   <div
     class="book-card"
     *ngFor="let book of books"
     [class.selected]="selectedBookIds.includes(book.id)"
     (click)="onRowClick(book, $event)"
     (contextmenu)="onRowRightClick(book, $event)"
+    [ngStyle]="{
+      'width.px': bookListService.gridItemSize,
+      'height.px': bookListService.gridItemSize,
+      'min-height.px': bookListService.gridItemSize+60,
+    }"
     tabindex="0"
   >
     <div class="cover-wrapper">
