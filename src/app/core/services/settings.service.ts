@@ -17,6 +17,10 @@ export class SettingsService {
   private static readonly BOOK_LIST_COLUMN_VISIBILITY_KEY = 'bookListColumnVisibility'; // Key for column visibility settings
   private bookListColumnVisibility: { [key: string]: boolean } = {};
 
+  private static readonly BOOK_LIST_VIEW_MODE_KEY = 'bookListViewMode';
+  private static readonly BOOK_LIST_GRID_SIZE_KEY = 'bookListGridSize';
+  private static readonly BOOK_LIST_SHOW_TITLES_KEY = 'bookListShowTitles';
+
   constructor() {
     this.loadSettings();
     this.loadCustomSearches();
@@ -115,5 +119,26 @@ export class SettingsService {
   // TODO use getter
   getBookListColumnVisibility(): { [key: string]: boolean } {
     return this.bookListColumnVisibility;
+  }
+
+  saveBookListSettings(viewMode: 'grid' | 'table', gridSize: number, showTitles: boolean): void {
+    localStorage.setItem(SettingsService.BOOK_LIST_VIEW_MODE_KEY, viewMode);
+    localStorage.setItem(SettingsService.BOOK_LIST_GRID_SIZE_KEY, gridSize.toString());
+    localStorage.setItem(SettingsService.BOOK_LIST_SHOW_TITLES_KEY, JSON.stringify(showTitles));
+  }
+
+  getBookListViewMode(): 'grid' | 'table' {
+    const viewMode = localStorage.getItem(SettingsService.BOOK_LIST_VIEW_MODE_KEY);
+    return viewMode as 'grid' | 'table' || 'grid';
+  }
+
+  getBookListGridSize(): number {
+    const gridSize = localStorage.getItem(SettingsService.BOOK_LIST_GRID_SIZE_KEY);
+    return gridSize ? parseInt(gridSize, 10) : 200;
+  }
+
+  getBookListShowTitles(): boolean {
+    const showTitles = localStorage.getItem(SettingsService.BOOK_LIST_SHOW_TITLES_KEY);
+    return showTitles ? JSON.parse(showTitles) : true;
   }
 }
